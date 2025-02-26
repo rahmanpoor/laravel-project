@@ -1,6 +1,6 @@
 @font-face {
     font-family: IRANSans;
-    src: url('../fonts/IRANSans/IRANSansWeb_Light.woff') format('woff');
+    src: url("../fonts/IRANSans/IRANSansWeb_Light.woff") format("woff");
 }
 
 * {
@@ -10,7 +10,7 @@
 }
 
 .bg-gray {
-    background-color: #404E67;
+    background-color: #404e67;
     color: #dcdcdc;
 }
 
@@ -19,7 +19,13 @@
 }
 
 .bg-custom-yellow {
-    background: -webkit-gradient(linear, left top, right top, from(#feb798), to(#fe9365));
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#feb798),
+        to(#fe9365)
+    );
     background: linear-gradient(to right, #feb798, #fe9365);
 }
 
@@ -35,10 +41,26 @@
     background: linear-gradient(to right, #01dbdf, #01a9ac);
 }
 
-.font-size-12{
+.font-size-12 {
     font-size: 12px;
 }
 
-.width-16-rem{
+.width-16-rem {
     width: 16rem;
+}
+
+.max-width-16-rem {
+    max-width: 16rem;
+}
+
+.max-height-2-rem {
+    max-height: 2rem;
+}
+
+.main-body {
+    font-size: 0.8rem;
+}
+
+.main-body table {
+    font-size: 0.75rem;
 }

@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>دسته بندی</title>
+    <title>برند ها</title>
 @endsection
 
 
@@ -13,7 +13,7 @@
         <ol class="breadcrumb font-size-12">
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item"> <a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> دسته بندی</li>
+            <li class="breadcrumb-item active" aria-current="page">  برند ها</li>
         </ol>
     </nav>
 
@@ -23,11 +23,11 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        دسته بندی
+                        برند
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.market.category.create') }}" class="btn btn-info btn-sm">ایجاد دسته بندی</a>
+                    <a href="{{ route('admin.market.brand.create') }}" class="btn btn-info btn-sm">ایجاد برند</a>
                     <section class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </section>
@@ -41,8 +41,8 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>نام دسته بندی</th>
-                    <th>دسته والد</th>
+                    <th>نام برند</th>
+                    <th>لوگو</th>
                     <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                 </tr>
             </thead>
@@ -50,7 +50,7 @@
                 <tr>
                     <th>1</th>
                     <td>نمایشگر</td>
-                    <td>کالای الکترونیکی</td>
+                    <td><img src="{{asset('admin-asset/images/huawei.png')}}" class="max-height-2-rem" alt=""></td>
                     <td class="width-16-rem text-left">
                         <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                         <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
@@ -59,7 +59,7 @@
                 <tr>
                     <th>2</th>
                     <td>موبایل</td>
-                    <td>کالای الکترونیکی</td>
+                    <td><img src="{{asset('admin-asset/images/apple.png')}}" class="max-height-2-rem" alt=""></td>
                     <td class="width-16-rem text-left">
                         <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                         <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
@@ -68,7 +68,7 @@
                 <tr>
                     <th>3</th>
                     <td>تبلت</td>
-                    <td>کالای الکترونیکی</td>
+                    <td><img src="{{asset('admin-asset/images/xiaomi.png')}}" class="max-height-2-rem" alt=""></td>
                     <td class="width-16-rem text-left">
                         <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                         <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
