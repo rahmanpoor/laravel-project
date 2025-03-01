@@ -45,6 +45,10 @@
     font-size: 12px;
 }
 
+.width-8-rem {
+    width: 8rem;
+}
+
 .width-16-rem {
     width: 16rem;
 }
@@ -63,4 +67,12 @@
 
 .main-body table {
     font-size: 0.75rem;
+}
+
+.max-width-8-rem {
+    max-width: 8rem;
+}
+
+.h-150px {
+    height: 150px;
 }

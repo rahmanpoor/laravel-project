@@ -32,65 +32,66 @@
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </section>
                 </section>
+                <section class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>کد تخفیف</th>
+                                <th>درصد تخفیف</th>
+                                <th>سقف تخفیف</th>
+                                <th>عنوان مناسبت</th>
+                                <th>تاریخ شروع</th>
+                                <th>تاریخ پایان</th>
+                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>1</th>
+                                <td>blackfriday</td>
+                                <td>15%</td>
+                                <td>25,000 تومان</td>
+                                <td>عمومی</td>
+                                <td>24 اردیبهشت 99</td>
+                                <td>31 اردیبهست 99</td>
+                                <td class="width-16-rem text-left">
+                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
+                                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>nowrouz</td>
+                                <td>10%</td>
+                                <td>8,000 تومان</td>
+                                <td>عمومی</td>
+                                <td>24 اردیبهشت 99</td>
+                                <td>31 اردیبهست 99</td>
+                                <td class="width-16-rem text-left">
+                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
+                                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>eid-fetr</td>
+                                <td>12%</td>
+                                <td>30,000 تومان</td>
+                                <td>عمومی</td>
+                                <td>24 اردیبهشت 99</td>
+                                <td>31 اردیبهست 99</td>
+                                <td class="width-16-rem text-left">
+                                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
+                                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
             </section>
         </section>
     </section>
 
-    <section class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>کد تخفیف</th>
-                    <th>درصد تخفیف</th>
-                    <th>سقف تخفیف</th>
-                    <th>عنوان مناسبت</th>
-                    <th>تاریخ شروع</th>
-                    <th>تاریخ پایان</th>
-                    <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>1</th>
-                    <td>blackfriday</td>
-                    <td>15%</td>
-                    <td>25,000 تومان</td>
-                    <td>عمومی</td>
-                    <td>24 اردیبهشت 99</td>
-                    <td>31 اردیبهست 99</td>
-                    <td class="width-16-rem text-left">
-                        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
-                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <td>nowrouz</td>
-                    <td>10%</td>
-                    <td>8,000 تومان</td>
-                    <td>عمومی</td>
-                    <td>24 اردیبهشت 99</td>
-                    <td>31 اردیبهست 99</td>
-                    <td class="width-16-rem text-left">
-                        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
-                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                        </td>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <td>eid-fetr</td>
-                    <td>12%</td>
-                    <td>30,000 تومان</td>
-                    <td>عمومی</td>
-                    <td>24 اردیبهشت 99</td>
-                    <td>31 اردیبهست 99</td>
-                    <td class="width-16-rem text-left">
-                        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
-                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+
 @endsection
