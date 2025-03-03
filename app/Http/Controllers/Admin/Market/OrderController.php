@@ -19,6 +19,12 @@ class OrderController extends Controller
     public function canceled() {
         return view('admin.market.order.index');
     }
+    public function returned() {
+        return view('admin.market.order.index');
+    }
+    public function all() {
+        return view('admin.market.order.index');
+    }
     public function show() {
         return view('admin.market.order.index');
     }

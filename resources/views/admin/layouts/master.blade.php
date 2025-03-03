@@ -35,6 +35,7 @@
 
 
     @include('admin.layouts.script')
+    @yield('script')
 </body>
 
 </html>

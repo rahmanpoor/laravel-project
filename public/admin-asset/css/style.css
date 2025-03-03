@@ -53,12 +53,19 @@
     width: 16rem;
 }
 
+.width-22-rem {
+    width: 22rem;
+}
+
 .max-width-16-rem {
     max-width: 16rem;
 }
 
 .max-height-2-rem {
     max-height: 2rem;
+}
+.max-height-3-rem {
+    max-height: 3rem;
 }
 
 .main-body {
