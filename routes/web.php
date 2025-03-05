@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Admin\Market\StoreController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Market\CommentController;
-use App\Http\Controllers\Admin\Market\paymentController;
+use App\Http\Controllers\Admin\Market\GalleryController;
+use App\Http\Controllers\Admin\Market\PaymentController;
 use App\Http\Controllers\Admin\Market\ProductController;
 use App\Http\Controllers\Admin\Market\CategoryController;
 use App\Http\Controllers\Admin\Market\DeliveryController;
@@ -83,11 +83,11 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         });
         //Payment
         Route::prefix('payment')->group(function () {
-            Route::get('/', [paymentController::class, 'index'])->name('admin.market.payment.index');
-            Route::get('/online', [paymentController::class, 'online'])->name('admin.market.payment.online');
-            Route::get('/offline', [paymentController::class, 'offline'])->name('admin.market.payment.offline');
-            Route::get('/attendance', [paymentController::class, 'attendance'])->name('admin.market.payment.attendance');
-            Route::get('/confirm', [paymentController::class, 'confirm'])->name('admin.market.payment.confirm');
+            Route::get('/', [PaymentController::class, 'index'])->name('admin.market.payment.index');
+            Route::get('/online', [PaymentController::class, 'online'])->name('admin.market.payment.online');
+            Route::get('/offline', [PaymentController::class, 'offline'])->name('admin.market.payment.offline');
+            Route::get('/attendance', [PaymentController::class, 'attendance'])->name('admin.market.payment.attendance');
+            Route::get('/confirm', [PaymentController::class, 'confirm'])->name('admin.market.payment.confirm');
         });
         //product
         Route::prefix('product')->group(function () {
