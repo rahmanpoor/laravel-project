@@ -58,9 +58,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PostCategory $postCategory)
     {
-        //
+        dd($postCategory);
     }
 
     /**
@@ -81,8 +81,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PostCategory $postCategory)
     {
-        //
+        $result = $postCategory->delete();
+        return redirect()->route('admin.content.category.index');
     }
 }
