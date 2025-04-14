@@ -9,11 +9,12 @@
 
 
 @section('content')
+{{ $postCategories }}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb font-size-12">
             <li class="breadcrumb-item"> <a href="#"> خانه</a></li>
             <li class="breadcrumb-item"> <a href="#"> بخش محتوا</a></li>
-            <li class="breadcrumb-item active" aria-current="page">  پست ها</li>
+            <li class="breadcrumb-item active" aria-current="page"> 2 پست ها</li>
         </ol>
     </nav>
 
