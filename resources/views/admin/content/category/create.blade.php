@@ -33,22 +33,79 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.content.category.store') }}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <section class="row">
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-2">
                                 <div class="form-group">
-                                    <label for="">نام دسته</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <label for="name">نام دسته</label>
+                                    <input type="text" class="form-control form-control-sm" name="name"
+                                        id="name" value="{{ old('name') }}">
+                                </div>
+                                @error('name')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-2">
+                                <div class="form-group">
+                                    <label for="tags">تگ ها</label>
+                                    <input type="text" class="form-control form-control-sm" name="tags"
+                                        id="tags"  value="{{ old('tags') }}">
+                                </div>
+                                @error('tags')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 col-md-6 my-2">
+                                <div class="form-group">
+                                    <label for="status">وضعیت</label>
+                                    <select name="status" id="status" class="form-control form-control-sm">
+                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال</option>
+                                        <option value="1" @if (old('status') == 1) selected @endif>فعال</option>
+                                    </select>
+                                    @error('status')
+                                        <span class="alert_required text-danger p-1">
+                                            <strong>
+                                                {{ $message }}
+                                            </strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </section>
-                            <section class="col-12 col-md-6">
+                            <section class="col-12 col-md-6 my-2">
                                 <div class="form-group">
-                                    <label for="">دسته والد</label>
-                                    <select name="" id="" class="form-control form-control-sm">
-                                        <option value="">دسته را انتخاب کنید</option>
-                                        <option value="">وسایل الکترونیکی</option>
-                                    </select>
+                                    <label for="image">تصویر</label>
+                                    <input type="file" class="form-control form-control-sm" name="image"
+                                        id="image" value="{{ old('name') }}">
                                 </div>
+                                @error('image')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
+                            </section>
+                            <section class="col-12 my-3">
+                                <div class="form-group">
+                                    <label for="description">توضیحات</label>
+                                    <textarea name="description" id="description" rows="6" class="form-control form-control-sm">{{ old('description') }}</textarea>
+                                </div>
+                                @error('description')
+                                <span class="alert_required text-danger p-1">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
                             </section>
                         </section>
                         <section>
@@ -59,4 +116,11 @@
             </section>
         </section>
     </section>
+@endsection
+
+@section('script')
+    <script src="{{ asset('admin-asset/ckeditor/ckeditor.js') }} "></script>
+    <script>
+        CKEDITOR.replace('description');
+    </script>
 @endsection

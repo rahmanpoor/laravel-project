@@ -9,7 +9,6 @@
 
 
 @section('content')
-{{ $postCategories }}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb font-size-12">
             <li class="breadcrumb-item"> <a href="#"> خانه</a></li>
