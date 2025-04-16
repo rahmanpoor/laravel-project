@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد دسته بندی</title>
+    <title>ویرایش دسته بندی</title>
 @endsection
 
 
@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item"> <a href="#">بخش محتوا</a></li>
             <li class="breadcrumb-item"> <a href="#">دسته بندی</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> ایجاد دسته بندی</li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش دسته بندی</li>
         </ol>
     </nav>
 
@@ -24,7 +24,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد دسته بندی
+                        ویرایش دسته بندی
                     </h5>
                 </section>
 
@@ -33,14 +33,15 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.content.category.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.content.category.update', $postCategory->id ) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        {{ method_field('put') }}
                         <section class="row">
                             <section class="col-12 col-md-6 my-2">
                                 <div class="form-group">
                                     <label for="name">نام دسته</label>
                                     <input type="text" class="form-control form-control-sm" name="name"
-                                        id="name" value="{{ old('name') }}">
+                                        id="name" value="{{ old('name', $postCategory->name) }}">
                                 </div>
                                 @error('name')
                                     <span class="alert_required text-danger p-1">
@@ -54,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
                                     <input type="text" class="form-control form-control-sm" name="tags"
-                                        id="tags"  value="{{ old('tags') }}">
+                                        id="tags"  value="{{ old('tags', $postCategory->tags) }}">
                                 </div>
                                 @error('tags')
                                     <span class="alert_required text-danger p-1">
@@ -68,8 +69,8 @@
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال</option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال</option>
+                                        <option value="0" @if (old('status', $postCategory->status) == 0) selected @endif>غیرفعال</option>
+                                        <option value="1" @if (old('status', $postCategory->status) == 1) selected @endif>فعال</option>
                                     </select>
                                     @error('status')
                                         <span class="alert_required text-danger p-1">
@@ -97,7 +98,7 @@
                             <section class="col-12 my-3">
                                 <div class="form-group">
                                     <label for="description">توضیحات</label>
-                                    <textarea name="description" id="description" rows="6" class="form-control form-control-sm">{{ old('description') }}</textarea>
+                                    <textarea name="description" id="description" rows="6" class="form-control form-control-sm">{{ old('description', $postCategory->description) }}</textarea>
                                 </div>
                                 @error('description')
                                 <span class="alert_required text-danger p-1">

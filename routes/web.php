@@ -43,7 +43,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [CategoryController::class, 'create'])->name('admin.market.category.create');
             Route::post('/store', [CategoryController::class, 'store'])->name('admin.market.category.store');
             Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('admin.market.category.edit');
-            Route::put('/update{id}', [CategoryController::class, 'update'])->name('admin.market.category.update');
+            Route::put('/update/{id}', [CategoryController::class, 'update'])->name('admin.market.category.update');
             Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.market.category.destroy');
         });
         //Brand
@@ -52,7 +52,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [BrandController::class, 'create'])->name('admin.market.brand.create');
             Route::post('/store', [BrandController::class, 'store'])->name('admin.market.brand.store');
             Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
-            Route::put('/update{id}', [BrandController::class, 'update'])->name('admin.market.brand.update');
+            Route::put('/update/{id}', [BrandController::class, 'update'])->name('admin.market.brand.update');
             Route::delete('/destroy/{id}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
         });
         //Comment
@@ -61,7 +61,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/show', [CommentController::class, 'show'])->name('admin.market.comment.show');
             Route::post('/store', [CommentController::class, 'store'])->name('admin.market.comment.store');
             Route::get('/edit/{id}', [CommentController::class, 'edit'])->name('admin.market.comment.edit');
-            Route::put('/update{id}', [CommentController::class, 'update'])->name('admin.market.comment.update');
+            Route::put('/update/{id}', [CommentController::class, 'update'])->name('admin.market.comment.update');
             Route::delete('/destroy/{id}', [CommentController::class, 'destroy'])->name('admin.market.comment.destroy');
         });
         //Delivery
@@ -70,7 +70,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [DeliveryController::class, 'create'])->name('admin.market.delivery.create');
             Route::post('/store', [DeliveryController::class, 'store'])->name('admin.market.delivery.store');
             Route::get('/edit/{id}', [DeliveryController::class, 'edit'])->name('admin.market.delivery.edit');
-            Route::put('/update{id}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
+            Route::put('/update/{id}', [DeliveryController::class, 'update'])->name('admin.market.delivery.update');
             Route::delete('/destroy/{id}', [DeliveryController::class, 'destroy'])->name('admin.market.delivery.destroy');
         });
         //Discount
@@ -109,7 +109,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [ProductController::class, 'create'])->name('admin.market.product.create');
             Route::post('/store', [ProductController::class, 'store'])->name('admin.market.product.store');
             Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
-            Route::put('/update{id}', [ProductController::class, 'update'])->name('admin.market.product.update');
+            Route::put('/update/{id}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
             //gallery
             Route::get('/gallery', [GalleryController::class, 'index'])->name('admin.market.gallery.index');
@@ -122,7 +122,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [PropertyController::class, 'create'])->name('admin.market.property.create');
             Route::post('/store', [PropertyController::class, 'store'])->name('admin.market.property.store');
             Route::get('/edit/{id}', [PropertyController::class, 'edit'])->name('admin.market.property.edit');
-            Route::put('/update{id}', [PropertyController::class, 'update'])->name('admin.market.property.update');
+            Route::put('/update/{id}', [PropertyController::class, 'update'])->name('admin.market.property.update');
             Route::delete('/destroy/{id}', [PropertyController::class, 'destroy'])->name('admin.market.property.destroy');
         });
         //store
@@ -131,7 +131,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/add-to-store', [StoreController::class, 'addToStore'])->name('admin.market.store.add-to-store');
             Route::post('/store', [StoreController::class, 'store'])->name('admin.market.store.store');
             Route::get('/edit/{id}', [StoreController::class, 'edit'])->name('admin.market.store.edit');
-            Route::put('/update{id}', [StoreController::class, 'update'])->name('admin.market.store.update');
+            Route::put('/update/{id}', [StoreController::class, 'update'])->name('admin.market.store.update');
             Route::delete('/destroy/{id}', [StoreController::class, 'destroy'])->name('admin.market.store.destroy');
         });
     });
@@ -143,7 +143,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [ContentCategoryController::class, 'create'])->name('admin.content.category.create');
             Route::post('/store', [ContentCategoryController::class, 'store'])->name('admin.content.category.store');
             Route::get('/edit/{postCategory}', [ContentCategoryController::class, 'edit'])->name('admin.content.category.edit');
-            Route::put('/update{postCategory}', [ContentCategoryController::class, 'update'])->name('admin.content.category.update');
+            Route::put('/update/{postCategory}', [ContentCategoryController::class, 'update'])->name('admin.content.category.update');
             Route::delete('/destroy/{postCategory}', [ContentCategoryController::class, 'destroy'])->name('admin.content.category.destroy');
         });
         //Comment
@@ -152,7 +152,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/show', [ContentCommentController::class, 'show'])->name('admin.content.comment.show');
             Route::post('/store', [ContentCommentController::class, 'store'])->name('admin.content.comment.store');
             Route::get('/edit/{id}', [ContentCommentController::class, 'edit'])->name('admin.content.comment.edit');
-            Route::put('/update{id}', [ContentCommentController::class, 'update'])->name('admin.content.comment.update');
+            Route::put('/update/{id}', [ContentCommentController::class, 'update'])->name('admin.content.comment.update');
             Route::delete('/destroy/{id}', [ContentCommentController::class, 'destroy'])->name('admin.content.comment.destroy');
         });
         //faq
@@ -161,7 +161,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [FAQController::class, 'create'])->name('admin.content.faq.create');
             Route::post('/store', [FAQController::class, 'store'])->name('admin.content.faq.store');
             Route::get('/edit/{id}', [FAQController::class, 'edit'])->name('admin.content.faq.edit');
-            Route::put('/update{id}', [FAQController::class, 'update'])->name('admin.content.faq.update');
+            Route::put('/update/{id}', [FAQController::class, 'update'])->name('admin.content.faq.update');
             Route::delete('/destroy/{id}', [FAQController::class, 'destroy'])->name('admin.content.faq.destroy');
         });
         //menu
@@ -170,7 +170,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [MenuController::class, 'create'])->name('admin.content.menu.create');
             Route::post('/store', [MenuController::class, 'store'])->name('admin.content.menu.store');
             Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('admin.content.menu.edit');
-            Route::put('/update{id}', [MenuController::class, 'update'])->name('admin.content.menu.update');
+            Route::put('/update/{id}', [MenuController::class, 'update'])->name('admin.content.menu.update');
             Route::delete('/destroy/{id}', [MenuController::class, 'destroy'])->name('admin.content.menu.destroy');
         });
         //page
@@ -179,7 +179,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [PageController::class, 'create'])->name('admin.content.page.create');
             Route::post('/store', [PageController::class, 'store'])->name('admin.content.page.store');
             Route::get('/edit/{id}', [PageController::class, 'edit'])->name('admin.content.page.edit');
-            Route::put('/update{id}', [PageController::class, 'update'])->name('admin.content.page.update');
+            Route::put('/update/{id}', [PageController::class, 'update'])->name('admin.content.page.update');
             Route::delete('/destroy/{id}', [PageController::class, 'destroy'])->name('admin.content.page.destroy');
         });
         //post
@@ -188,7 +188,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [PostController::class, 'create'])->name('admin.content.post.create');
             Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store');
             Route::get('/edit/{id}', [PostController::class, 'edit'])->name('admin.content.post.edit');
-            Route::put('/update{id}', [PostController::class, 'update'])->name('admin.content.post.update');
+            Route::put('/update/{id}', [PostController::class, 'update'])->name('admin.content.post.update');
             Route::delete('/destroy/{id}', [PostController::class, 'destroy'])->name('admin.content.post.destroy');
         });
     });
@@ -200,7 +200,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [AdminUserController::class, 'create'])->name('admin.user.admin-user.create');
             Route::post('/store', [AdminUserController::class, 'store'])->name('admin.user.admin-user.store');
             Route::get('/edit/{id}', [AdminUserController::class, 'edit'])->name('admin..user.admin-user.edit');
-            Route::put('/update{id}', [AdminUserController::class, 'update'])->name('admin.user.admin-user.update');
+            Route::put('/update/{id}', [AdminUserController::class, 'update'])->name('admin.user.admin-user.update');
             Route::delete('/destroy/{id}', [AdminUserController::class, 'destroy'])->name('admin.user.admin-user.destroy');
         });
         //customer
@@ -209,7 +209,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [CustomerController::class, 'create'])->name('admin.user.customer.create');
             Route::post('/store', [CustomerController::class, 'store'])->name('admin.user.customer.store');
             Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('admin..user.customer.edit');
-            Route::put('/update{id}', [CustomerController::class, 'update'])->name('admin.user.customer.update');
+            Route::put('/update/{id}', [CustomerController::class, 'update'])->name('admin.user.customer.update');
             Route::delete('/destroy/{id}', [CustomerController::class, 'destroy'])->name('admin.user.customer.destroy');
         });
         //role
@@ -218,7 +218,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [RoleController::class, 'create'])->name('admin.user.role.create');
             Route::post('/store', [RoleController::class, 'store'])->name('admin.user.role.store');
             Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('admin..user.role.edit');
-            Route::put('/update{id}', [RoleController::class, 'update'])->name('admin.user.role.update');
+            Route::put('/update/{id}', [RoleController::class, 'update'])->name('admin.user.role.update');
             Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('admin.user.role.destroy');
         });
         //permission
@@ -227,7 +227,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [PermissionController::class, 'create'])->name('admin.user.permission.create');
             Route::post('/store', [PermissionController::class, 'store'])->name('admin.user.permission.store');
             Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin..user.permission.edit');
-            Route::put('/update{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
+            Route::put('/update/{id}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
             Route::delete('/destroy/{id}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
         });
     });
@@ -239,7 +239,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [EmailController::class, 'create'])->name('admin.notify.email.create');
             Route::post('/store', [EmailController::class, 'store'])->name('admin.notify.email.store');
             Route::get('/edit/{id}', [EmailController::class, 'edit'])->name('admin..notify.email.edit');
-            Route::put('/update{id}', [EmailController::class, 'update'])->name('admin.notify.email.update');
+            Route::put('/update/{id}', [EmailController::class, 'update'])->name('admin.notify.email.update');
             Route::delete('/destroy/{id}', [EmailController::class, 'destroy'])->name('admin.notify.email.destroy');
         });
         //sms
@@ -248,7 +248,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/create', [SMSController::class, 'create'])->name('admin.notify.sms.create');
             Route::post('/store', [SMSController::class, 'store'])->name('admin.notify.sms.store');
             Route::get('/edit/{id}', [SMSController::class, 'edit'])->name('admin..notify.sms.edit');
-            Route::put('/update{id}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
+            Route::put('/update/{id}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
             Route::delete('/destroy/{id}', [SMSController::class, 'destroy'])->name('admin.notify.sms.destroy');
         });
     });
@@ -262,7 +262,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::get('/create', [TicketController::class, 'create'])->name('admin.ticket.create');
         Route::post('/store', [TicketController::class, 'store'])->name('admin.ticket.store');
         Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('admin..ticket.edit');
-        Route::put('/update{id}', [TicketController::class, 'update'])->name('admin.ticket.update');
+        Route::put('/update/{id}', [TicketController::class, 'update'])->name('admin.ticket.update');
         Route::delete('/destroy/{id}', [TicketController::class, 'destroy'])->name('admin.ticket.destroy');
     });
     //setting
@@ -271,7 +271,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::get('/create', [SettingController::class, 'create'])->name('admin.setting.create');
         Route::post('/store', [SettingController::class, 'store'])->name('admin.setting.store');
         Route::get('/edit/{id}', [SettingController::class, 'edit'])->name('admin..setting.edit');
-        Route::put('/update{id}', [SettingController::class, 'update'])->name('admin.setting.update');
+        Route::put('/update/{id}', [SettingController::class, 'update'])->name('admin.setting.update');
         Route::delete('/destroy/{id}', [SettingController::class, 'destroy'])->name('admin.setting.destroy');
     });
 });
