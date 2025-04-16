@@ -55,8 +55,8 @@
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags"
-                                        id="tags"  value="{{ old('tags'), $postCategory->tags }}">
-                                        <select class="select2 form-control form-control-sm" multiple id="select_tags" ></select>
+                                        id="tags"  value="{{ old('tags', $postCategory->tags) }}">
+                                        <select class="select2 form-control form-control-sm" multiple="multiple" id="select_tags" ></select>
                                 </div>
                                 @error('tags')
                                     <span class="alert_required text-danger p-1">

@@ -340,3 +340,7 @@ button:hover {
 .body-content p {
     font-size: .8rem;
 }
+
+.select2-search__field {
+    font-family: iransans !important;
+}
