@@ -43,16 +43,13 @@ class CategoryController extends Controller
 
         $inputs = $request->all();
 
-        $inputs['slug'] = str_replace(' ', '-' , $inputs['name']) . '-' . Str::random(5);
+        $inputs['slug'] = str_replace(' ', '-', $inputs['name']) . '-' . Str::random(5);
 
         $inputs['image'] = 'image';
 
         $postCategory = PostCategory::create($inputs);
 
         return redirect()->route('admin.content.category.index');
-
-
-
     }
 
     /**
@@ -74,7 +71,7 @@ class CategoryController extends Controller
      */
     public function edit(PostCategory $postCategory)
     {
-        return view('admin.content.category.edit',compact('postCategory'));
+        return view('admin.content.category.edit', compact('postCategory'));
     }
 
     /**
@@ -105,5 +102,24 @@ class CategoryController extends Controller
     {
         $result = $postCategory->delete();
         return redirect()->route('admin.content.category.index');
+    }
+
+    public function status(PostCategory $postCategory)
+    {
+        $postCategory->status = $postCategory->status == 0 ? 1 : 0;
+        $result = $postCategory->save();
+        if ($result) {
+
+            if ($postCategory->status == 0) {
+
+                return response()->json(['status' => true, 'checked' => false]);
+            } else {
+
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        } else {
+
+            return response()->json(['status' => false]);
+        }
     }
 }

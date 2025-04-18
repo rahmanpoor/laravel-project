@@ -9,7 +9,6 @@
 
 
 @section('content')
-
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb font-size-12">
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
@@ -49,31 +48,35 @@
                         </thead>
                         <tbody>
                             @foreach ($postCategories as $postCategory)
-                            <tr>
-                                <th>1</th>
-                                <td>{{ $postCategory->name }}</td>
-                                <td>{{ $postCategory->description }}</td>
-                                <td>{{ $postCategory->slug }}</td>
-                                <td>
-                                    <img src="{{ asset($postCategory->image) }}" alt="" width="50" height="50">
-                                </td>
-                                <td>{{ $postCategory->tags }}</td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" @if ( $postCategory->status === 1)
-                                            checked
-                                        @endif>
-                                    </label>
-                                </td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.content.category.edit', $postCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                    <form class="d-inline" action="{{ route('admin.content.category.destroy', $postCategory->id) }}" method="post">
-                                        @csrf
-                                        {{ method_field('delete') }}
-                                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <td>{{ $postCategory->name }}</td>
+                                    <td>{{ $postCategory->description }}</td>
+                                    <td>{{ $postCategory->slug }}</td>
+                                    <td>
+                                        <img src="{{ asset($postCategory->image) }}" alt="" width="50"
+                                            height="50">
+                                    </td>
+                                    <td>{{ $postCategory->tags }}</td>
+                                    <td>
+                                       <label class="switch">
+                                            <input id="{{ $postCategory->id }}" onchange="changeStatus({{ $postCategory->id }})" data-url="{{ route('admin.content.category.status', $postCategory->id)}}" type="checkbox" @if ($postCategory->status === 1) checked @endif>
+                                            <span class="slider"></span>
+                                          </label>
+                                    </td>
+                                    <td class="width-16-rem text-left">
+                                        <a href="{{ route('admin.content.category.edit', $postCategory->id) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.content.category.destroy', $postCategory->id) }}"
+                                            method="post">
+                                            @csrf
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -81,6 +84,30 @@
             </section>
         </section>
     </section>
+@endsection
 
+@section('script')
+<script>
+   function changeStatus(id){
+        var element = $("#" + id);
+        var url = element.attr('data-url');
+        var elementValue = !element.prop('checked');
 
+        $.ajax({
+            url : url,
+            type: "GET",
+            success: function(response){
+                if (response.status) {
+                    if (response.checked) {
+                        element.prop('checked', true);
+                    }else{
+                        element.prop('checked', false);
+                    }
+                } else {
+                    element.prop('checked', elementValue);
+                }
+            }
+        })
+    }
+</script>
 @endsection
