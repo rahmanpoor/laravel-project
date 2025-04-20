@@ -26,6 +26,8 @@
                         دسته بندی
                     </h5>
                 </section>
+
+
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
                     <a href="{{ route('admin.content.category.create') }}" class="btn btn-info btn-sm">ایجاد دسته بندی</a>
                     <section class="max-width-16-rem">
@@ -59,9 +61,9 @@
                                     </td>
                                     <td>{{ $postCategory->tags }}</td>
                                     <td>
-                                       <label class="switch">
+                                       <label class="apple-switch">
                                             <input id="{{ $postCategory->id }}" onchange="changeStatus({{ $postCategory->id }})" data-url="{{ route('admin.content.category.status', $postCategory->id)}}" type="checkbox" @if ($postCategory->status === 1) checked @endif>
-                                            <span class="slider"></span>
+                                            <span class="apple-slider"></span>
                                           </label>
                                     </td>
                                     <td class="width-16-rem text-left">

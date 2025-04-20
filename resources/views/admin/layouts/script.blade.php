@@ -3,5 +3,9 @@
 <script src="{{asset('admin-asset/js/bootstrap/bootstrap.min.js')}}"></script>
 <script src="{{asset('admin-asset/js/grid.js')}}"></script>
 <script src="{{asset('admin-asset\select2\js\select2.min.js')}}"></script>
+<script src="{{asset('admin-asset\sweetalert\sweetalert2.min.js')}}"></script>
+
+
+
 
 

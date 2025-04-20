@@ -49,7 +49,7 @@ class CategoryController extends Controller
 
         $postCategory = PostCategory::create($inputs);
 
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی با موفقیت ثبت شد');
     }
 
     /**
@@ -101,7 +101,7 @@ class CategoryController extends Controller
     public function destroy(PostCategory $postCategory)
     {
         $result = $postCategory->delete();
-        return redirect()->route('admin.content.category.index');
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی با موفقیت حذف شد');
     }
 
     public function status(PostCategory $postCategory)

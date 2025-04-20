@@ -91,7 +91,7 @@
 
 /* toggle switch start */
 
-.switch {
+.apple-switch {
     position: relative;
     display: inline-block;
     width: 52px;
@@ -99,14 +99,14 @@
   }
 
   /* Hide default HTML checkbox */
-  .switch input {
+  .apple-switch input {
     opacity: 0;
     width: 0;
     height: 0;
   }
 
   /* Slider (the visible switch part) */
-  .slider {
+  .apple-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -119,7 +119,7 @@
   }
 
   /* The circle inside the switch */
-  .slider:before {
+  .apple-slider:before {
     position: absolute;
     content: "";
     height: 22px;
@@ -132,20 +132,108 @@
   }
 
   /* When checked, change background and move circle */
-  .switch input:checked + .slider {
+  .apple-switch input:checked + .apple-slider {
     background-color: #4cd964; /* iPhone green */
   }
 
-  .switch input:checked + .slider:before {
+  .apple-switch input:checked + .apple-slider:before {
     transform: translateX(24px);
   }
 
-  .slider {
+  .apple-slider {
     box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
   }
-  .slider:before {
+  .apple-slider:before {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
 /* toggle switch end */
+
+
+/* sweet alert 2 start */
+
+.alert_required{
+	color: #ff50a1 !important;
+  }
+  .switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+  }
+
+  .switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+  }
+
+  .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+
+  .slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 4px;
+	bottom: 3px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+
+  input:checked + .slider {
+	background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+	border-radius: 34px;
+	margin: 4px;
+  }
+
+  .slider.round:before {
+	border-radius: 50%;
+  }
+
+
+
+  /* sweet alert reform */
+  .swal2-html-container {
+	  text-align: center;
+  }
+
+
+  /* toast wrapper */
+	.toast-wrapper {
+		position: fixed;
+		z-index: 9999;
+		top: 3rem;
+		left: 0;
+		width: 26rem;
+		max-width: 80%;
+		padding: 2rem;
+	}
+
+    /* sweet alert 2 end */
 
