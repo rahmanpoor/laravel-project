@@ -87,11 +87,11 @@ class ImageService extends ImageToolsService
             }
         }
 
-        $image['indexArray'] = $indexArray;
-        $image['directory'] = $this->getFinalImageDirectory();
-        $image['currentImage'] =  config('image-settings.default_index_size');
+        $images['indexArray'] = $indexArray;
+        $images['directory'] = $this->getFinalImageDirectory();
+        $images['currentImage'] =  config('image-settings.default_index_size');
 
-        return $image;
+        return $images;
     }
 
     public function deleteImage($imagePath)
