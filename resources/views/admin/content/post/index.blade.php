@@ -44,23 +44,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>شرکت هوآوی باز شگفتی ساخت!</td>
-                                <td>اقتصادی</td>
-                                <td><img src="{{asset('admin-asset/images/huawei.png')}}" class="max-height-2-rem" alt=""></td>
-                                <td class="width-16-rem text-left">
-                                    <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                                </td>
-                            </tr>
-
+                            @foreach ($posts as $key => $post)
+                                <tr>
+                                    <th>{{ $key+=1 }}</th>
+                                    <td>{{ $post->title }}</td>
+                                    <td>{{ $post->postCategory->name }}</td>
+                                    <td>
+                                        {{-- <img
+                                            src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}"
+                                            alt="" width="50" height="50"> --}}
+                                        </td>
+                                    <td class="width-16-rem text-left">
+                                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
+                                            ویرایش</a>
+                                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i>
+                                            حذف</button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
             </section>
         </section>
     </section>
-
-
 @endsection
