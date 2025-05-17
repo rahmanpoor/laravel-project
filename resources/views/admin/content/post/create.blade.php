@@ -4,6 +4,7 @@
 
 @section('head-tag')
     <title>ایجاد پست</title>
+    <link rel="stylesheet" href="{{ asset('admin-asset/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
 
@@ -124,8 +125,9 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">تاریخ انتشار</label>
-                                    <input type="text" class="form-control form-control-sm" name="published_at"
+                                    <input type="text" class="form-control form-control-sm d-none" name="published_at"
                                         id="published_at">
+                                    <input type="text" class="form-control form-control-sm" id="published_at_view">
                                 </div>
                             </section>
                             <section class="col-12">
@@ -168,10 +170,22 @@
 
 @section('script')
     <script src="{{ asset('admin-asset/ckeditor/ckeditor.js') }} "></script>
+    <script src="{{ asset('admin-asset/jalalidatepicker/persian-date.min.js') }} "></script>
+    <script src="{{ asset('admin-asset/jalalidatepicker/persian-datepicker.min.js') }} "></script>
     <script>
         CKEDITOR.replace('body');
         CKEDITOR.replace('summary');
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#published_at_view').persianDatepicker({
+                format: 'YYYY/MM/DD',
+                altField: '#published_at',
+            })
+        })
+    </script>
+
     <script>
         $(document).ready(function() {
             var tags_input = $('#tags');
