@@ -46,14 +46,13 @@
                         <tbody>
                             @foreach ($posts as $key => $post)
                                 <tr>
-                                    <th>{{ $key+=1 }}</th>
+                                    <th>{{ $key += 1 }}</th>
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->postCategory->name }}</td>
                                     <td>
-                                        {{-- <img
-                                            src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}"
-                                            alt="" width="50" height="50"> --}}
-                                        </td>
+                                        <img src="{{ asset($post->image['indexArray'][$post->image['currentImage']]) }}"
+                                            alt="" width="50" height="50">
+                                    </td>
                                     <td class="width-16-rem text-left">
                                         <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                                             ویرایش</a>

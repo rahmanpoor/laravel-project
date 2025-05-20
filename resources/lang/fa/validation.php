@@ -38,7 +38,7 @@ return [
     "email"            => "فرمت :attribute معتبر نیست.",
     "exists"           => ":attribute انتخاب شده، معتبر نیست.",
     "filled"           => "فیلد :attribute الزامی است",
-    "image"            => ":attribute باید تصویر باشد.",
+    "image"            => ":attribute باید فرمت عکس باشد.",
     "in"               => ":attribute انتخاب شده، معتبر نیست.",
     "integer"          => ":attribute باید نوع داده ای عددی (integer) باشد.",
     "ip"               => ":attribute باید IP آدرس معتبر باشد.",
@@ -133,7 +133,7 @@ return [
         "hour"                      => "ساعت",
         "minute"                    => "دقیقه",
         "second"                    => "ثانیه",
-        "title"                     => "عنوان کالا",
+        "title"                     => "عنوان",
         "text"                      => "متن",
         "content"                   => "محتوا",
         "excerpt"                   => "گلچین کردن",
@@ -157,7 +157,8 @@ return [
         'name'                      => 'نام دسته بندی',
         'description'               => 'توضیحات',
         'status'                    => 'وضعیت',
-        'tags'                      => 'تگ ها'
+        'tags'                      => 'تگ ها',
+        'summary'                   => 'خلاصه'
 
     ],
 ];

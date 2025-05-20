@@ -150,12 +150,26 @@
                                     <label for="">خلاصه پست</label>
                                     <textarea name="summary" id="summary" rows="6" class="form-control form-control-sm">{{ old('summary') }}</textarea>
                                 </div>
+                                 @error('summary')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="">متن پست</label>
                                     <textarea name="body" id="body" rows="6" class="form-control form-control-sm">{{ old('body') }}</textarea>
                                 </div>
+                                @error('body')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                         </section>
                         <section>
