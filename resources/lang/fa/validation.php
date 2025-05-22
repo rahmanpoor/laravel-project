@@ -158,7 +158,9 @@ return [
         'description'               => 'توضیحات',
         'status'                    => 'وضعیت',
         'tags'                      => 'تگ ها',
-        'summary'                   => 'خلاصه'
+        'summary'                   => 'خلاصه',
+        'question'                   => 'پرسش',
+        'answer'                   => 'جواب'
 
     ],
 ];
