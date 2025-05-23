@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد پرسش</title>
+    <title>ویرایش پرسش</title>
 @endsection
 
 
@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item"> <a href="#">بخش محتوا</a></li>
             <li class="breadcrumb-item"> <a href="#">دسته بندی</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> ایجاد پرسش</li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش پرسش</li>
         </ol>
     </nav>
 
@@ -24,7 +24,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد پرسش
+                        ویرایش پرسش
                     </h5>
                 </section>
 
@@ -33,14 +33,16 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.content.faq.store') }}" method="POST" id="form">
+                    <form action="{{ route('admin.content.faq.update', $faq->id) }}" method="post"
+                        id="form">
                         @csrf
+                        {{ method_field('put') }}
                         <section class="row">
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="">پرسش</label>
-                                    <input type="text" class="form-control form-control-sm" name="question"
-                                    id="question" value="{{ old('question') }}">
+                                    <input type="text" class="form-control form-control-sm" name="question" id="question"
+                                    value="{{ old('question', $faq->question) }}">
                                 </div>
                                 @error('question')
                                     <span class="alert_required text-danger p-1">
@@ -53,7 +55,7 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="">پاسخ</label>
-                                    <textarea name="answer" id="asnwer" rows="6" class="form-control form-control-sm">{{ old('answer') }}</textarea>
+                                    <textarea name="answer" id="asnwer" rows="6" class="form-control form-control-sm">{{ old('answer', $faq->answer) }}</textarea>
                                 </div>
                                 @error('answer')
                                     <span class="alert_required text-danger p-1">
@@ -66,9 +68,9 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
-                                    <input type="hidden" class="form-control form-control-sm" name="tags"
-                                        id="tags"  value="{{ old('tags') }}">
-                                        <select class="select2 form-control form-control-sm" multiple id="select_tags" ></select>
+                                    <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
+                                        value="{{ old('tags', $faq->tags) }}">
+                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple></select>
                                 </div>
                                 @error('tags')
                                     <span class="alert_required text-danger p-1">
@@ -82,8 +84,10 @@
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال</option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال</option>
+                                        <option value="0" @if (old('status', $faq->status) == 0) selected @endif>غیرفعال
+                                        </option>
+                                        <option value="1" @if (old('status', $faq->status) == 1) selected @endif>فعال
+                                        </option>
                                     </select>
                                     @error('status')
                                         <span class="alert_required text-danger p-1">
