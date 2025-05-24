@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد پیج</title>
+    <title>ویرایش پیج</title>
 @endsection
 
 
@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item"> <a href="#">بخش محتوا</a></li>
             <li class="breadcrumb-item"> <a href="#"> پیج ساز</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> ایجاد پیج</li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش پیج</li>
         </ol>
     </nav>
 
@@ -24,7 +24,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد پیج
+                        ویرایش پیج
                     </h5>
                 </section>
 
@@ -33,14 +33,15 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.content.page.store') }}" method="POST" id="form">
-                        @csrf
+                    <form action="{{ route('admin.content.page.update', $page->id) }}" method="POST" id="form">
+                         @csrf
+                        {{ method_field('put') }}
                         <section class="row">
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="">عنوان</label>
                                     <input type="text" class="form-control form-control-sm" name="title" id="title"
-                                        value="{{ old('title') }}">
+                                        value="{{ old('title', $page->title) }}">
                                 </div>
                                 @error('title')
                                     <span class="alert_required text-danger p-1">
@@ -54,8 +55,8 @@
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
-                                        value="{{ old('tags') }}">
-                                    <select class="select2 form-control form-control-sm" multiple id="select_tags"></select>
+                                        value="{{ old('tags', $page->tags) }}">
+                                    <select class="select2 form-control form-control-sm" id="select_tags" multiple></select>
                                 </div>
                                 @error('tags')
                                     <span class="alert_required text-danger p-1">
@@ -69,9 +70,9 @@
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال
+                                        <option value="0" @if (old('status', $page->status) == 0) selected @endif>غیرفعال
                                         </option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('status', $page->status) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                     @error('status')
@@ -86,7 +87,7 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="body">محتوا</label>
-                                    <textarea name="body" id="body" rows="6" class="form-control form-control-sm">{{ old('body') }}</textarea>
+                                    <textarea name="body" id="body" rows="6" class="form-control form-control-sm">{{ old('body', $page->body) }}</textarea>
                                 </div>
                                 @error('body')
                                 <span class="alert_required text-danger p-1">
