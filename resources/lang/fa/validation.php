@@ -160,7 +160,8 @@ return [
         'tags'                      => 'تگ ها',
         'summary'                   => 'خلاصه',
         'question'                   => 'پرسش',
-        'answer'                   => 'جواب'
+        'answer'                   => 'جواب',
+        'parent_id'                   => 'منوی والد'
 
     ],
 ];
