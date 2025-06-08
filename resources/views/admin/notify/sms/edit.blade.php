@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد اطلاعیه پیامکی</title>
+    <title>ویرایش اطلاعیه پیامکی</title>
     <link rel="stylesheet" href="{{ asset('admin-asset/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -15,7 +15,7 @@
             <li class="breadcrumb-item"> <a href="#"> خانه</a></li>
             <li class="breadcrumb-item"> <a href="#"> اطلاع رسانی</a></li>
             <li class="breadcrumb-item"> <a href="#"> اطلاعیه پیامکی</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> ایجاد اطلاعیه پیامکی</li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش اطلاعیه پیامکی</li>
         </ol>
     </nav>
 
@@ -25,7 +25,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد اطلاعیه پیامکی
+                        ویرایش اطلاعیه پیامکی
                     </h5>
                 </section>
 
@@ -34,14 +34,16 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.notify.sms.store') }}" method="post">
+                    <form action="{{ route('admin.notify.sms.update', $sms->id) }}" id="form') }}" method="post"
+                        id="form">
                         @csrf
+                        {{ method_field('put') }}
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="title">عنوان پیامک</label>
                                     <input type="text" name="title" id="title" class="form-control form-control-sm"
-                                        value="{{ old('title') }}">
+                                        value="{{ old('title', $sms->title) }}">
                                 </div>
                                 @error('title')
                                     <span class="alert_required text-danger p-1">
@@ -53,13 +55,14 @@
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="published_at">تاریخ انتشار</label>
-                                    <input type="text" class="form-control form-control-sm d-none" name="published_at"
-                                        id="published_at">
-                                    <input type="text" class="form-control form-control-sm" id="published_at_view">
+                                    <label for="">تاریخ انتشار</label>
+                                    <input type="text" name="published_at" id="published_at"
+                                        class="form-control form-control-sm d-none" value="{{ $sms->published_at }}">
+                                    <input type="text" id="published_at_view" class="form-control form-control-sm"
+                                        value="{{ $sms->published_at }}">
                                 </div>
                                 @error('published_at')
-                                    <span class="alert_required text-danger p-1">
+                                    <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                         <strong>
                                             {{ $message }}
                                         </strong>
@@ -70,9 +73,9 @@
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال
+                                        <option value="0" @if (old('status', $sms->status) == 0) selected @endif>غیرفعال
                                         </option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('status', $sms->status) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                     @error('status')
@@ -87,7 +90,7 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="body">متن پیامک</label>
-                                    <textarea name="body" id="body" rows="6" class="form-control form-control-sm">{{ old('body') }}</textarea>
+                                    <textarea name="body" id="body" rows="6" class="form-control form-control-sm">{{ old('body', $sms->body) }}</textarea>
                                 </div>
                                 @error('body')
                                     <span class="alert_required text-danger p-1">
@@ -107,7 +110,6 @@
         </section>
     </section>
 @endsection
-
 
 @section('script')
     <script src="{{ asset('admin-asset/jalalidatepicker/persian-date.min.js') }}"></script>
