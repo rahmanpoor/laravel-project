@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
-use App\Http\Controllers\Controller;
+use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
+use App\Models\Setting\Setting;
+use Database\Seeders\SettingSeeder;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Image\ImageService;
+use App\Http\Requests\Admin\Setting\SettingRequest;
 
 class SettingController extends Controller
 {
@@ -14,7 +19,16 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return view('admin.setting.index');
+
+        $setting = Setting::first();
+
+        if ($setting === null) {
+            $default = new SettingSeeder();
+            $default->run();
+            $setting = Setting::first();
+        }
+
+        return view('admin.setting.index', compact('setting'));
     }
 
     /**
@@ -55,9 +69,9 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Setting $setting)
     {
-        //
+        return view('admin.setting.edit', compact('setting'));
     }
 
     /**
@@ -67,9 +81,56 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SettingRequest $request, Setting $setting, ImageService $imageService)
     {
-        //
+        $inputs = $request->all();
+
+        //date fixes
+        $realTimestampStart = substr($request->published_at, 0, 10);
+        $inputs['published_at'] = date('Y-m-d H:i:s', (int)$realTimestampStart);
+
+
+        //logo start
+        if ($request->hasFile('logo')) {
+
+            if (!empty($setting->logo)) {
+                $imageService->deleteDirectoryAndFiles($setting->logo);
+            }
+
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'setting');
+            $imageService->setImageName('logo');
+
+            $result = $imageService->save($request->file('logo'));
+
+            if ($result === false) {
+                return redirect()->route('admin.setting.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+            }
+            $inputs['logo'] = $result;
+        }
+        //logo end
+
+        //icon start
+        if ($request->hasFile('icon')) {
+
+            if (!empty($setting->icon)) {
+                $imageService->deleteDirectoryAndFiles($setting->icon);
+            }
+
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'setting');
+            $imageService->setImageName('icon');
+
+            $result = $imageService->save($request->file('icon'));
+
+            if ($result === false) {
+                return redirect()->route('admin.setting.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+            }
+            $inputs['icon'] = $result;
+        }
+        //icon end
+
+        $setting->update($inputs);
+
+        return redirect()->route('admin.setting.index')->with('swal-success', 'تنظیمات با موفقیت ویرایش شد');
     }
 
     /**

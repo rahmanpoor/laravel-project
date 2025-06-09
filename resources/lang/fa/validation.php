@@ -159,9 +159,12 @@ return [
         'status'                    => 'وضعیت',
         'tags'                      => 'تگ ها',
         'summary'                   => 'خلاصه',
-        'question'                   => 'پرسش',
-        'answer'                   => 'جواب',
-        'parent_id'                   => 'منوی والد'
+        'question'                  => 'پرسش',
+        'answer'                    => 'جواب',
+        'keywords'                  => 'کلمات کلیدی',
+        'logo'                      => 'لوگو',
+        'icon'                      => 'آیکون',
+        'parent_id'                 => 'منوی والد'
 
     ],
 ];
