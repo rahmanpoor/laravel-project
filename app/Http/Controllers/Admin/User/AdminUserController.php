@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminUserController extends Controller
 {
@@ -14,7 +15,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.admin-user.index');
+        $admins = User::where('user_type', 1)->get();
+        return view('admin.user.admin-user.index', compact('admins'));
     }
 
     /**
