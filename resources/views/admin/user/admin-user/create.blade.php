@@ -13,7 +13,7 @@
         <ol class="breadcrumb font-size-12">
             <li class="breadcrumb-item"> <a href="#"> خانه</a></li>
             <li class="breadcrumb-item"> <a href="#"> بخش کاربران</a></li>
-            <li class="breadcrumb-item"> <a href="#">  کاربران ادمین</a></li>
+            <li class="breadcrumb-item"> <a href="#"> کاربران ادمین</a></li>
             <li class="breadcrumb-item active" aria-current="page"> ایجاد کاربر ادمین</li>
         </ol>
     </nav>
@@ -33,57 +33,117 @@
                 </section>
 
                 <section>
-                    <form action="" method="">
+                    <form action="{{ route('admin.user.admin-user.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">نام</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input name="first_name" type="text" class="form-control form-control-sm" value="{{ old('first_name') }}">
                                 </div>
+                                @error('first_name')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">نام خانوادگی</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input name="last_name" type="text" class="form-control form-control-sm" value="{{ old('last_name') }}">
                                 </div>
+                                @error('last_name')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">ایمیل</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input name="email" type="text" class="form-control form-control-sm" value="{{ old('email') }}">
                                 </div>
+                                @error('email')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">شماره موبایل</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input name="mobile" type="text" class="form-control form-control-sm" value="{{ old('mobile') }}">
                                 </div>
+                                @error('mobile')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">کلمه عبور</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input name="password" type="password" class="form-control form-control-sm" value="{{ old('password') }}">
                                 </div>
+                                @error('password')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">تکرار کلمه عبور</label>
-                                    <input type="text" class="form-control form-control-sm">
+                                    <input name="password_confirmation" type="password" class="form-control form-control-sm" value="{{ old('password_confirmation') }}">
                                 </div>
+                                @error('password_confirmation')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">تصویر</label>
-                                    <input type="file" class="form-control form-control-sm" name="" id="">
+                                    <input name="profile_photo_path" type="file" class="form-control form-control-sm"
+                                        value="{{ old('profile_photo_path') }}">
                                 </div>
+                                @error('profile_photo_path')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="">وضعیت کاربر</label>
-                                    <select name="" id="" class="form-control form-control-sm">
-                                        <option value="">غیرفعال</option>
-                                        <option value="">فعال</option>
+                                    <label for="activation">وضعیت فعال ساری کاربر</label>
+                                    <select name="activation" id="activation" class="form-control form-control-sm">
+                                        <option value="0" @if (old('activation') == 0) selected @endif>غیرفعال
+                                        </option>
+                                        <option value="1" @if (old('activation') == 1) selected @endif>فعال
+                                        </option>
                                     </select>
+                                    @error('activation')
+                                        <span class="alert_required text-danger p-1">
+                                            <strong>
+                                                {{ $message }}
+                                            </strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </section>
                         </section>

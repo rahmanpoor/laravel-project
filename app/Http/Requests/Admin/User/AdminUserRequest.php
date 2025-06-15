@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Admin\User;
 
+
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminUserRequest extends FormRequest
