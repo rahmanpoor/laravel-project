@@ -130,7 +130,7 @@
                             </section>
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="activation">وضعیت فعال ساری کاربر</label>
+                                    <label for="activation">فعال سازی</label>
                                     <select name="activation" id="activation" class="form-control form-control-sm">
                                         <option value="0" @if (old('activation') == 0) selected @endif>غیرفعال
                                         </option>
