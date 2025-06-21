@@ -81,9 +81,9 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+         return view('admin.user.admin-user.edit', compact('user'));
     }
 
     /**
@@ -93,9 +93,34 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminUserRequest $request, User $user, ImageService $imageService)
     {
-        //
+        $inputs = $request->all();
+
+
+
+        if ($request->hasFile('profile_photo_path')) {
+
+            if (!empty($user->profile_photo_path)) {
+                $imageService->deleteImage($user->profile_photo_path);
+            }
+
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'users');
+
+
+            $result = $imageService->save($request->file('profile_photo_path'));
+
+            if ($result === false) {
+                return redirect()->route('admin.user.admin-user.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+            }
+            $inputs['profile_photo_path'] = $result;
+        }
+        //logo end
+
+
+        $user->update($inputs);
+
+        return redirect()->route('admin.user.admin-user.index')->with('swal-success', 'ادمین با موفقیت ویرایش شد');
     }
 
     /**
@@ -104,20 +129,21 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $admin)
+    public function destroy(User $user)
     {
-        $result = $admin->delete();
+        $result = $user->forceDelete();
         return redirect()->route('admin.user.admin-user.index')->with('swal-success', ' ادمین با موفقیت حذف شد');
     }
 
 
-    public function status(User $admin)
+    public function status(User $user)
     {
-        $admin->status = $admin->status == 0 ? 1 : 0;
-        $result = $admin->save();
+
+        $user->status = $user->status == 0 ? 1 : 0;
+        $result = $user->save();
         if ($result) {
 
-            if ($admin->status == 0) {
+            if ($user->status == 0) {
 
                 return response()->json(['status' => true, 'checked' => false]);
             } else {
@@ -130,13 +156,13 @@ class AdminUserController extends Controller
         }
     }
 
-     public function activation(User $admin)
+    public function activation(User $user)
     {
-        $admin->activation = $admin->activation == 0 ? 1 : 0;
-        $result = $admin->save();
+        $user->activation = $user->activation == 0 ? 1 : 0;
+        $result = $user->save();
         if ($result) {
 
-            if ($admin->activation == 0) {
+            if ($user->activation == 0) {
 
                 return response()->json(['activation' => true, 'checked' => false]);
             } else {

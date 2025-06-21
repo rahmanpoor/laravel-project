@@ -87,9 +87,12 @@
 
 @section('script')
     <script>
+
         function changeStatus(id) {
             var element = $("#" + id);
+
             var url = element.attr('data-url');
+
             var elementValue = !element.prop('checked');
 
             $.ajax({

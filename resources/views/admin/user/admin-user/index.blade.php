@@ -56,29 +56,31 @@
                                     <td>{{ $admin->first_name }}</td>
                                     <td>{{ $admin->last_name }}</td>
                                     <td>سوپر ادمین</td>
-                                    <td>
+
+                                   <td>
+                                    <label class="apple-switch">
+                                        <input id="{{ $admin->id }}"
+                                            onchange="changeStatus({{ $admin->id }})"
+                                            data-url="{{ route('admin.user.admin-user.status', $admin->id) }}"
+                                            type="checkbox" @if ($admin->status === 1) checked @endif>
+                                        <span class="apple-slider"></span>
+                                    </label>
+                                </td>
+
+                                        <td>
                                         <label class="apple-switch">
-                                            <input id="{{ $admin->id }}" onchange="changeStatus({{ $admin->id }})"
-                                                data-url="{{ route('admin.user.admin-user.status', $admin->id) }}"
-                                                type="checkbox" @if ($admin->status === 1) checked @endif>
-                                            <span class="apple-slider"></span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label class="apple-switch">
-                                            <input id="{{ $admin->id }}"
-                                                onchange="changeActivation({{ $admin->id }})"
-                                                data-url="{{ route('admin.user.admin-user.activetion', $admin->id) }}"
+                                            <input id="{{ $admin->id }}-active" onchange="changeActive({{ $admin->id }})"
+                                                data-url="{{ route('admin.user.admin-user.activation', $admin->id) }}"
                                                 type="checkbox" @if ($admin->activation === 1) checked @endif>
                                             <span class="apple-slider"></span>
                                         </label>
                                     </td>
+
                                     <td class="width-22-rem text-left">
                                         <a href="" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> نقش</a>
-                                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
-                                            ویرایش</a>
+                                        <a href="{{ route('admin.user.admin-user.edit', $admin->id) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                         <form class="d-inline"
-                                            action="{{ route('admin.user.admin-user.destroy', $admin->id) }}"
                                             action="{{ route('admin.user.admin-user.destroy', $admin->id) }}"
                                             method="post">
                                             @csrf
@@ -100,9 +102,13 @@
 
 @section('script')
     <script>
-        function changeStatus(id) {
+         function changeStatus(id) {
+
+
             var element = $("#" + id);
+
             var url = element.attr('data-url');
+
             var elementValue = !element.prop('checked');
 
             $.ajax({
@@ -112,17 +118,17 @@
                     if (response.status) {
                         if (response.checked) {
                             element.prop('checked', true)
-                            successToast(' ادمین با موفقیت فعال شد')
+                            successToast('ادمین با موفقیت فعال شد')
                         } else {
                             element.prop('checked', false)
-                            successToast(' ادمین با موفقیت غیر فعال شد')
+                            successToast('ادمین با موفقیت غیرفعال شد')
                         }
                     } else {
                         element.prop('checked', elementValue);
                         errorToast('هنگام ویرایش مشکلی بوجود امده است')
                     }
                 },
-                error: function() {
+                error : function(){
                     element.prop('checked', elementValue);
                     errorToast('ارتباط برقرار نشد')
                 }
@@ -132,27 +138,25 @@
 
                 var successToastTag = '<section class="toast" data-delay="5000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
-                    '<strong class="ml-auto">' + message + '</strong>\n' +
-                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                    '<span aria-hidden="true">&times;</span>\n' +
-                    '</button>\n' +
-                    '</section>\n' +
-                    '</section>';
+                        '<strong class="ml-auto">' + message + '</strong>\n' +
+                        '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                            '<span aria-hidden="true">&times;</span>\n' +
+                            '</button>\n' +
+                            '</section>\n' +
+                            '</section>';
 
-                $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(5500).queue(function() {
-                    $(this).remove();
-                })
+                            $('.toast-wrapper').append(successToastTag);
+                            $('.toast').toast('show').delay(5500).queue(function() {
+                                $(this).remove();
+                            })
 
             }
         }
     </script>
 
-
-
     <script>
-        function changeActivation(id) {
-            var element = $("#" + id);
+        function changeActive(id) {
+            var element = $("#" + id + "-active");
             var url = element.attr('data-url');
             var elementValue = !element.prop('checked');
 
@@ -163,10 +167,10 @@
                     if (response.activation) {
                         if (response.checked) {
                             element.prop('checked', true)
-                            successToast('فعال سازی با موفقیت انجام شد')
+                            successToast('فعالسازی با موفقیت انجام شد')
                         } else {
                             element.prop('checked', false)
-                            successToast('غیر فعال سازی با موفقیت انجام شد')
+                            successToast('غیر فعالسازی با موفقیت انجام شد')
                         }
                     } else {
                         element.prop('checked', elementValue);
@@ -198,8 +202,6 @@
             }
         }
     </script>
-
-
 
 
     @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
