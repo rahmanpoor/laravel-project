@@ -42,43 +42,27 @@
                                 <th>دسته تیکت</th>
                                 <th>اولویت تیکت</th>
                                 <th>ارجاع شده از</th>
+                                <th>تیکت مرجع</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
+
+                            @foreach ($tickets as $ticket )
                             <tr>
-                                <th>1</th>
-                                <td>حامد احمدی</td>
-                                <td>مشکل در پرداخت</td>
-                                <td>دسته فروش</td>
-                                <td>فوری</td>
-                                <td>کامران محمدی</td>
+                                <th>{{ $loop->iteration }}</th>
+                                <td>{{ $ticket->user->first_name . ' ' . $ticket->user->last_name }}</td>
+                                <td>{{ $ticket->subject }}</td>
+                                <td>{{ $ticket->category->name }}</td>
+                                <td>{{ $ticket->priority->name }}</td>
+                                <td>{{ $ticket->admin->user->first_name . ' ' . $ticket->admin->user->last_name }}</td>
+                                <td>{{ $ticket->parent->subject ?? '-' }}</td>
                                 <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.ticket.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
+                                    <a href="{{ route('admin.ticket.show', $ticket->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>حامد احمدی</td>
-                                <td>مشکل در پرداخت</td>
-                                <td>دسته فروش</td>
-                                <td>فوری</td>
-                                <td>کامران محمدی</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.ticket.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>حامد احمدی</td>
-                                <td>مشکل در پرداخت</td>
-                                <td>دسته فروش</td>
-                                <td>فوری</td>
-                                <td>کامران محمدی</td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.ticket.show') }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
-                                </td>
-                            </tr>
+                             @endforeach
+
                         </tbody>
                     </table>
                 </section>

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Ticket;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Ticket\Ticket;
+use App\Http\Controllers\Controller;
 
 class TicketController extends Controller
 {
     public function newTickets()
     {
-        return view('admin.ticket.index');
+        $tickets = Ticket::where('seen', 0)->get();
+        return view('admin.ticket.index', compact('tickets'));
     }
 
     public function openTickets()
