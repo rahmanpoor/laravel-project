@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User\Role;
 use App\Models\Ticket\Ticket;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ticket\TicketAdmin;
@@ -55,13 +56,20 @@ class User extends Authenticatable
         return $this->first_name . " " . $this->last_name;
     }
 
-    public function ticketAdmin() {
+    public function ticketAdmin()
+    {
         return $this->hasOne(TicketAdmin::class);
     }
 
-      public function tickets()
-     {
-         return $this->hasMany(Ticket::class);
-     }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 
+
+    public function roles()
+    {
+
+        return $this->belongsToMany(Role::class);
+    }
 }

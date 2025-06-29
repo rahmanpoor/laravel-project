@@ -41,7 +41,6 @@
                                 <th>شماره موبایل</th>
                                 <th>نام</th>
                                 <th>نام خانوادگی</th>
-                                <th>نقش</th>
                                 <th>وضعیت</th>
                                 <th>فعالسازی</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -55,8 +54,6 @@
                                     <td>{{ $user->mobile }}</td>
                                     <td>{{ $user->first_name }}</td>
                                     <td>{{ $user->last_name }}</td>
-                                    <td>سوپر ادمین</td>
-
                                     <td>
                                         <label class="apple-switch">
                                             <input id="{{ $user->id }}" onchange="changeStatus({{ $user->id }})"
@@ -75,12 +72,11 @@
                                             <span class="apple-slider"></span>
                                         </label>
                                     </td>
-                                      <td class="width-22-rem text-left">
+                                    <td class="width-22-rem text-left">
                                         <a href="{{ route('admin.user.customer.edit', $user->id) }}"
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                         <form class="d-inline"
-                                            action="{{ route('admin.user.customer.destroy', $user->id) }}"
-                                            method="post">
+                                            action="{{ route('admin.user.customer.destroy', $user->id) }}" method="post">
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
