@@ -123,7 +123,7 @@ class TicketController extends Controller
         $inputs['user_id'] = 1;
         $inputs['category_id'] = $ticket->category_id;
         $inputs['priority_id'] = $ticket->priority_id;
-        $inputs['ticket_id'] = $ticket->ticket_id;
+        $inputs['ticket_id'] = $ticket->id;
 
         $ticket = Ticket::create($inputs);
         return redirect()->route('admin.ticket.index')->with('swal-success', 'پاسخ با موفقیت ثبت شد');

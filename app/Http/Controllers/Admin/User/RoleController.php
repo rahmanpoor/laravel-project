@@ -39,7 +39,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $inputs = $request->all();
+        $role = Role::create($inputs);
+        $inputs['permissions'] = $inputs['permissions'] ?? [];
+        $role->permissions()->sync($inputs['permissions']);
+        return redirect()->route('admin.user.role.index')->with('swal-success', ' نقش با موفقیت ثبت شد');
     }
 
     /**
