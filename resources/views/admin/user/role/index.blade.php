@@ -57,12 +57,18 @@
                                         @endif
                                     </td>
                                     <td class="width-22-rem text-left">
-                                        <a href="" class="btn btn-success btn-sm"><i class="fa fa-user-graduate"></i>
+                                        <a href="{{ route('admin.user.role.permission-form', $role->id)  }}" class="btn btn-success btn-sm"><i class="fa fa-user-graduate"></i>
                                             دسترسی ها</a>
-                                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
+                                        <a href="{{ route('admin.user.role.edit', $role->id)  }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                                             ویرایش</a>
-                                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i>
-                                            حذف</button>
+                                          
+                                            <form class="d-inline"
+                                                action="{{ route('admin.user.role.destroy', $role->id) }}" method="post">
+                                                @csrf
+                                                {{ method_field('delete') }}
+                                                <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                        class="fa fa-trash-alt"></i> حذف</button>
+                                            </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -72,4 +78,11 @@
             </section>
         </section>
     </section>
+@endsection
+
+
+@section('script')
+
+@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
+
 @endsection

@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد روش ارسال</title>
+    <title>ویرایش روش ارسال</title>
 @endsection
 
 
@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item"> <a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item"> <a href="#">روش های ارسال</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> ایجاد روش ارسال</li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش روش ارسال</li>
         </ol>
     </nav>
 
@@ -24,7 +24,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد روش ارسال
+                        ویرایش روش ارسال
                     </h5>
                 </section>
 
@@ -33,14 +33,15 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.delivery.store') }}" method="POST">
+                    <form action="{{ route('admin.market.delivery.update', $delivery->id ) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">نام روش ارسال</label>
                                     <input type="text" name="name" class="form-control form-control-sm"
-                                        value="{{ old('name') }}">
+                                        value="{{ old('name', $delivery->name) }}">
                                 </div>
                                 @error('name')
                                     <span class="alert_required text-danger p-1">
@@ -54,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="">هزینه ارسال</label>
                                     <input type="text" name="amount" class="form-control form-control-sm"
-                                        value="{{ old('amount') }}">
+                                        value="{{ old('amount', $delivery->amount) }}">
                                 </div>
                                 @error('amount')
                                     <span class="alert_required text-danger p-1">
@@ -68,7 +69,7 @@
                                 <div class="form-group">
                                     <label for="">زمان ارسال</label>
                                     <input type="text" name="delivery_time" class="form-control form-control-sm"
-                                        value="{{ old('delivery_time') }}">
+                                        value="{{ old('delivery_time', $delivery->delivery_time) }}">
                                 </div>
                                 @error('delivery_time')
                                     <span class="alert_required text-danger p-1">
@@ -83,7 +84,7 @@
                                 <div class="form-group">
                                     <label for="">واحد زمان ارسال</label>
                                     <input type="text" name="delivery_time_unit" class="form-control form-control-sm"
-                                        value="{{ old('delivery_time_unit') }}">
+                                        value="{{ old('delivery_time_unit', $delivery->delivery_time_unit) }}">
                                 </div>
                                 @error('delivery_time_unit')
                                     <span class="alert_required text-danger p-1">

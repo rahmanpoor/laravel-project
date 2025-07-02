@@ -3,7 +3,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد دسته بندی</title>
+    <title>ویرایش دسته بندی</title>
 @endsection
 
 
@@ -14,7 +14,7 @@
             <li class="breadcrumb-item"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item"> <a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item"> <a href="#">دسته بندی</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> ایجاد دسته بندی</li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش دسته بندی</li>
         </ol>
     </nav>
 
@@ -24,7 +24,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ایجاد دسته بندی
+                        ویرایش دسته بندی
                     </h5>
                 </section>
 
@@ -33,13 +33,14 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.category.store') }}" method="post" enctype="multipart/form-data" id="form">
+                    <form action="{{ route('admin.market.category.update', $productCategory->id) }}" method="post" enctype="multipart/form-data" id="form">
                         @csrf
+                        {{ method_field('put') }}
                         <section class="row">
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">نام دسته</label>
-                                    <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control form-control-sm">
+                                    <input type="text" name="name" id="name" value="{{ old('name', $productCategory->name ) }}" class="form-control form-control-sm">
                                 </div>
                                 @error('name')
                                     <span class="alert_required text-danger p-1">
@@ -55,10 +56,10 @@
                                     <label for="parent_id">انتخاب دسته والد</label>
                                     <select name="parent_id" id="parent_id" class="form-control form-control-sm">
                                         <option value="">منوی اصلی</option>
-                                        @foreach ($productCategories as $productCategory)
-                                            <option value="{{ $productCategory->id }}"
-                                                @if (old('parent_id') == $productCategory->id) selected @endif>
-                                                {{ $productCategory->name }}
+                                        @foreach ($parent_categories as $parent_category)
+                                            <option value="{{ $parent_category->id }}"
+                                                @if (old('parent_id', $productCategory->parent_id) == $parent_category->id) selected @endif>
+                                                {{ $parent_category->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -74,7 +75,7 @@
 
 
 
-                            <section class="col-12 col-md-6 my-2">
+                            <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="image">تصویر</label>
                                     <input type="file" class="form-control form-control-sm" name="image"
@@ -87,6 +88,26 @@
                                         </strong>
                                     </span>
                                 @enderror
+                                <section class="row">
+                                    @php
+                                        $number = 1;
+                                    @endphp
+                                    @foreach ($productCategory->image['indexArray'] as $key => $value)
+                                        <section class="col-md-{{ 6 / $number }}">
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="currentImage"
+                                                    value="{{ $key }}" id="{{ $number }}"
+                                                    @if ($productCategory->image['currentImage'] == $key) checked @endif>
+                                                <label for="{{ $number }}" class="form-check-label mx-2">
+                                                    <img src=" {{ asset($value) }} " class="w-100" alt="">
+                                                </label>
+                                            </div>
+                                        </section>
+                                        @php
+                                            $number++;
+                                        @endphp
+                                    @endforeach
+                                </section>
                             </section>
 
 
@@ -95,9 +116,9 @@
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="status" class="form-control form-control-sm">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیرفعال
+                                        <option value="0" @if (old('status', $productCategory->status) == 0) selected @endif>غیرفعال
                                         </option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('status', $productCategory->status) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                     @error('status')
@@ -115,9 +136,9 @@
                                 <div class="form-group">
                                     <label for="status">نمایش در منو</label>
                                     <select name="show_in_menu" id="show_in_menu" class="form-control form-control-sm">
-                                        <option value="0" @if (old('show_in_menu') == 0) selected @endif>غیرفعال
+                                        <option value="0" @if (old('show_in_menu', $productCategory->show_in_menu) == 0) selected @endif>غیرفعال
                                         </option>
-                                        <option value="1" @if (old('show_in_menu') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('show_in_menu', $productCategory->show_in_menu) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                     @error('status')
@@ -135,7 +156,7 @@
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
-                                        value="{{ old('tags') }}">
+                                        value="{{ old('tags', $productCategory->tags) }}">
                                     <select class="select2 form-control form-control-sm" multiple id="select_tags"></select>
                                 </div>
                                 @error('tags')
@@ -151,7 +172,7 @@
                             <section class="col-12 my-3">
                                 <div class="form-group">
                                     <label for="description">توضیحات</label>
-                                    <textarea name="description" id="description" rows="6" class="form-control form-control-sm">{{ old('description') }}</textarea>
+                                    <textarea name="description" id="description" rows="6" class="form-control form-control-sm">{{ old('description', $productCategory->description) }}</textarea>
                                 </div>
                                 @error('description')
                                     <span class="alert_required text-danger p-1">

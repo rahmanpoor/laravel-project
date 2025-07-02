@@ -154,7 +154,7 @@ return [
         "reference_id"              => "ارجاع",
         "priority_id"               => "اولویت",
         "category_id"               => "دسته بندی",
-        'name'                      => 'نام دسته بندی',
+        'name'                      => 'نام',
         'description'               => 'توضیحات',
         'status'                    => 'وضعیت',
         'tags'                      => 'تگ ها',
@@ -164,7 +164,11 @@ return [
         'keywords'                  => 'کلمات کلیدی',
         'logo'                      => 'لوگو',
         'icon'                      => 'آیکون',
-        'parent_id'                 => 'منوی والد'
+        'parent_id'                 => 'منوی والد',
+        'amount'                    => 'هزینه',
+        'delivery_time'             => 'زمان ارسال',
+        'delivery_time_unit'        => 'واحد زمان ارسال'
+
 
     ],
 ];

@@ -2,8 +2,12 @@
 
 namespace App\Http\Requests\Admin\User;
 
+
+
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Routing\Route;
+
+
 
 class RoleRequest extends FormRequest
 {
@@ -33,10 +37,24 @@ class RoleRequest extends FormRequest
                 'description' => 'required|max:200|min:1',
                 'permissions.*' => ['exists:permissions,id']
             ];
+        } elseif ($route->getName() == 'admin.user.role.update') {
+
+            return [
+
+                'name' => 'required|max:120|min:1',
+                'description' => 'required|max:200|min:1',
+            ];
+        } elseif ($route->getName() == 'admin.user.role.permission-update') {
+
+            return [
+
+                'permissions.*' => ['exists:permissions,id']
+            ];
         }
     }
 
-    public function attributes() {
+    public function attributes()
+    {
         return [
             'name' => 'عنوان نقش',
             'permissions.*' => 'دسترسی ها'
