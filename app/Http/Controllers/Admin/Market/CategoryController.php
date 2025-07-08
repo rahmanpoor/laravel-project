@@ -45,7 +45,7 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'product-category');
-          
+
             $result = $imageService->createIndexAndSave($request->file('image'));
         }
 
@@ -134,8 +134,12 @@ class CategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
+        if ($productCategory->children()->count() < 1) {
         $result = $productCategory->delete();
         return redirect()->route('admin.market.category.index')->with('swal-success', 'دسته بندی با موفقیت حذف شد');
+         } else {
+             return back()->with('swal-error', 'دسته بندی دارای زیر دسته می باشد');
+         }
     }
 
     public function status(ProductCategory $productCategory)

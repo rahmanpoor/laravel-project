@@ -167,7 +167,9 @@ return [
         'parent_id'                 => 'منوی والد',
         'amount'                    => 'هزینه',
         'delivery_time'             => 'زمان ارسال',
-        'delivery_time_unit'        => 'واحد زمان ارسال'
+        'delivery_time_unit'        => 'واحد زمان ارسال',
+        'original_name'             => 'نام اصلی ',
+        'persian_name'              => 'نام فارسی'
 
 
     ],
