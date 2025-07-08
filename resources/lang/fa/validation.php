@@ -169,7 +169,14 @@ return [
         'delivery_time'             => 'زمان ارسال',
         'delivery_time_unit'        => 'واحد زمان ارسال',
         'original_name'             => 'نام اصلی ',
-        'persian_name'              => 'نام فارسی'
+        'persian_name'              => 'نام فارسی',
+        'weight'                    => 'وزن',
+        'width'                     => 'عرض',
+        'length'                    => 'طول',
+        'price'                     => 'قیمت',
+        'introduction'              => 'معرفی',
+        'brand_id'                  => 'برند',
+        'height'                    => 'ارتفاع'
 
 
     ],

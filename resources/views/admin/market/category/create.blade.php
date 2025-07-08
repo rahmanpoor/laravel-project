@@ -74,7 +74,7 @@
 
 
 
-                            <section class="col-12 col-md-6 my-2">
+                            <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="image">تصویر</label>
                                     <input type="file" class="form-control form-control-sm" name="image"

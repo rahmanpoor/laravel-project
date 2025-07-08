@@ -40,100 +40,43 @@
                                 <th>نام کالا</th>
                                 <th>تصویر کالا</th>
                                 <th>قیمت</th>
-                                <th>وزن</th>
                                 <th>دسته</th>
-                                <th>فرم</th>
                                 <th class="max-width-8-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>LED سامسونگ</td>
-                                <td><img src="{{ asset('admin-asset/images/led.jpg') }}" class="max-height-3-rem"
-                                        alt="LED"></td>
-                                <td>12,500,000 تومان</td>
-                                <td>13 کیلوگرم</td>
-                                <td>کالای الکترونیکی</td>
-                                <td>نمایشگر</td>
-                                <td class="width-16-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
-                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-images"></i>
-                                                گالری</a>
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-list-ul"></i>
-                                                فرم کالا</a>
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-edit"></i>
-                                                ویرایش</a>
+                            @foreach ($products as $product)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $product->name }}</td>
+                                    <td><img src="{{ asset($product->image) }}" alt="تصویر کالا" class="max-height-3-rem"
+                                            alt="LED"></td>
+                                    <td>{{ $product->price }} تومان</td>
+                                    <td>کالای الکترونیکی</td>
+                                    <td class="width-16-rem text-left">
+                                        <div class="dropdown">
+                                            <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
+                                                role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a href="#" class="dropdown-item text-right"><i
+                                                        class="fa fa-images"></i>
+                                                    گالری</a>
+                                                <a href="#" class="dropdown-item text-right"><i
+                                                        class="fa fa-list-ul"></i>
+                                                    فرم کالا</a>
+                                                <a href="#" class="dropdown-item text-right"><i
+                                                        class="fa fa-edit"></i>
+                                                    ویرایش</a>
                                                 <form action="" method="POST">
                                                     <button type="submit" class="dropdown-item text-right"><i
-                                                        class="fa fa-window-close"></i> حذف</button>
+                                                            class="fa fa-window-close"></i> حذف</button>
                                                 </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>آیفون 16</td>
-                                <td><img src="{{ asset('admin-asset/images/iphone 16.jpg') }}" class="max-height-3-rem"
-                                        alt="LED"></td>
-                                <td>18,500,000 تومان</td>
-                                <td>1 کیلوگرم</td>
-                                <td>کالای الکترونیکی</td>
-                                <td>موبایل</td>
-                                <td class="width-16-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
-                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-images"></i>
-                                                گالری</a>
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-list-ul"></i>
-                                                فرم کالا</a>
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-edit"></i>
-                                                ویرایش</a>
-                                                <form action="" method="POST">
-                                                    <button type="submit" class="dropdown-item text-right"><i
-                                                        class="fa fa-window-close"></i> حذف</button>
-                                                </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>بلندگو</td>
-                                <td><img src="{{ asset('admin-asset/images/speaker.jpg') }}" class="max-height-3-rem"
-                                        alt="LED"></td>
-                                <td>1,500,000 تومان</td>
-                                <td>2 کیلوگرم</td>
-                                <td>کالای الکترونیکی</td>
-                                <td>بلندگو</td>
-                                <td class="width-16-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
-                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-images"></i>
-                                                گالری</a>
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-list-ul"></i>
-                                                فرم کالا</a>
-                                            <a href="#" class="dropdown-item text-right"><i class="fa fa-edit"></i>
-                                                ویرایش</a>
-                                                <form action="" method="POST">
-                                                    <button type="submit" class="dropdown-item text-right"><i
-                                                        class="fa fa-window-close"></i> حذف</button>
-                                                </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
