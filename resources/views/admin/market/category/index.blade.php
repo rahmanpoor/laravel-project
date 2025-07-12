@@ -46,16 +46,16 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($productCategories as $productCategory) 
-                                
-                            
+                            @foreach ($productCategories as $productCategory)
+
+
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $productCategory->name }}</td>
                                 <td>{{ $productCategory->parent_id ? $productCategory->parent->name : 'دسته اصلی' }}</td>
                                 <td>
                                     <img src="{{ asset($productCategory->image['indexArray'][$productCategory->image['currentImage']]) }}" alt="تصویر" width="50"
-                                        height="50">
+                                        height="35">
                                 </td>
                                 <td>
                                     <label class="apple-switch">

@@ -176,7 +176,9 @@ return [
         'price'                     => 'قیمت',
         'introduction'              => 'معرفی',
         'brand_id'                  => 'برند',
-        'height'                    => 'ارتفاع'
+        'height'                    => 'ارتفاع',
+        'meta_key.*'                => 'ویژگی',
+        'meta_value.*'              => 'مقدار'
 
 
     ],

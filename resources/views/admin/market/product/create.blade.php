@@ -30,7 +30,8 @@
                 </section>
 
                 <section>
-                    <form action="{{ route('admin.market.product.store') }}" method="post" id="form">
+                    <form action="{{ route('admin.market.product.store') }}" method="post" id="form"
+                        enctype="multipart/form-data">
                         @csrf
                         <section class="row">
 
@@ -112,7 +113,7 @@
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">وزن</label>
-                                    <input type="text" names="weight" value="{{ old('weight') }}"
+                                    <input type="text" name="weight" value="{{ old('weight') }}"
                                         class="form-control form-control-sm">
                                 </div>
                                 @error('weight')
@@ -280,22 +281,37 @@
 
                                     <section class="col-6 col-md-3">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm"
+                                            <input type="text" name="meta_key[]" class="form-control form-control-sm"
                                                 placeholder="ویژگی ...">
                                         </div>
+                                        @error('meta_key.*')
+                                            <span class="alert_required text-danger p-1">
+                                                <strong>
+                                                    {{ $message }}
+                                                </strong>
+                                            </span>
+                                        @enderror
+
                                     </section>
 
                                     <section class="col-6 col-md-3">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm"
-                                                placeholder="مقدار ...">
+                                            <input type="text" name="meta_value[]"
+                                                class="form-control form-control-sm" placeholder="مقدار ...">
                                         </div>
+                                        @error('meta_value.*')
+                                            <span class="alert_required text-danger p-1">
+                                                <strong>
+                                                    {{ $message }}
+                                                </strong>
+                                            </span>
+                                        @enderror
                                     </section>
 
                                 </section>
 
                                 <section>
-                                    <button type="button" class="btn btn-success btn-sm">افزودن</button>
+                                    <button type="button" id="btn-copy" class="btn btn-success btn-sm">افزودن</button>
                                 </section>
 
 
@@ -354,6 +370,16 @@
                     var selectedSource = select_tags.val().join(',');
                     tags_input.val(selectedSource)
                 }
+            })
+        })
+    </script>
+
+
+    <script>
+        $(function() {
+            $('#btn-copy').on('click', function() {
+                var ele = $(this).parent().prev().clone(true);
+                $(this).before(ele);
             })
         })
     </script>
