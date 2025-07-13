@@ -178,7 +178,12 @@ return [
         'brand_id'                  => 'برند',
         'height'                    => 'ارتفاع',
         'meta_key.*'                => 'ویژگی',
-        'meta_value.*'              => 'مقدار'
+        'meta_value.*'              => 'مقدار',
+        'unit'                      => 'واحد',
+        'product_id'                => 'محصول',
+        'price_increase'            => 'افزایش قیمت',
+        'value'                     => 'مقدار',
+        'type'                      => 'نوع'
 
 
     ],

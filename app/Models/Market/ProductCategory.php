@@ -3,6 +3,7 @@
 namespace App\Models\Market;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Market\CategoryAttribute;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,6 +42,12 @@ class ProductCategory extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'category_id');
+    }
+
+
+    public function attributes()
+    {
+        return $this->hasMany(CategoryAttribute::class);
     }
 }

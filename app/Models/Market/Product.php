@@ -52,4 +52,12 @@ class Product extends Model
     {
         return $this->hasMany(Gallery::class, 'product_id');
     }
+
+
+     public function values()
+    {
+        return $this->hasMany(CategoryValue::class);
+    }
+
+
 }
