@@ -130,20 +130,22 @@ class ProductController extends Controller
             }
         }
         $product->update($inputs);
-        $meta_keys = $request->meta_key;
-        $meta_values = $request->meta_value;
-        $meta_ids = array_keys($request->meta_key);
-        $metas = array_map(function ($meta_id, $meta_key, $meta_value) {
-            return array_combine(
-                ['meta_id', 'meta_key', 'meta_value'],
-                [$meta_id, $meta_key, $meta_value]
-            );
-        }, $meta_ids, $meta_keys, $meta_values);
-        foreach ($metas as $meta) {
-            ProductMeta::where('id', $meta['meta_id'])->update([
-                'meta_key' => $meta['meta_key'],
-                'meta_value' => $meta['meta_value']
-            ]);
+        if ($request->has('meta_key')) {
+            $meta_keys = $request->meta_key;
+            $meta_values = $request->meta_value;
+            $meta_ids = array_keys($request->meta_key);
+            $metas = array_map(function ($meta_id, $meta_key, $meta_value) {
+                return array_combine(
+                    ['meta_id', 'meta_key', 'meta_value'],
+                    [$meta_id, $meta_key, $meta_value]
+                );
+            }, $meta_ids, $meta_keys, $meta_values);
+            foreach ($metas as $meta) {
+                ProductMeta::where('id', $meta['meta_id'])->update([
+                    'meta_key' => $meta['meta_key'],
+                    'meta_value' => $meta['meta_value']
+                ]);
+            }
         }
         return redirect()->route('admin.market.product.index')->with('swal-success', 'محصول  شما با موفقیت ویرایش شد');
     }
@@ -157,7 +159,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-         $result = $product->delete();
+        $result = $product->delete();
         return redirect()->route('admin.market.product.index')->with('swal-success', 'محصول  شما با موفقیت حذف شد');
     }
 }
