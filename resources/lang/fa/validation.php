@@ -183,7 +183,12 @@ return [
         'product_id'                => 'محصول',
         'price_increase'            => 'افزایش قیمت',
         'value'                     => 'مقدار',
-        'type'                      => 'نوع'
+        'type'                      => 'نوع',
+        'receiver'                  => 'تحویل گیرنده',
+        'deliverer'                 => 'تحویل دهنده',
+        'marketable_number'         => 'تعداد قابل فروش',
+        'frozen_number'             => 'تعداد رزرو شده ',
+        'sold_number'               => 'تعداد فروخته شده',
 
 
     ],
