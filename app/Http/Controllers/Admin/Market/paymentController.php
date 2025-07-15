@@ -2,24 +2,43 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Market\Payment;
+use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
-    public function index() {
-        return view('admin.market.payment.index');
+    public function index()
+    {
+        $payments = Payment::all();
+        return view('admin.market.payment.index', compact('payments'));
     }
-    public function online() {
-        return view('admin.market.payment.index');
+    public function online()
+    {
+        $payments = Payment::orderBy('created_at', 'desc')->where('paymentable_type', 'App\Models\Market\OnlinePayment')->simplePaginate(15);
+        return view('admin.market.payment.index', compact('payments'));
     }
-    public function offline() {
-        return view('admin.market.payment.index');
+    public function offline()
+    {
+        $payments = Payment::orderBy('created_at', 'desc')->where('paymentable_type', 'App\Models\Market\OfflinePayment')->simplePaginate(15);
+        return view('admin.market.payment.index', compact('payments'));
     }
-    public function attendance() {
-        return view('admin.market.payment.index');
+    public function cash()
+    {
+        $payments = Payment::orderBy('created_at', 'desc')->where('paymentable_type', 'App\Models\Market\CashPayment')->simplePaginate(15);
+        return view('admin.market.payment.index', compact('payments'));
     }
-    public function confirm() {
-        return view('admin.market.payment.index');
+    public function canceled(Payment $payment)
+    {
+        $payment->status = 2;
+        $payment->save();
+        return redirect()->route('admin.market.payment.index')->with('swal-success', 'تغییر شما با موفقیت انجام شد');
+    }
+
+    public function returned(Payment $payment)
+    {
+       $payment->status = 3;
+        $payment->save();
+        return redirect()->route('admin.market.payment.index')->with('swal-success', 'تغییر شما با موفقیت انجام شد');
     }
 }

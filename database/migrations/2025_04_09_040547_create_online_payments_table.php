@@ -17,7 +17,7 @@ class CreateOnlinePaymentsTable extends Migration
             $table->id();
             $table->decimal('amount', 20, 3);
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('geteway')->nullable();
+            $table->string('gateway')->nullable();
             $table->string('transaction_id')->nullable();
             $table->text('bank_first_response')->nullable();
             $table->text('bank_second_response')->nullable();

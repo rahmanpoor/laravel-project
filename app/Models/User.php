@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Market\Payment;
 use App\Models\User\Role;
 use App\Models\Ticket\Ticket;
 use Laravel\Sanctum\HasApiTokens;
@@ -71,5 +72,11 @@ class User extends Authenticatable
     {
 
         return $this->belongsToMany(Role::class);
+    }
+
+
+     public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }
