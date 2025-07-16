@@ -189,6 +189,9 @@ return [
         'marketable_number'         => 'تعداد قابل فروش',
         'frozen_number'             => 'تعداد رزرو شده ',
         'sold_number'               => 'تعداد فروخته شده',
+        'percentage'                => 'درصد',
+        'discount_ceiling'          => 'حداکثر تخفیف',
+        'minimal_order_amount'      => 'حداقل مبلغ',
 
 
     ],
