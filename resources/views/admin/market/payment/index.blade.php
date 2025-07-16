@@ -3,7 +3,8 @@
 
 
 @section('head-tag')
-    <title> پرداخت ها</title>
+    <title>
+        پرداخت ها</title>
 @endsection
 
 
@@ -52,13 +53,34 @@
                                     <td>{{ $payment->paymentable->transaction_id ?? '-' }}</td>
                                     <td>{{ $payment->paymentable->gateway ?? '-' }}</td>
                                     <td>{{ $payment->user->fullName }}</td>
-                                    <td>@if ($payment->status == 0 ) <h5><span class="badge bg-primary text-white rounded-pill">پرداخت نشده</span></h5> @elseif($payment->status == 1)<h5><span class="badge bg-success rounded-pill text-white">پرداخت</span></h5> @elseif($payment->status == 2) <h5><span class="badge bg-danger rounded-pill text-white">باطل شده</span></h5> @else  <h5><span class="badge bg-warning rounded-pill">برگشت داده شده</span></h5>  @endif</td>
-                                    <td> @if ($payment->type == 0 ) آنلاین @elseif($payment->type == 1) آفلاین @else  در محل @endif </td>
+                                    <td>
+                                        @if ($payment->status == 0)
+                                            <h5><span class="badge bg-primary text-white rounded-pill">پرداخت نشده</span>
+                                            </h5>
+                                        @elseif($payment->status == 1)
+                                            <h5><span class="badge bg-success rounded-pill text-white">پرداخت</span></h5>
+                                        @elseif($payment->status == 2)
+                                            <h5><span class="badge bg-danger rounded-pill text-white">باطل شده</span></h5>
+                                        @else
+                                            <h5><span class="badge bg-warning rounded-pill">برگشت داده شده</span></h5>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($payment->type == 0)
+                                            آنلاین
+                                        @elseif($payment->type == 1)
+                                            آفلاین
+                                        @else
+                                            در محل
+                                        @endif
+                                    </td>
                                     <td class="width-22-rem text-left">
-                                        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
-                                        <a href="{{ route('admin.market.payment.canceled', $payment->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> باطل
+                                        <a href="{{ route('admin.market.payment.show', $payment->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
+                                        <a href="{{ route('admin.market.payment.canceled', $payment->id) }}"
+                                            class="btn btn-danger btn-sm"><i class="fa fa-times"></i> باطل
                                             کردن</a>
-                                        <a href="{{ route('admin.market.payment.returned', $payment->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-reply"></i>
+                                        <a href="{{ route('admin.market.payment.returned', $payment->id) }}"
+                                            class="btn btn-warning btn-sm"><i class="fa fa-reply"></i>
                                             برگرداندن</a>
                                     </td>
                                 </tr>
