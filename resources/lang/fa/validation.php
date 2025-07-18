@@ -165,7 +165,7 @@ return [
         'logo'                      => 'لوگو',
         'icon'                      => 'آیکون',
         'parent_id'                 => 'منوی والد',
-        'amount'                    => 'هزینه',
+        'amount'                    => 'مقدار',
         'delivery_time'             => 'زمان ارسال',
         'delivery_time_unit'        => 'واحد زمان ارسال',
         'original_name'             => 'نام اصلی ',
@@ -192,6 +192,8 @@ return [
         'percentage'                => 'درصد',
         'discount_ceiling'          => 'حداکثر تخفیف',
         'minimal_order_amount'      => 'حداقل مبلغ',
+        'code'                      => 'کد',
+        'user_id'                   => 'کاربر'
 
 
     ],
