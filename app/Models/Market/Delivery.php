@@ -14,9 +14,14 @@ class Delivery extends Model
 
     protected $fillable = [
         'name',
-        'amount', 
+        'amount',
         'delivery_time',
         'delivery_time_unit',
         'statsu'
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

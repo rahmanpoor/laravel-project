@@ -3,7 +3,8 @@
 
 
 @section('head-tag')
-    <title>سفارشات</title>
+    <title>
+        سفارشات</title>
 @endsection
 
 
@@ -38,8 +39,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>کد سفارش</th>
-                                <th>مبلغ سفارش</th>
-                                <th>مبلغ تخفیف</th>
+                                <th>مجموع مبلغ سفارش (بدون تخفیف)</th>
+                                <th>مجموع تمامی مبلغ تخفیفات</th>
                                 <th>مبلغ نهایی</th>
                                 <th>وضعیت پرداخت</th>
                                 <th>شیوه پرداخت</th>
@@ -51,96 +52,90 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>19219-3224</td>
-                                <td>381,000 تومان</td>
-                                <td>34,000 تومان</td>
-                                <td>347,000 تومان</td>
-                                <td>پرداخت شده</td>
-                                <td>آنلاین</td>
-                                <td>ملت</td>
-                                <td>در حال ارسال</td>
-                                <td>پیک موتوری</td>
-                                <td>در حال ارسال</td>
-                                <td class="width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
-                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-images"></i> مشاهده فاکتور</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-list-ul"></i> تغییر وضعیت ارسال</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-edit"></i> تغییر وضعیت سفارش</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-window-close"></i> باطل کردن سفارش</a>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->order_final_amount }} تومان</td>
+                                    <td>{{ $order->order_discount_amount }} تومان</td>
+                                    <td>{{ $order->order_final_amount - $order->order_discount_amount }} تومان</td>
+                                    <td>
+                                        @if ($order->payment_status == 0)
+                                            <h5><span class="badge bg-primary text-white rounded-pill">پرداخت نشده</span>
+                                            </h5>
+                                        @elseif($order->payment_status == 1)
+                                            <h5><span class="badge bg-success rounded-pill text-white">پرداخت</span></h5>
+                                        @elseif($order->payment_status == 2)
+                                            <h5><span class="badge bg-danger rounded-pill text-white">باطل شده</span></h5>
+                                        @else
+                                            <h5><span class="badge bg-warning rounded-pill">برگشت داده شده</span></h5>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($order->payment_type == 0)
+                                            آنلاین
+                                        @elseif($order->payment_type == 1)
+                                            آفلاین
+                                        @else
+                                            در محل
+                                        @endif
+                                    </td>
+                                    <td>{{ $order->payment->paymentable->gateway ?? '-' }}</td>
+                                    <td>
+                                        @if ($order->delivery_status == 0)
+                                            <h5><span class="badge bg-secondary text-white rounded-pill">ارسال نشده</span>
+                                            </h5>
+                                        @elseif($order->delivery_status == 1)
+                                            <h5><span class="badge bg-warning rounded-pill">در حال ارسال</span>
+                                            @elseif($order->delivery_status == 2)
+                                                <h5><span class="badge bg-primary text-white rounded-pill">ارسال شده</span>
+                                                </h5>
+                                            @else
+                                                <h5><span class="badge bg-success text-white rounded-pill">تحویل شده</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $order->delivery->name }}</td>
+                                    <td>
+                                        @if ($order->order_status == 0)
+                                            <h5><span class="badge  text-danger ">بررسی نشده</span>
+                                            </h5>
+                                        @elseif ($order->order_status == 1)
+                                            <h5><span class="badge bg-warning rounded-pill">در انتظار تایید</span>
+                                            </h5>
+                                        @elseif($order->order_status == 2)
+                                            <h5><span class="badge bg-secondary text-white rounded-pill">تایید نشده</span>
+                                            </h5>
+                                        @elseif($order->order_status == 3)
+                                            <h5><span class="badge bg-success text-white rounded-pill">تایید شده</span>
+                                            </h5>
+                                        @elseif ($order->order_status == 4)
+                                            <h5><span class="badge bg-danger text-white rounded-pill">باطل شده</span>
+                                            </h5>
+                                        @elseif($order->order_status == 5)
+                                            <h5><span class="badge bg-dark text-white  rounded-pill">مرجوع شده</span>
+                                        @endif
+                                    </td>
+                                    <td class="width-8-rem text-left">
+                                        <div class="dropdown">
+                                            <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
+                                                role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a href="#" class="dropdown-item text-right"><i
+                                                        class="fa fa-images"></i> مشاهده فاکتور</a>
+                                                <a href="{{ route('admin.market.order.changeSendStatus', $order->id) }}"
+                                                    class="dropdown-item text-right"><i class="fa fa-list-ul"></i> تغییر
+                                                    وضعیت ارسال</a>
+                                                <a href="{{ route('admin.market.order.changeOrderStatus', $order->id) }}"
+                                                    class="dropdown-item text-right"><i class="fa fa-edit"></i> تغییر وضعیت
+                                                    سفارش</a>
+                                                <a href="{{ route('admin.market.order.cancelOrder', $order->id) }}" class="dropdown-item text-right"><i
+                                                        class="fa fa-window-close"></i> باطل کردن سفارش</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>19219-3224</td>
-                                <td>381,000 تومان</td>
-                                <td>34,000 تومان</td>
-                                <td>347,000 تومان</td>
-                                <td>پرداخت شده</td>
-                                <td>آنلاین</td>
-                                <td>ملت</td>
-                                <td>در حال ارسال</td>
-                                <td>پیک موتوری</td>
-                                <td>در حال ارسال</td>
-                                <td class="width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
-                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-images"></i>مشاهده فاکتور</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-list-ul"></i>تغییر وضعیت ارسال</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-edit"></i>تغییر وضعیت سفارش</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-window-close"></i>باطل کردن سفارش</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>19219-3224</td>
-                                <td>381,000 تومان</td>
-                                <td>34,000 تومان</td>
-                                <td>347,000 تومان</td>
-                                <td>پرداخت شده</td>
-                                <td>آنلاین</td>
-                                <td>ملت</td>
-                                <td>در حال ارسال</td>
-                                <td>پیک موتوری</td>
-                                <td>در حال ارسال</td>
-                                <td class="width-8-rem text-left">
-                                    <div class="dropdown">
-                                        <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"
-                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                            aria-expanded="false"><i class="fa fa-tools"></i> عملیات</a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-images"></i>مشاهده فاکتور</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-list-ul"></i>تغییر وضعیت ارسال</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-edit"></i>تغییر وضعیت سفارش</a>
-                                            <a href="#" class="dropdown-item text-right"><i
-                                                    class="fa fa-window-close"></i>باطل کردن سفارش</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>

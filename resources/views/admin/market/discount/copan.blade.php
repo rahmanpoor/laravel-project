@@ -60,9 +60,16 @@
                                     <td>{{ jalaliDate($copan->start_date) }}</td>
                                     <td>{{ jalaliDate($copan->end_date) }}</td>
                                     <td class="width-16-rem text-left">
-                                        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
-                                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-alt"></i>
-                                            حذف</button>
+                                        <a href="{{ route('admin.market.discount.copan.edit', $copan->id) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.market.discount.copan.destroy', $copan->id) }}"
+                                            method="post">
+                                            @csrf
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -72,4 +79,13 @@
             </section>
         </section>
     </section>
+@endsection
+
+
+
+@section('script')
+
+@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
+
 @endsection
