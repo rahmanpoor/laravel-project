@@ -2,9 +2,13 @@
 
 namespace App\Models\Market;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Address;
+use App\Models\Market\Copan;
+use App\Models\Market\CommonDiscount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -17,5 +21,20 @@ class Order extends Model
 
     public function delivery(){
         return $this->belongsTo(Delivery::class, 'delivery_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function address(){
+        return $this->belongsTo(Address::class);
+    }
+
+    public function copan(){
+        return $this->belongsTo(Copan::class);
+    }
+    public function commonDiscount(){
+        return $this->belongsTo(CommonDiscount::class);
     }
 }

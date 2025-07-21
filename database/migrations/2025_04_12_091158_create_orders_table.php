@@ -21,11 +21,11 @@ class CreateOrdersTable extends Migration
             $table->foreignId('payment_id')->nullable()->constrained('payments')->onUpdate('cascade')->onDelete('cascade');
             $table->longText('payment_object')->nullable();
             $table->tinyInteger('payment_type')->default(0);
-            $table->tinyInteger('payment_status')->default(0);
+            $table->tinyInteger('payment_status')->default(0)->comment('0 => notPaid, 1 => paid, 2 => cancel, 3 => returned');
             $table->foreignId('delivery_id')->nullable()->constrained('delivery')->onUpdate('cascade')->onDelete('cascade');
             $table->longText('delivery_object')->nullable();
             $table->decimal('delivery_amount',20,3)->nullable();
-            $table->tinyInteger('delivery_status')->default(0);
+            $table->tinyInteger('delivery_status')->default(0)->comment('0 => notSend, 1 => sending, 2 => sent, 3 => delivered');
             $table->timestamp('delivery_date')->nullable();
             $table->decimal('order_final_amount',20,3)->nullable();
             $table->decimal('order_discount_amount',20,3)->nullable();
@@ -36,7 +36,7 @@ class CreateOrdersTable extends Migration
             $table->longText('common_discount_object')->nullable();
             $table->decimal('order_common_discount_amount',20,3)->nullable();
             $table->decimal('order_total_products_discount_amount',20,3)->nullable();
-            $table->tinyInteger('order_status')->default(0);
+            $table->tinyInteger('order_status')->default(0)->comment('0 => notChecked, 1 => waiting, 2 => notConfirm, 3 => confirm, 4 => cancel, 5 => returned');
             $table->timestamps();
             $table->softDeletes();
         });
