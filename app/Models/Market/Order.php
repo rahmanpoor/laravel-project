@@ -5,6 +5,7 @@ namespace App\Models\Market;
 use App\Models\User;
 use App\Models\Address;
 use App\Models\Market\Copan;
+use App\Models\Market\OrderItem;
 use App\Models\Market\CommonDiscount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,22 +20,127 @@ class Order extends Model
         return $this->belongsTo(Payment::class);
     }
 
-    public function delivery(){
+    public function delivery()
+    {
         return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function address(){
+    public function address()
+    {
         return $this->belongsTo(Address::class);
     }
 
-    public function copan(){
+    public function copan()
+    {
         return $this->belongsTo(Copan::class);
     }
-    public function commonDiscount(){
+    public function commonDiscount()
+    {
         return $this->belongsTo(CommonDiscount::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function getPaymentStatusValueAttribute()
+    {
+        switch ($this->payment_status) {
+            case 0:
+                $result = 'پرداخت نشده';
+                $badge_color = 'warning';
+                break;
+            case 1:
+                $result = 'پرداخت شده';
+                $badge_color = 'success';
+                break;
+            case 2:
+                $result = 'باطل شده';
+                $badge_color = 'danger';
+                break;
+            default:
+                $result = 'برگشت داده شده';
+                $badge_color = 'primary';
+        }
+        return [
+            'result' =>  $result,
+            'badge_color' => $badge_color,
+        ];
+    }
+
+
+
+    public function getPaymentTypeValueAttribute()
+    {
+        switch ($this->payment_type) {
+            case 0:
+                $result = 'آنلاین';
+                break;
+            case 1:
+                $result = 'آفلاین';
+                break;
+            default:
+                $result = 'در محل';
+        }
+        return $result;
+    }
+
+
+     public function getDeliveryStatusValueAttribute()
+    {
+        switch ($this->delivery_status){
+            case 0:
+                $result = 'ارسال نشده';
+                break;
+                  case 1:
+                $result = 'در حال ارسال';
+                break;
+                 case 2:
+                $result = 'ارسال شده';
+                break;
+                  default :
+                $result = 'تحویل شده';
+        }
+        return $result;
+    }
+
+
+    public function getOrderStatusValueAttribute()
+    {
+        switch ($this->order_status) {
+            case 1:
+                $result = 'در انتظار تایید';
+                $color = 'primary';
+                break;
+            case 2:
+                $result = 'تاییده نشده';
+                $color = 'primary';
+                break;
+            case 3:
+                $result = 'تایید شده';
+                $color = 'success';
+                break;
+            case 4:
+                $result = 'باطل شده';
+                $color = 'danger';
+                break;
+            case 5:
+                $result = 'مرجوع شده';
+                $color = 'dark';
+                break;
+            default:
+                $result = 'بررسی نشده';
+                $color = 'primary';
+        }
+        return [
+            'result' =>  $result,
+            'color' => $color,
+        ];
     }
 }
