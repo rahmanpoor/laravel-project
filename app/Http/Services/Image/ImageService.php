@@ -20,7 +20,7 @@ class ImageService extends ImageToolsService
         $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
         $imageObject = $manager->read($image->getRealPath());
         $savePath = public_path($this->getImageAddress());
-        $result = $imageObject->save($savePath, quality: null, format: $this->getImageFormat());
+        $result = $imageObject->save($savePath, quality: 90, format: $this->getImageFormat());
         return $result ? $this->getImageAddress() : false;
     }
 
@@ -37,7 +37,7 @@ class ImageService extends ImageToolsService
         $imageObject = $manager->read($image->getRealPath());
         $imageObject = $imageObject->cover($width, $height);
         $savePath = public_path($this->getImageAddress());
-        $result = $imageObject->save($savePath, quality: null, format: $this->getImageFormat());
+        $result = $imageObject->save($savePath, quality: 90, format: $this->getImageFormat());
         return $result ? $this->getImageAddress() : false;
     }
 
@@ -79,7 +79,7 @@ class ImageService extends ImageToolsService
             $imageObject = $manager->read($image->getRealPath());
             $imageObject = $imageObject->cover($imageSize['width'], $imageSize['height']);
             $savePath = public_path($this->getImageAddress());
-            $result = $imageObject->save($savePath, quality: 95, format: $this->getImageFormat());
+            $result = $imageObject->save($savePath, quality: 90, format: $this->getImageFormat());
             if ($result)
                 $indexArray[$sizeAlias] = $this->getImageAddress();
             else {

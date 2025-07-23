@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\Image\ImageService;
 use App\Http\Requests\Admin\User\CustomerRequest;
+use App\Notifications\NewUserRegistered;
 
 class CustomerController extends Controller
 {
@@ -59,6 +60,11 @@ class CustomerController extends Controller
         $inputs['password'] = Hash::make($request->password);
         $inputs['user_type'] = 0;
         $user = User::create($inputs);
+        $details = [
+            'message' => 'یک کاربر جدید در سایت ثبت نام کرد'
+        ];
+        $adminUser = User::find(2);
+        $adminUser->notify(new NewUserRegistered($details));
         return redirect()->route('admin.user.customer.index')->with('swal-success', ' مشتری با موفقیت ثبت شد');
     }
 

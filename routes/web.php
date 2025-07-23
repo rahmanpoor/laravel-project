@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Notify\SMSController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Admin\Market\StoreController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\Notify\EmailController;
 use App\Http\Controllers\Admin\Ticket\TicketController;
 use App\Http\Controllers\Admin\User\CustomerController;
@@ -366,4 +368,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
         Route::get('/edit/{setting}', [SettingController::class, 'edit'])->name('admin.setting.edit');
         Route::put('/update/{setting}', [SettingController::class, 'update'])->name('admin.setting.update');
     });
+
+     Route::post('/notification/read-all', [NotificationController::class, 'readAll'])->name('admin.notification.readAll');
+
 });
