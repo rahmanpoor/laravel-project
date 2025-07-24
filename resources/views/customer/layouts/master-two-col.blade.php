@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @include('customer.layouts.head-tag')
+    @yield('head-tag')
+</head>
+<body>
+
+
+    <section class="container-xxl body-container">
+        @yield('customer.layouts.sidebar')
+    </section>
+
+    <main id="main-body-one-col" class="main-body">
+    @yield('content')
+    </main>
+
+
+
+
+    @include('customer.layouts.scripts')
+    @yield('scripts')
+</body>
+</html>
