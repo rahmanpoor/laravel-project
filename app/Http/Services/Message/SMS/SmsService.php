@@ -1,6 +1,14 @@
 <?php
 
+
+namespace App\Http\Services\Message\SMS;
+
 use App\Http\Interfaces\MessageInterface;
+use App\Http\Services\Message\SMS\MeliPayamkService;
+
+
+
+;
 
 class SmsService implements MessageInterface
 
@@ -18,6 +26,8 @@ class SmsService implements MessageInterface
 
     public function fire( )
     {
+        $meliPayamak = new MeliPayamkService;
+        return $meliPayamak->SendSmsSoapClient($this->from, $this->to, $this->text, $this->isFlash);
 
     }
 
@@ -64,5 +74,15 @@ class SmsService implements MessageInterface
     public function setTo($to)
     {
         $this->to = $to;
+    }
+
+    public function getIsFlash()
+    {
+        return $this->isFlash;
+    }
+
+    public function setIsFlash($isFlash)
+    {
+        $this->isFlash = $isFlash;
     }
 }
