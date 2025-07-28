@@ -13,16 +13,15 @@
                 <section class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</section>
                 <section class="login-input-text">
                     <input type="text" name="id" value="{{ old('id') }}">
-                     @error('id')
-                    <span class="alert_required text-danger p-1">
-                        <strong>
-                            {{ $message }}
-                        </strong>
-                    </span>
-                @enderror
+                    @error('id')
+                        <span class="alert_required text-danger p-1" style="font-size: small">
+                                {{ $message }}
+                        </span>
+                    @enderror
                 </section>
                 <section class="login-btn d-grid g-2"><button class="btn btn-danger">ورود</button></section>
-                <section class="login-terms-and-conditions"><a href="#">شرایط و قوانین</a> را خوانده ام و پذیرفته ام
+                <section class="login-terms-and-conditions"><a href="#" class="no-underline">شرایط و قوانین</a> را
+                    خوانده ام و پذیرفته ام
                 </section>
             </section>
         </form>
