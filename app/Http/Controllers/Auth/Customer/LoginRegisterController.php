@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Http\Services\Message\MessageService;
 use App\Http\Services\Message\SMS\SmsService;
+use App\Http\Services\Message\Email\EmailService;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
 
 class LoginRegisterController extends Controller
@@ -88,6 +89,23 @@ class LoginRegisterController extends Controller
 
 
             $messagesService = new MessageService($smsService);
+        } elseif ($type == 1) {
+            //send Email
+            $emailService = new EmailService();
+            $details = [
+                'title' => 'ایمیل فعال سازی',
+                'body' => "سعید مارکت\n کد تایید: $otpCode"
+            ];
+
+            $emailService->setSubject('کد احراز هویت');
+            $emailService->setFrom('noreply@example.com', 'example');
+            $emailService->setTo($inputs['id']);
+            $emailService->setDetails($details);
+
+
+
+            $messagesService = new MessageService($emailService);
+
         }
 
         $messagesService->send();

@@ -7,7 +7,7 @@ namespace App\Http\Services\Message\SMS;
 
 return [
 
-'username' => '9170766430',
+'username' => '917',
 'password' => '90YEP',
 
 
