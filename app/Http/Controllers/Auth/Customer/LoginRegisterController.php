@@ -12,6 +12,7 @@ use App\Http\Services\Message\MessageService;
 use App\Http\Services\Message\SMS\SmsService;
 use App\Http\Services\Message\Email\EmailService;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
+use Illuminate\Auth\Events\Login;
 
 class LoginRegisterController extends Controller
 {
@@ -109,5 +110,23 @@ class LoginRegisterController extends Controller
         }
 
         $messagesService->send();
+
+
+        return redirect()->route('auth.customer.login-confirm-form', $token);
+    }
+
+    public function loginConfirmForm($token)
+    {
+        $otp = Otp::where('token', $token)->first();
+        if (empty($otp)) {
+            return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده صحیح نمی باشد']);
+        }
+        return view('customer.auth.login-confirm', compact('token', 'otp'));
+    }
+
+
+
+    public function loginConfirm($token, LoginRegisterRequest $request){
+
     }
 }
