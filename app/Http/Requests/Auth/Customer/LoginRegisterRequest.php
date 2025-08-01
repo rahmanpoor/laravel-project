@@ -31,7 +31,7 @@ class LoginRegisterRequest extends FormRequest
             ];
         } elseif ($route->getName() == 'auth.customer.login-confirm') {
             return [
-                'otp' => 'required|min:|max:4'
+                'otp' => 'required|min:4|max:4'
             ];
         }
     }

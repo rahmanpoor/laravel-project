@@ -193,7 +193,8 @@ return [
         'discount_ceiling'          => 'حداکثر تخفیف',
         'minimal_order_amount'      => 'حداقل مبلغ',
         'code'                      => 'کد',
-        'user_id'                   => 'کاربر'
+        'user_id'                   => 'کاربر',
+        'otp'                       => 'رمز یکبار مصرف',
 
 
     ],

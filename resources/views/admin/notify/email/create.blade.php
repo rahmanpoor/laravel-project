@@ -42,7 +42,7 @@
                                 value="{{ old('subject') }}">
                             </div>
                             @error('subject')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                            <span class="alert_required text-danger p-1" role="alert">
                                 <strong>
                                     {{ $message }}
                                 </strong>
@@ -59,7 +59,7 @@
                                 <input type="text" id="published_at_view" class="form-control form-control-sm">
                             </div>
                             @error('published_at')
-                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <span class="alert_required text-danger p-1" role="alert">
                                     <strong>
                                         {{ $message }}
                                     </strong>
@@ -77,7 +77,7 @@
                                 </select>
                             </div>
                             @error('status')
-                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <span class="alert_required text-danger p-1" role="alert">
                                     <strong>
                                         {{ $message }}
                                     </strong>
@@ -91,7 +91,7 @@
                                 <textarea name="body" id="body"  class="form-control form-control-sm" rows="6">{{ old('body') }}</textarea>
                             </div>
                             @error('body')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                            <span class="alert_required text-danger p-1" role="alert">
                                 <strong>
                                     {{ $message }}
                                 </strong>
