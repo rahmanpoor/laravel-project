@@ -16,6 +16,6 @@
 
 
     @include('customer.layouts.scripts')
-    @yield('scripts')
+    @yield('script')
 </body>
 </html>

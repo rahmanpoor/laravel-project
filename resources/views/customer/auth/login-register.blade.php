@@ -7,7 +7,7 @@
             @csrf
             <section class="login-wrapper mb-5">
                 <section class="login-logo">
-                    <img src="{{ asset('customer-assets/images/logo/8.svg') }}" alt="">
+                    <img src="{{ asset('customer-assets/images/logo/logo-login.svg') }}" alt="">
                 </section>
                 <section class="login-title">ورود / ثبت نام</section>
                 <section class="login-info">شماره موبایل یا پست الکترونیک خود را وارد کنید</section>
