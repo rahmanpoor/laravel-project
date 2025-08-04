@@ -23,10 +23,10 @@ class Banner extends Model
         'position'
     ];
 
-    public static $positions = [
-        0 => 'main slide show',
-        1 => 'aside slide show',
-        2 => 'middle slide show',
-        3 => 'bottom slide show'
+  public static $positions = [
+        0   =>  'اسلاید شو (صفحه اصلی)',
+        1   =>  'کنار اسلاید شو (صفحه اصلی)',
+        2   =>  'دو بنر تبلیغی بین دو اسلایدر  (صفحه اصلی)',
+        3   =>  'بنر تبلیغی بزرگ پایین دو اسلایدر  (صفحه اصلی)'
     ];
 }

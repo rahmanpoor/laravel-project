@@ -2,6 +2,7 @@
 
 use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Notify\SMSController;
 use App\Http\Controllers\Admin\Content\FAQController;
@@ -395,6 +396,4 @@ Route::namespace('Auth')->group(function () {
 
 });
 
-Route::get('/', function () {
-    return view('customer.home');
-})->name('customer.home');
+Route::get('/', [HomeController::class, 'home'])->name('customer.home');

@@ -106,8 +106,11 @@
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="">موقعیت</label>
-                                    <input type="text" name="position" value="{{ old('position') }}"
-                                        class="form-control form-control-sm">
+                                        <select name="position" id="" class="form-control form-control-sm">
+                                            @foreach ($positions as $key => $position)
+                                            <option value="{{ $key }}">{{ $position }}</option>
+                                            @endforeach
+                                        </select>
                                 </div>
                                 @error('position')
                                     <span class="alert_required text-danger p-1" role="alert">

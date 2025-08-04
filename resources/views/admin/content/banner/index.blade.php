@@ -63,7 +63,7 @@
                                         </label>
                                     </td>
                                     <td>
-                                        {{ $banner->position }}
+                                        {{ $positions[$banner->position] }}
                                     </td>
                                     <td class="width-16-rem text-left">
                                         <a href="{{ route('admin.content.banner.edit', $banner->id) }}"
