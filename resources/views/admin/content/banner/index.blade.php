@@ -51,7 +51,7 @@
                                     <td>{{ $banner->title }}</td>
                                     <td>{{ $banner->url }}</td>
                                     <td>
-                                        <img src="{{ asset($banner->image['indexArray'][$banner->image['currentImage']]) }}"
+                                        <img src="{{ asset($banner->image) }}"
                                             alt="" width="100" height="50">
                                     </td>
                                     <td>

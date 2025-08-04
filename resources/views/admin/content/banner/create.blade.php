@@ -108,7 +108,7 @@
                                     <label for="">موقعیت</label>
                                         <select name="position" id="" class="form-control form-control-sm">
                                             @foreach ($positions as $key => $position)
-                                            <option value="{{ $key }}">{{ $position }}</option>
+                                            <option value="{{ $key }}" @if (old('position') == $key) selected @endif>{{ $position }}</option>
                                             @endforeach
                                         </select>
                                 </div>

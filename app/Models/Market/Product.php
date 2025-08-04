@@ -3,6 +3,7 @@
 namespace App\Models\Market;
 
 use App\Models\Content\Comment;
+use App\Models\Market\Guarantee;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -46,6 +47,12 @@ class Product extends Model
     public function colors()
     {
         return $this->hasMany(ProductColor::class);
+    }
+
+
+     public function guarantees()
+    {
+        return $this->hasMany(Guarantee::class);
     }
 
 

@@ -65,25 +65,7 @@
                             @enderror
                         </section>
 
-                        <section class="row">
-                            @php
-                                $number = 1;
-                                @endphp
-                            @foreach ($banner->image['indexArray'] as $key => $value )
-                            <section class="col-md-{{ 6 / $number }}">
-                                <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="currentImage" value="{{ $key }}" id="{{ $number }}" @if($banner->image['currentImage'] == $key) checked @endif>
-                                    <label for="{{ $number }}" class="form-check-label mx-2">
-                                        <img src="{{ asset($value) }}" class="w-100" alt="">
-                                    </label>
-                                </div>
-                            </section>
-                            @php
-                            $number++;
-                        @endphp
-                            @endforeach
 
-                        </section>
 
                         <section class="col-12 col-md-6 my-2">
                             <div class="form-group">
