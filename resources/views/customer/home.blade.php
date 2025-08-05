@@ -59,12 +59,12 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                {{-- <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
+                                                <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
                                                     data-bs-placement="left" title="افزودن به سبد خرید"><i
                                                         class="fa fa-cart-plus"></i></a></section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section> --}}
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                                 <a class="product-link" href="#">
                                                     <section class="product-image">
                                                         <img class=""
@@ -73,7 +73,7 @@
                                                     </section>
                                                     <section class="product-colors"></section>
                                                     <section class="product-name">
-                                                        <h3>{{ Str::limit($mostVisitedProduct->name, 20) }}</h3>
+                                                        <h3>{{ Str::limit($mostVisitedProduct->name, 30) }}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">
@@ -152,12 +152,12 @@
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
-                                                {{-- <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
+                                                <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
                                                     data-bs-placement="left" title="افزودن به سبد خرید"><i
                                                         class="fa fa-cart-plus"></i></a></section>
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section> --}}
+                                                    title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
                                                 <a class="product-link" href="#">
                                                     <section class="product-image">
                                                         <img class=""
@@ -166,7 +166,7 @@
                                                     </section>
                                                     <section class="product-colors"></section>
                                                     <section class="product-name">
-                                                        <h3>{{ Str::limit($offerProduct->name, 20) }}</h3>
+                                                        <h3>{{ Str::limit($offerProduct->name, 30) }}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">
@@ -240,7 +240,7 @@
                             @foreach ($brands as $brand)
                                 <section class="item">
                                     <section class="brand-item">
-                                        <a href=""><img class="rounded-2" src="{{ asset($brand->logo['indexArray']['medium']) }}"
+                                        <a href=""><img class="rounded-2" src="{{ asset($brand->logo['indexArray']['small']) }}"
                                                 alt="{{ $brand->persian_name }}"></a>
                                     </section>
                                 </section>

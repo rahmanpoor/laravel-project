@@ -32,8 +32,8 @@ return [
             'height' => 350,
         ],
         'small' => [
-            'width' => 80,
-            'height' => 60,
+            'width' => 205,
+            'height' => 205,
         ],
     ],
 
