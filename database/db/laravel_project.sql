@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 05, 2025 at 05:24 PM
+-- Generation Time: Aug 06, 2025 at 11:21 AM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.27
 
@@ -31,13 +31,13 @@ CREATE TABLE `addresses` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `city_id` bigint UNSIGNED NOT NULL,
-  `postal_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recipient_first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recipient_last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `postal_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recipient_first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recipient_last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -70,9 +70,9 @@ CREATE TABLE `amazing_sales` (
 
 CREATE TABLE `banners` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `position` tinyint NOT NULL DEFAULT '0' COMMENT 'developer explain 0 or 1 ... in admin\\content\\banner model',
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -104,12 +104,12 @@ INSERT INTO `banners` (`id`, `title`, `image`, `url`, `position`, `status`, `cre
 
 CREATE TABLE `brands` (
   `id` bigint UNSIGNED NOT NULL,
-  `persian_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `persian_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `original_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
-  `tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -121,8 +121,19 @@ CREATE TABLE `brands` (
 
 INSERT INTO `brands` (`id`, `persian_name`, `original_name`, `slug`, `logo`, `status`, `tags`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Apple', 'Apple', 'Apple', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\07\\\\13\\\\1752416712\\\\1752416712_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\07\\\\13\\\\1752416712\\\\1752416712_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\07\\\\13\\\\1752416712\\\\1752416712_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\07\\\\13\\\\1752416712\",\"currentImage\":\"medium\"}', 1, 'apple', '2025-07-13 14:25:12', '2025-08-05 16:07:42', '2025-08-05 16:07:42'),
-(2, 'شیائومی', 'xiaomi', 'xiaomi', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414167\\\\1754414167_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414167\\\\1754414167_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414167\\\\1754414167_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414167\",\"currentImage\":\"medium\"}', 1, 'شیائومی,xiaomi', '2025-08-05 16:35:40', '2025-08-05 17:16:07', NULL),
-(3, 'هوآوی', 'Huawei', 'huawei', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\\\\1754414144_large.jpg\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\\\\1754414144_medium.jpg\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\\\\1754414144_small.jpg\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\",\"currentImage\":\"medium\"}', 1, 'Huawei,هوآوی', '2025-08-05 16:43:45', '2025-08-05 17:15:44', NULL);
+(2, 'شیائومی', 'Xiaomi', 'xiaomi', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454527\\\\1754454527_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454527\\\\1754454527_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454527\\\\1754454527_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454527\",\"currentImage\":\"large\"}', 1, 'شیائومی,xiaomi', '2025-08-05 16:35:40', '2025-08-06 04:37:38', NULL),
+(3, 'هوآوی', 'Huawei', 'huawei', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\\\\1754414144_large.jpg\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\\\\1754414144_medium.jpg\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\\\\1754414144_small.jpg\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\05\\\\1754414144\",\"currentImage\":\"medium\"}', 1, 'Huawei,هوآوی', '2025-08-05 16:43:45', '2025-08-05 17:15:44', NULL),
+(4, 'آدیتا', 'ADATA', 'adata', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454078\\\\1754454078_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454078\\\\1754454078_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454078\\\\1754454078_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454078\",\"currentImage\":\"medium\"}', 1, 'ADATA', '2025-08-06 04:21:18', '2025-08-06 04:21:18', NULL),
+(5, 'کاسیو', 'Casio', 'casio', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454103\\\\1754454103_large.jpg\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454103\\\\1754454103_medium.jpg\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454103\\\\1754454103_small.jpg\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454103\",\"currentImage\":\"medium\"}', 1, 'کاسیو', '2025-08-06 04:21:44', '2025-08-06 04:21:44', NULL),
+(6, 'جی پلاس', 'Gplus', 'gplus', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454186\\\\1754454186_large.jpg\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454186\\\\1754454186_medium.jpg\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454186\\\\1754454186_small.jpg\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454186\",\"currentImage\":\"medium\"}', 1, 'Gplus', '2025-08-06 04:23:06', '2025-08-06 04:23:06', NULL),
+(7, 'لوجیتک', 'logitech', 'logitech', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454216\\\\1754454216_large.jpg\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454216\\\\1754454216_medium.jpg\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454216\\\\1754454216_small.jpg\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454216\",\"currentImage\":\"medium\"}', 1, 'logitech', '2025-08-06 04:23:36', '2025-08-06 04:23:36', NULL),
+(8, 'نوکیا', 'Nokia', 'nokia', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454291\\\\1754454291_large.jpg\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454291\\\\1754454291_medium.jpg\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454291\\\\1754454291_small.jpg\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454291\",\"currentImage\":\"medium\"}', 1, 'نوکیا', '2025-08-06 04:24:51', '2025-08-06 04:24:51', NULL),
+(9, 'پاکشوما', 'Pakshoma', 'pakshoma', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454329\\\\1754454329_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454329\\\\1754454329_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454329\\\\1754454329_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454329\",\"currentImage\":\"medium\"}', 1, 'پاکشوما', '2025-08-06 04:25:29', '2025-08-06 04:25:29', NULL),
+(10, 'پاناسونیک', 'Panasonic', 'panasonic', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454366\\\\1754454366_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454366\\\\1754454366_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454366\\\\1754454366_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454366\",\"currentImage\":\"medium\"}', 1, 'پاناسونیک', '2025-08-06 04:26:06', '2025-08-06 04:26:06', NULL),
+(11, 'پارس خزر', 'Pars Khazar', 'pars-khazar', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454399\\\\1754454399_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454399\\\\1754454399_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454399\\\\1754454399_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454399\",\"currentImage\":\"small\"}', 1, 'پارس خزر', '2025-08-06 04:26:39', '2025-08-06 04:29:38', NULL),
+(12, 'سامسونگ', 'Samsung', 'samsung', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454435\\\\1754454435_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454435\\\\1754454435_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454435\\\\1754454435_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454435\",\"currentImage\":\"medium\"}', 1, 'سامسونگ', '2025-08-06 04:27:16', '2025-08-06 04:27:16', NULL),
+(13, 'اسنوا', 'Snowa', 'snowa', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454468\\\\1754454468_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454468\\\\1754454468_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454468\\\\1754454468_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454468\",\"currentImage\":\"medium\"}', 1, 'اسنوا,snowa', '2025-08-06 04:27:48', '2025-08-06 04:27:48', NULL),
+(14, 'ایکس ویژن', 'Xvision', 'xvision', '{\"indexArray\":{\"large\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454506\\\\1754454506_large.png\",\"medium\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454506\\\\1754454506_medium.png\",\"small\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454506\\\\1754454506_small.png\"},\"directory\":\"images\\\\brand\\\\2025\\\\08\\\\06\\\\1754454506\",\"currentImage\":\"medium\"}', 1, 'ایکس ویژن', '2025-08-06 04:28:26', '2025-08-06 04:28:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -153,7 +164,7 @@ CREATE TABLE `cart_item_selected_attributes` (
   `cart_item_id` bigint UNSIGNED NOT NULL,
   `category_attribute_id` bigint UNSIGNED NOT NULL,
   `category_value_id` bigint UNSIGNED NOT NULL,
-  `value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -169,7 +180,7 @@ CREATE TABLE `cash_payments` (
   `id` bigint UNSIGNED NOT NULL,
   `amount` decimal(20,3) NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `cash_receiver` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cash_receiver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pay_date` timestamp NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -185,9 +196,9 @@ CREATE TABLE `cash_payments` (
 
 CREATE TABLE `category_attributes` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` tinyint NOT NULL DEFAULT '0',
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -209,7 +220,7 @@ INSERT INTO `category_attributes` (`id`, `name`, `type`, `unit`, `category_id`, 
 
 CREATE TABLE `category_attribute_default_values` (
   `id` bigint UNSIGNED NOT NULL,
-  `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_attribute_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -226,7 +237,7 @@ CREATE TABLE `category_values` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `category_attribute_id` bigint UNSIGNED NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` tinyint NOT NULL DEFAULT '0' COMMENT 'value type is 0 => simple, 1 => multi values select by customers (affected on price)',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -248,7 +259,7 @@ INSERT INTO `category_values` (`id`, `product_id`, `category_attribute_id`, `val
 
 CREATE TABLE `cities` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `province_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -263,11 +274,11 @@ CREATE TABLE `cities` (
 
 CREATE TABLE `comments` (
   `id` bigint UNSIGNED NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_id` bigint UNSIGNED DEFAULT NULL,
   `author_id` bigint UNSIGNED NOT NULL,
   `commentable_id` bigint UNSIGNED NOT NULL,
-  `commentable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `commentable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `seen` tinyint NOT NULL DEFAULT '0' COMMENT '0 => unseen, 1 => seen',
   `approved` tinyint NOT NULL DEFAULT '0' COMMENT '0 => not approved, 1 => approved',
   `status` tinyint NOT NULL DEFAULT '0',
@@ -284,7 +295,7 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `common_discount` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `percentage` int NOT NULL,
   `discount_ceiling` bigint UNSIGNED DEFAULT NULL,
   `minimal_order_amount` bigint UNSIGNED DEFAULT NULL,
@@ -304,8 +315,8 @@ CREATE TABLE `common_discount` (
 
 CREATE TABLE `copans` (
   `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount_type` tinyint NOT NULL DEFAULT '0' COMMENT '0 => percentage, 1 => price unit',
   `discount_ceiling` bigint UNSIGNED DEFAULT NULL,
   `type` tinyint NOT NULL DEFAULT '0' COMMENT '0 => common (each user can use one time), 1 => private (one user can use one time)',
@@ -340,10 +351,10 @@ INSERT INTO `copans` (`id`, `code`, `amount`, `amount_type`, `discount_ceiling`,
 
 CREATE TABLE `delivery` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` decimal(20,3) DEFAULT NULL,
   `delivery_time` int DEFAULT NULL,
-  `delivery_time_unit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_time_unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -358,11 +369,11 @@ CREATE TABLE `delivery` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -374,11 +385,11 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `faqs` (
   `id` bigint UNSIGNED NOT NULL,
-  `question` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `question` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
-  `tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -392,7 +403,7 @@ CREATE TABLE `faqs` (
 
 CREATE TABLE `guarantees` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `price_increase` decimal(8,2) NOT NULL DEFAULT '0.00',
   `status` tinyint NOT NULL DEFAULT '0',
@@ -416,8 +427,8 @@ INSERT INTO `guarantees` (`id`, `name`, `product_id`, `price_increase`, `status`
 
 CREATE TABLE `menus` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `parent_id` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -433,7 +444,7 @@ CREATE TABLE `menus` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -507,11 +518,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_id` bigint UNSIGNED NOT NULL,
-  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -534,7 +545,7 @@ CREATE TABLE `offline_payments` (
   `id` bigint UNSIGNED NOT NULL,
   `amount` decimal(20,3) NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transaction_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pay_date` timestamp NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -552,10 +563,10 @@ CREATE TABLE `online_payments` (
   `id` bigint UNSIGNED NOT NULL,
   `amount` decimal(20,3) NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `geteway` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bank_first_response` text COLLATE utf8mb4_unicode_ci,
-  `bank_second_response` text COLLATE utf8mb4_unicode_ci,
+  `geteway` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transaction_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_first_response` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `bank_second_response` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -572,23 +583,23 @@ CREATE TABLE `orders` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `address_id` bigint UNSIGNED DEFAULT NULL,
-  `address_object` longtext COLLATE utf8mb4_unicode_ci,
+  `address_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `payment_id` bigint UNSIGNED DEFAULT NULL,
-  `payment_object` longtext COLLATE utf8mb4_unicode_ci,
+  `payment_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `payment_type` tinyint NOT NULL DEFAULT '0',
   `payment_status` tinyint NOT NULL DEFAULT '0',
   `delivery_id` bigint UNSIGNED DEFAULT NULL,
-  `delivery_object` longtext COLLATE utf8mb4_unicode_ci,
+  `delivery_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `delievry_amount` decimal(20,3) DEFAULT NULL,
   `delievry_status` tinyint NOT NULL DEFAULT '0',
   `delivery_date` timestamp NULL DEFAULT NULL,
   `order_final_amount` decimal(20,3) DEFAULT NULL,
   `order_discount_amount` decimal(20,3) DEFAULT NULL,
   `copan_id` bigint UNSIGNED DEFAULT NULL,
-  `copon_object` longtext COLLATE utf8mb4_unicode_ci,
+  `copon_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `order_copon_discount_amount` decimal(20,3) DEFAULT NULL,
   `common_discount_id` bigint UNSIGNED DEFAULT NULL,
-  `common_discount_object` longtext COLLATE utf8mb4_unicode_ci,
+  `common_discount_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `order_common_discount_amount` decimal(20,3) DEFAULT NULL,
   `order_total_products_discount_amount` decimal(20,3) DEFAULT NULL,
   `order_status` tinyint NOT NULL DEFAULT '0',
@@ -607,9 +618,9 @@ CREATE TABLE `order_items` (
   `id` bigint UNSIGNED NOT NULL,
   `order_id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
-  `product` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `amazing_sale_id` bigint UNSIGNED DEFAULT NULL,
-  `amazing_sale_object` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amazing_sale_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `amazing_sale_discount_amount` decimal(20,3) DEFAULT NULL,
   `number` int NOT NULL DEFAULT '1',
   `final_product_price` decimal(20,3) DEFAULT NULL,
@@ -632,7 +643,7 @@ CREATE TABLE `order_item_selected_attributes` (
   `order_item_id` bigint UNSIGNED NOT NULL,
   `category_attribute_id` bigint UNSIGNED NOT NULL,
   `category_value_id` bigint UNSIGNED NOT NULL,
-  `value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -646,10 +657,10 @@ CREATE TABLE `order_item_selected_attributes` (
 
 CREATE TABLE `otps` (
   `id` bigint UNSIGNED NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `otp_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `login_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'email address or mobile number',
+  `otp_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `login_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'email address or mobile number',
   `type` tinyint NOT NULL DEFAULT '0' COMMENT '0 => mobile, 1 => email',
   `used` tinyint NOT NULL DEFAULT '0' COMMENT '0 => not used, 1 => used',
   `status` tinyint NOT NULL DEFAULT '0',
@@ -710,11 +721,11 @@ INSERT INTO `otps` (`id`, `token`, `user_id`, `otp_code`, `login_id`, `type`, `u
 
 CREATE TABLE `pages` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` bigint DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
-  `tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -727,8 +738,8 @@ CREATE TABLE `pages` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -745,7 +756,7 @@ CREATE TABLE `payments` (
   `status` tinyint NOT NULL DEFAULT '0',
   `type` tinyint NOT NULL DEFAULT '0' COMMENT '0 => online, 1 => offline, 2 => cash',
   `paymentable_id` bigint UNSIGNED NOT NULL,
-  `paymentable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paymentable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -759,8 +770,8 @@ CREATE TABLE `payments` (
 
 CREATE TABLE `permissions` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -802,11 +813,11 @@ INSERT INTO `permission_role` (`role_id`, `permission_id`, `created_at`) VALUES
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -820,14 +831,14 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `posts` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `summary` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `summary` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `commentable` tinyint NOT NULL DEFAULT '0' COMMENT '0 => uncommentable, 1 => commentable',
-  `tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `published_at` timestamp NOT NULL,
   `author_id` bigint UNSIGNED NOT NULL,
   `category_id` bigint UNSIGNED NOT NULL,
@@ -844,12 +855,12 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `post_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
-  `tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -863,10 +874,10 @@ CREATE TABLE `post_categories` (
 
 CREATE TABLE `products` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `introduction` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `introduction` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `weight` decimal(10,2) NOT NULL,
   `length` decimal(10,1) NOT NULL COMMENT 'cm unit',
   `width` decimal(10,1) NOT NULL COMMENT 'cm unit',
@@ -874,7 +885,7 @@ CREATE TABLE `products` (
   `price` decimal(20,3) NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `marketable` tinyint NOT NULL DEFAULT '1' COMMENT '1 => marketable, 0 => is not marketable',
-  `tags` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sold_number` tinyint NOT NULL DEFAULT '0',
   `frozen_number` tinyint NOT NULL DEFAULT '0',
   `marketable_number` tinyint NOT NULL DEFAULT '0',
@@ -893,7 +904,13 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `name`, `introduction`, `slug`, `image`, `weight`, `length`, `width`, `height`, `price`, `status`, `marketable`, `tags`, `sold_number`, `frozen_number`, `marketable_number`, `brand_id`, `category_id`, `published_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'آیفون 13', '<p>توضیحات آیفون</p>', 'آیفون-13', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\07\\\\13\\\\1752416796\\\\1752416796_large.png\",\"medium\":\"images\\\\product\\\\2025\\\\07\\\\13\\\\1752416796\\\\1752416796_medium.png\",\"small\":\"images\\\\product\\\\2025\\\\07\\\\13\\\\1752416796\\\\1752416796_small.png\"},\"directory\":\"images\\\\product\\\\2025\\\\07\\\\13\\\\1752416796\",\"currentImage\":\"medium\"}', 8.00, 8.0, 8.0, 8.0, 50000000.000, 1, 1, 'آیفون', 0, 0, 0, 1, 1, '2025-07-13 14:25:32', '2025-07-13 14:26:37', '2025-08-05 16:07:54', '2025-08-05 16:07:54'),
 (2, 'گوشی موبایل شیائومی مدل POCO X3 Pro M2102J20SG', '<p>گوشی موبایل شیائومی مدل POCO X3 Pro M2102J20SG بسیار باکیفیت می باشد.</p>', 'osh-mob-l-sh-om-mdl-poco-x3-pro-m2102j20sg', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413283\\\\1754413283_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413283\\\\1754413283_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413283\\\\1754413283_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413283\",\"currentImage\":\"medium\"}', 1.00, 9.0, 5.0, 9.0, 16000000.000, 1, 1, 'poco,موبایل', 0, 0, 0, 2, 2, '2025-08-05 17:01:14', '2025-08-05 16:51:28', '2025-08-05 17:01:23', NULL),
-(3, 'گوشی موبایل شیائومی مدل POCO M3 M2010J19CG', '<p>گوشی موبایل شیائومی مدل POCO M3 M2010J19CG دو سیم&zwnj; کارت دارای قابلیت های بسیاری می باشد.</p>', 'osh-mob-l-sh-om-mdl-poco-m3-m2010j19cg', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\",\"currentImage\":\"medium\"}', 1.00, 9.0, 5.0, 9.0, 9000000.000, 1, 1, 'شیائومی,موبایل', 0, 0, 0, 2, 2, '2025-08-05 17:09:20', '2025-08-05 17:09:36', '2025-08-05 17:09:36', NULL);
+(3, 'گوشی موبایل شیائومی مدل POCO M3 M2010J19CG', '<p>گوشی موبایل شیائومی مدل POCO M3 M2010J19CG دو سیم&zwnj; کارت دارای قابلیت های بسیاری می باشد.</p>', 'osh-mob-l-sh-om-mdl-poco-m3-m2010j19cg', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\",\"currentImage\":\"medium\"}', 1.00, 9.0, 5.0, 9.0, 9000000.000, 1, 1, 'شیائومی,موبایل', 0, 0, 0, 2, 2, '2025-08-05 17:09:20', '2025-08-05 17:09:36', '2025-08-05 17:09:36', NULL),
+(4, 'کیف هندزفری جانتا مدل 141مجموعه 3 عددی', '<p>کیف هندزفری جانتا مدل 141مجموعه 3 عددی بسیار با کیفیت و جادار می باشد.</p>', 'f-hndzfr-g-nt-mdl-141mgmoaah-3-aadd', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\\\\1754466516_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\\\\1754466516_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\\\\1754466516_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\",\"currentImage\":\"medium\"}', 2.00, 15.0, 10.0, 7.0, 370000.000, 1, 1, 'کیف', 0, 0, 0, 6, 3, '2025-08-06 07:45:52', '2025-08-06 07:48:36', '2025-08-06 07:48:36', NULL),
+(5, 'کیف رودوشی چرم جانتا مدل D078', '<p>کیف رودوشی چرم جانتا مدل D078 بسیار کاربردی میباشد.</p>', 'f-rodosh-rm-g-nt-mdl-d078', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\\\\1754466636_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\\\\1754466636_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\\\\1754466636_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\",\"currentImage\":\"medium\"}', 1.00, 14.0, 20.0, 15.0, 760000.000, 1, 1, 'کیف,رودوشی', 0, 0, 0, 6, 3, '2025-08-06 07:49:00', '2025-08-06 07:50:37', '2025-08-06 07:50:37', NULL),
+(6, 'مجموعه کتاب من پیش از تو پس از تو باز هم من', '<p>مجموعه کتاب من پیش از تو، پس از تو، باز هم من یکی از جذاب ترین کتاب ها می باشد.</p>', 'mgmoaah-t-b-mn-sh-z-to-s-z-to-b-z-hm-mn', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 240000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:54:58', '2025-08-06 07:55:26', '2025-08-06 07:55:26', NULL),
+(7, 'کتاب سلخ اثر غزاله شکوهی', '<p>کتاب سلخ اثر غزاله شکوهی یکی از جدیدترین کتاب ها می باشد.</p>', 't-b-slkh-thr-ghz-lh-sh-oh', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 210000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:56:06', '2025-08-06 07:57:12', '2025-08-06 07:57:12', NULL),
+(8, 'کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون', '<p>کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون یکی از تاثیرگذاترین کتاب ها می باشد.</p>', 't-b-tkhtkho-bt-r-mrtb-n-thr-nr-l-o-l-m-m-r-on', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 345000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:57:39', '2025-08-06 08:00:19', '2025-08-06 08:00:19', NULL),
+(9, 'گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F DS', '<p>گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F/DS d یکی از بروزترین گوشی های بازار می باشد.</p>', 'osh-mob-l-s-mson-mdl-galaxy-a12-sm-a125f-ds', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\",\"currentImage\":\"medium\"}', 1.00, 15.0, 20.0, 20.0, 3799000.000, 1, 1, 'سامسونگ,موبایل', 0, 0, 0, 12, 2, '2025-08-06 08:02:43', '2025-08-06 08:03:04', '2025-08-06 08:03:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -903,13 +920,13 @@ INSERT INTO `products` (`id`, `name`, `introduction`, `slug`, `image`, `weight`,
 
 CREATE TABLE `product_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0',
   `show_in_menu` tinyint NOT NULL DEFAULT '0',
-  `tags` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_id` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -922,7 +939,9 @@ CREATE TABLE `product_categories` (
 
 INSERT INTO `product_categories` (`id`, `name`, `description`, `slug`, `image`, `status`, `show_in_menu`, `tags`, `parent_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'لوازم الکترونیکی', '<p>توضیحات لوازم</p>', 'لوازم-الکترونیکی', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\\\\1752416038_large.png\",\"medium\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\\\\1752416038_medium.png\",\"small\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\\\\1752416038_small.png\"},\"directory\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\",\"currentImage\":\"medium\"}', 1, 1, 'لوازم', NULL, '2025-07-13 14:14:01', '2025-08-05 16:47:43', '2025-08-05 16:47:43'),
-(2, 'موبایل', '<p>موبایل</p>', 'mob-l', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\05\\\\1754412557\\\\1754412557_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\05\\\\1754412557\\\\1754412557_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\05\\\\1754412557\\\\1754412557_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\05\\\\1754412557\",\"currentImage\":\"medium\"}', 1, 1, 'موبایل', NULL, '2025-08-05 16:49:17', '2025-08-05 16:49:17', NULL);
+(2, 'موبایل', '<p>موبایل</p>', 'mob-l', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\\\\1754453944_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\\\\1754453944_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\\\\1754453944_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\",\"currentImage\":\"medium\"}', 1, 1, 'موبایل', NULL, '2025-08-05 16:49:17', '2025-08-06 04:19:04', NULL),
+(3, 'کیف', '<p>کیف</p>', 'f', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\\\\1754453927_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\\\\1754453927_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\\\\1754453927_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\",\"currentImage\":\"medium\"}', 1, 1, 'کیف', NULL, '2025-08-06 04:18:49', '2025-08-06 04:18:49', NULL),
+(4, 'کتاب', '<p>کتاب</p>', 't-b', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\",\"currentImage\":\"medium\"}', 1, 1, 'کتاب', NULL, '2025-08-06 07:51:44', '2025-08-06 07:51:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -932,8 +951,8 @@ INSERT INTO `product_categories` (`id`, `name`, `description`, `slug`, `image`, 
 
 CREATE TABLE `product_colors` (
   `id` bigint UNSIGNED NOT NULL,
-  `color_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `price_increase` decimal(8,2) NOT NULL DEFAULT '0.00',
   `status` tinyint NOT NULL DEFAULT '0',
@@ -961,12 +980,21 @@ INSERT INTO `product_colors` (`id`, `color_name`, `color`, `product_id`, `price_
 
 CREATE TABLE `product_images` (
   `id` bigint UNSIGNED NOT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `image`, `product_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:02:42', '2025-08-06 11:02:42', NULL),
+(2, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\\\\1754478466_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\\\\1754478466_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\\\\1754478466_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:07:46', '2025-08-06 11:07:46', NULL),
+(3, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\\\\1754478617_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\\\\1754478617_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\\\\1754478617_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:10:18', '2025-08-06 11:10:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -976,8 +1004,8 @@ CREATE TABLE `product_images` (
 
 CREATE TABLE `product_meta` (
   `id` bigint UNSIGNED NOT NULL,
-  `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -991,7 +1019,13 @@ CREATE TABLE `product_meta` (
 INSERT INTO `product_meta` (`id`, `meta_key`, `meta_value`, `product_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'ضد آب', 'است', 1, '2025-07-13 14:26:37', '2025-07-13 14:26:37', NULL),
 (2, 'ضد آب', 'هست', 2, '2025-08-05 16:51:28', '2025-08-05 17:01:23', NULL),
-(3, 'ضد آب', 'هست', 3, '2025-08-05 17:09:36', '2025-08-05 17:09:36', NULL);
+(3, 'ضد آب', 'هست', 3, '2025-08-05 17:09:36', '2025-08-05 17:09:36', NULL),
+(4, 'جنس', 'چرم', 4, '2025-08-06 07:48:36', '2025-08-06 07:48:36', NULL),
+(5, 'جنس', 'چرم', 5, '2025-08-06 07:50:37', '2025-08-06 07:50:37', NULL),
+(6, 'جنس', 'کاغذ', 6, '2025-08-06 07:55:26', '2025-08-06 07:55:26', NULL),
+(7, 'جنس', 'کاغذ', 7, '2025-08-06 07:57:12', '2025-08-06 07:57:12', NULL),
+(8, 'جنس', 'کاغذ', 8, '2025-08-06 08:00:19', '2025-08-06 08:00:19', NULL),
+(9, 'ضد آب', 'هست', 9, '2025-08-06 08:03:04', '2025-08-06 08:03:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -1012,7 +1046,7 @@ CREATE TABLE `product_user` (
 
 CREATE TABLE `provinces` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1026,8 +1060,8 @@ CREATE TABLE `provinces` (
 
 CREATE TABLE `public_mail` (
   `id` bigint UNSIGNED NOT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `published_at` timestamp NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1044,9 +1078,9 @@ CREATE TABLE `public_mail` (
 CREATE TABLE `public_mail_files` (
   `id` bigint UNSIGNED NOT NULL,
   `public_mail_id` bigint UNSIGNED NOT NULL,
-  `file_path` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `file_size` bigint NOT NULL,
-  `file_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1061,8 +1095,8 @@ CREATE TABLE `public_mail_files` (
 
 CREATE TABLE `public_sms` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `published_at` timestamp NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1078,8 +1112,8 @@ CREATE TABLE `public_sms` (
 
 CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1113,11 +1147,11 @@ CREATE TABLE `role_user` (
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1126,8 +1160,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('46YoxxE3pRSEmPCyyHJPDGf9SCCyeTney6xOdV1W', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQXNOOEhueGc1ZGJ1OWJCN3d0VHR4SVljTGdqQmdQMVNwSzVLWnJEbSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1754414173),
-('HK3Q2wslLoec92hXz32OxS2BKtUpfWyvgHMSx14E', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV1Y4T2VQa3hSM3g4UE1RWGg1cHJ0czkyUDI5UzB4ajdWRGhLaTRuOCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1754410038);
+('EZDnU6wt9eBMNIJm7U5FVFvT1tuRucqNQtWv54yE', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoib2U5ektydkZMVFQ1T2Q4S203SnV0QmZTbXJvM2szYzZweGtsbUtCTiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0L29zaC1tb2ItbC1zLW1zb24tbWRsLWdhbGF4eS1hMTItc20tYTEyNWYtZHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1754479092);
 
 -- --------------------------------------------------------
 
@@ -1137,11 +1170,11 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `settings` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `keywords` text COLLATE utf8mb4_unicode_ci,
-  `logo` text COLLATE utf8mb4_unicode_ci,
-  `icon` text COLLATE utf8mb4_unicode_ci,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `logo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1154,8 +1187,8 @@ CREATE TABLE `settings` (
 
 CREATE TABLE `tickets` (
   `id` bigint UNSIGNED NOT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `seen` tinyint NOT NULL DEFAULT '0' COMMENT '0 => unseen, 1 => seen',
   `reference_id` bigint UNSIGNED NOT NULL,
@@ -1209,7 +1242,7 @@ INSERT INTO `ticket_admins` (`id`, `user_id`, `created_at`, `updated_at`, `delet
 
 CREATE TABLE `ticket_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1231,9 +1264,9 @@ INSERT INTO `ticket_categories` (`id`, `name`, `status`, `created_at`, `updated_
 
 CREATE TABLE `ticket_files` (
   `id` bigint UNSIGNED NOT NULL,
-  `file_path` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `file_size` bigint NOT NULL,
-  `file_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `ticket_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
@@ -1250,7 +1283,7 @@ CREATE TABLE `ticket_files` (
 
 CREATE TABLE `ticket_priorities` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1272,24 +1305,24 @@ INSERT INTO `ticket_priorities` (`id`, `name`, `status`, `created_at`, `updated_
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `national_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `two_factor_secret` text COLLATE utf8mb4_unicode_ci,
-  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `national_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `two_factor_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `two_factor_recovery_codes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `profile_photo_path` text COLLATE utf8mb4_unicode_ci COMMENT 'avatar',
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `profile_photo_path` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'avatar',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `mobile_verified_at` timestamp NULL DEFAULT NULL,
   `activation` tinyint NOT NULL DEFAULT '0' COMMENT '0 => inactive, 1 => active',
   `activation_date` timestamp NULL DEFAULT NULL,
   `user_type` tinyint NOT NULL DEFAULT '0' COMMENT '0 => user, 1 => admin',
   `status` tinyint NOT NULL DEFAULT '0',
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_team_id` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1747,7 +1780,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
@@ -1921,13 +1954,13 @@ ALTER TABLE `post_categories`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
@@ -1939,13 +1972,13 @@ ALTER TABLE `product_colors`
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product_meta`
 --
 ALTER TABLE `product_meta`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `provinces`

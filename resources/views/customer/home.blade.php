@@ -65,7 +65,7 @@
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
                                                     title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
-                                                <a class="product-link" href="#">
+                                                <a class="product-link" href="{{ route('customer.market.product',  $mostVisitedProduct) }}">
                                                     <section class="product-image">
                                                         <img class=""
                                                             src="{{ asset($mostVisitedProduct->image['indexArray']['medium']) }}"
@@ -158,7 +158,7 @@
                                             <section class="product-add-to-favorite"><a href="#"
                                                     data-bs-toggle="tooltip" data-bs-placement="left"
                                                     title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
-                                                <a class="product-link" href="#">
+                                                <a class="product-link" href="{{ route('customer.market.product',  $offerProduct)  }}">
                                                     <section class="product-image">
                                                         <img class=""
                                                             src="{{ asset($offerProduct->image['indexArray']['medium']) }}"
@@ -240,7 +240,7 @@
                             @foreach ($brands as $brand)
                                 <section class="item">
                                     <section class="brand-item">
-                                        <a href=""><img class="rounded-2" src="{{ asset($brand->logo['indexArray']['small']) }}"
+                                        <a href=""><img class="rounded-2" src="{{ asset($brand->logo['indexArray']['medium']) }}"
                                                 alt="{{ $brand->persian_name }}"></a>
                                     </section>
                                 </section>
