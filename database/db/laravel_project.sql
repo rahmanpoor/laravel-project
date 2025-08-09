@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 06, 2025 at 11:21 AM
+-- Generation Time: Aug 09, 2025 at 11:39 AM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.27
 
@@ -61,6 +61,13 @@ CREATE TABLE `amazing_sales` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `amazing_sales`
+--
+
+INSERT INTO `amazing_sales` (`id`, `product_id`, `percentage`, `status`, `start_date`, `end_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 9, 90, 1, '2025-08-05 11:31:18', '2025-08-12 11:31:18', '2025-08-09 11:23:28', '2025-08-09 11:31:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -417,7 +424,9 @@ CREATE TABLE `guarantees` (
 --
 
 INSERT INTO `guarantees` (`id`, `name`, `product_id`, `price_increase`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'گارانتی برتر', 1, 15000.00, 0, '2025-08-04 17:12:25', '2025-08-04 17:13:08', '2025-08-04 17:13:08');
+(1, 'گارانتی برتر', 1, 15000.00, 0, '2025-08-04 17:12:25', '2025-08-04 17:13:08', '2025-08-04 17:13:08'),
+(2, 'گارانتی سازگار', 9, 20000.00, 0, '2025-08-09 03:51:36', '2025-08-09 03:51:36', NULL),
+(3, 'گارانتی برتر', 9, 0.00, 0, '2025-08-09 03:51:50', '2025-08-09 03:51:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -910,7 +919,7 @@ INSERT INTO `products` (`id`, `name`, `introduction`, `slug`, `image`, `weight`,
 (6, 'مجموعه کتاب من پیش از تو پس از تو باز هم من', '<p>مجموعه کتاب من پیش از تو، پس از تو، باز هم من یکی از جذاب ترین کتاب ها می باشد.</p>', 'mgmoaah-t-b-mn-sh-z-to-s-z-to-b-z-hm-mn', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 240000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:54:58', '2025-08-06 07:55:26', '2025-08-06 07:55:26', NULL),
 (7, 'کتاب سلخ اثر غزاله شکوهی', '<p>کتاب سلخ اثر غزاله شکوهی یکی از جدیدترین کتاب ها می باشد.</p>', 't-b-slkh-thr-ghz-lh-sh-oh', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 210000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:56:06', '2025-08-06 07:57:12', '2025-08-06 07:57:12', NULL),
 (8, 'کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون', '<p>کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون یکی از تاثیرگذاترین کتاب ها می باشد.</p>', 't-b-tkhtkho-bt-r-mrtb-n-thr-nr-l-o-l-m-m-r-on', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 345000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:57:39', '2025-08-06 08:00:19', '2025-08-06 08:00:19', NULL),
-(9, 'گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F DS', '<p>گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F/DS d یکی از بروزترین گوشی های بازار می باشد.</p>', 'osh-mob-l-s-mson-mdl-galaxy-a12-sm-a125f-ds', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\",\"currentImage\":\"medium\"}', 1.00, 15.0, 20.0, 20.0, 3799000.000, 1, 1, 'سامسونگ,موبایل', 0, 0, 0, 12, 2, '2025-08-06 08:02:43', '2025-08-06 08:03:04', '2025-08-06 08:03:04', NULL);
+(9, 'گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F DS', '<p>گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F/DS d یکی از بروزترین گوشی های بازار می باشد.</p>', 'osh-mob-l-s-mson-mdl-galaxy-a12-sm-a125f-ds', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\",\"currentImage\":\"medium\"}', 1.00, 15.0, 20.0, 20.0, 3799000.000, 1, 1, 'سامسونگ,موبایل', 0, 0, 10, 12, 2, '2025-08-06 08:02:43', '2025-08-06 08:03:04', '2025-08-09 08:06:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -970,7 +979,9 @@ CREATE TABLE `product_colors` (
 
 INSERT INTO `product_colors` (`id`, `color_name`, `color`, `product_id`, `price_increase`, `status`, `sold_number`, `frozen_number`, `marketable_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (2, 'قرمز', NULL, 1, 10000.00, 0, 0, 0, 0, '2025-08-04 16:49:15', '2025-08-04 16:49:15', NULL),
-(3, 'آبی', '#0754ed', 1, 45000.00, 0, 0, 0, 0, '2025-08-04 16:50:59', '2025-08-04 16:50:59', NULL);
+(3, 'آبی', '#0754ed', 1, 45000.00, 0, 0, 0, 0, '2025-08-04 16:50:59', '2025-08-04 16:50:59', NULL),
+(4, 'قرمز', '#f90606', 9, 250000.00, 0, 0, 0, 0, '2025-08-09 03:00:57', '2025-08-09 03:00:57', NULL),
+(5, 'آبی', '#0a57f0', 9, 100000.00, 0, 0, 0, 0, '2025-08-09 03:01:25', '2025-08-09 03:20:29', '2025-08-09 03:20:29');
 
 -- --------------------------------------------------------
 
@@ -992,7 +1003,7 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `image`, `product_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:02:42', '2025-08-06 11:02:42', NULL),
+(1, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\\\\1754478162_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478162\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:02:42', '2025-08-09 07:53:00', '2025-08-09 07:53:00'),
 (2, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\\\\1754478466_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\\\\1754478466_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\\\\1754478466_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478466\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:07:46', '2025-08-06 11:07:46', NULL),
 (3, '{\"indexArray\":{\"large\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\\\\1754478617_large.jpg\",\"medium\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\\\\1754478617_medium.jpg\",\"small\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\\\\1754478617_small.jpg\"},\"directory\":\"images\\\\product-gallery\\\\2025\\\\08\\\\06\\\\1754478617\",\"currentImage\":\"medium\"}', 9, '2025-08-06 11:10:18', '2025-08-06 11:10:18', NULL);
 
@@ -1160,7 +1171,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('EZDnU6wt9eBMNIJm7U5FVFvT1tuRucqNQtWv54yE', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoib2U5ektydkZMVFQ1T2Q4S203SnV0QmZTbXJvM2szYzZweGtsbUtCTiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0L29zaC1tb2ItbC1zLW1zb24tbWRsLWdhbGF4eS1hMTItc20tYTEyNWYtZHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1754479092);
+('1KUCgtBYYnFtjfCiGm1COCceaaLjUvuzqzn3OSXh', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQWhGSnFRTHFXT1JuSEVyazEwYnV2OGVuenl6OW1iMUtwZ3Y2VXBqQSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0L2Ytcm9kb3NoLXJtLWctbnQtbWRsLWQwNzgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1754739470);
 
 -- --------------------------------------------------------
 
@@ -1768,7 +1779,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `amazing_sales`
 --
 ALTER TABLE `amazing_sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `banners`
@@ -1864,7 +1875,7 @@ ALTER TABLE `faqs`
 -- AUTO_INCREMENT for table `guarantees`
 --
 ALTER TABLE `guarantees`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -1966,7 +1977,7 @@ ALTER TABLE `product_categories`
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `product_images`

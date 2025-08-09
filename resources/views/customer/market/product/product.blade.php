@@ -28,16 +28,23 @@
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
                                 <section class="product-gallery">
                                     @php
-                                        $images = $product->images()->get();
+                                        $galleryImages = $product->images()->get();
+                                        $images = collect();
+                                        $images->push($product->image);
+                                        foreach ($galleryImages as $galleryImage) {
+                                            $images->push($galleryImage->image);
+                                        }
                                     @endphp
                                     <section class="product-gallery-selected-image mb-3">
-                                        <img src="{{ asset($images->first()->image['indexArray']['medium']) }}"
-                                            alt="">
+                                        <img src="{{ asset($images->first()['indexArray']['medium']) }}"
+                                            alt="{{ asset($images->first()['indexArray']['medium']) }}">
                                     </section>
                                     <section class="product-gallery-thumbs">
-                                        @foreach ($images as $key=> $image)
-                                            <img class="product-gallery-thumb" src="{{ asset($image->image['indexArray']['medium']) }}"
-                                                alt="{{ asset($image->image['indexArray']['medium']) . '-' . ($key + 1) }}" data-input="{{ asset($image->image['indexArray']['medium']) }}">
+                                        @foreach ($images as $key => $image)
+                                            <img class="product-gallery-thumb"
+                                                src="{{ asset($image['indexArray']['medium']) }}"
+                                                alt="{{ asset($image['indexArray']['medium']) . '-' . ($key + 1) }}"
+                                                data-input="{{ asset($image['indexArray']['medium']) }}">
                                         @endforeach
                                     </section>
                                 </section>
@@ -54,7 +61,7 @@
                                 <section class="content-header mb-3">
                                     <section class="d-flex justify-content-between align-items-center">
                                         <h2 class="content-header-title content-header-title-small">
-                                            کتاب اثر مرکب نوشته دارن هاردی
+                                            {{ $product->name }}
                                         </h2>
                                         <section class="content-header-link">
                                             <!--<a href="#">مشاهده همه</a>-->
@@ -63,20 +70,40 @@
                                 </section>
                                 <section class="product-info">
 
-                                    <p><span>رنگ : قهوه ای</span></p>
+                                    @php
+                                        $colors = $product->colors()->get();
+                                    @endphp
+
+                                    @if ($colors->count() != 0)
+                                        <p><span>رنگ : {{ $colors->first()->color_name }}</span></p>
+                                        <p>
+                                            @foreach ($colors as $key => $color)
+                                                <span style="background-color: {{ $color->color ?? '#ffffff' }};"
+                                                    class="product-info-colors me-1" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"></span>
+                                            @endforeach
+                                        </p>
+                                    @endif
+                                    @php
+                                        $guarantees = $product->guarantees()->get();
+                                    @endphp
+                                    @if ($guarantees->count() != 0)
+                                    @foreach ($guarantees as $guarantee)
+                                        <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span>
+                                                {{ $guarantee->name }}
+                                                    </span></p>
+                                    @endforeach
+                                     @endif
                                     <p>
-                                        <span style="background-color: #523e02;" class="product-info-colors me-1"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="قهوه ای تیره"></span>
-                                        <span style="background-color: #0c4128;" class="product-info-colors me-1"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="سبز یشمی"></span>
-                                        <span style="background-color: #fd7e14;" class="product-info-colors me-1"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                            title="نارنجی پرتقالی"></span>
+                                        @if ($product->marketable_number > 0)
+
+                                        <i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در
+                                            انبار</span>
+                                        @else
+
+                                        <i class="fa fa-store-alt cart-product-selected-store me-1 text-danger"></i> <span class="text-danger">ناموجود</span>
+                                        @endif
                                     </p>
-                                    <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span> گارانتی
-                                            اصالت و سلامت فیزیکی کالا</span></p>
-                                    <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در
-                                            انبار</span></p>
                                     <p><a class="btn btn-light  btn-sm text-decoration-none" href="#"><i
                                                 class="fa fa-heart text-danger"></i> افزودن به علاقه مندی</a></p>
                                     <section>
@@ -104,24 +131,34 @@
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">قیمت کالا</p>
-                                    <p class="text-muted">1,326,000 <span class="small">تومان</span></p>
+                                    <p class="text-muted">{{ priceFormat($product->price) }} <span class="small">تومان</span></p>
                                 </section>
 
+                                @php
+                                    $amazingSale = $product->activeAmazingSales();
+                                @endphp
+
+                                @if (!empty($amazingSale))
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">تخفیف کالا</p>
-                                    <p class="text-danger fw-bolder">260,000 <span class="small">تومان</span></p>
+                                    <p class="text-danger fw-bolder">{{ priceFormat($product->price * ($amazingSale->percentage / 100)) }} <span class="small">تومان</span></p>
                                 </section>
+                                 @endif
 
                                 <section class="border-bottom mb-3"></section>
 
                                 <section class="d-flex justify-content-end align-items-center">
-                                    <p class="fw-bolder">1,066,000 <span class="small">تومان</span></p>
+                                    {{-- <p class="fw-bolder">{{ priceFormat($product->price - ($product->price * ($amazingSale->percentage / 100))) }}<span class="small"> تومان</span></p> --}}
                                 </section>
-
+                                 @if ($product->marketable_number > 0)
                                 <section class="">
                                     <a id="next-level" href="#" class="btn btn-danger d-block">افزودن به سبد خرید</a>
                                 </section>
-
+                                @else
+                                <section class="">
+                                    <a id="next-level" href="#" class="btn btn-secondary disabled d-block">محصول ناموجود میباشد</a>
+                                </section>
+                                @endif
                             </section>
                         </section>
                     </section>
