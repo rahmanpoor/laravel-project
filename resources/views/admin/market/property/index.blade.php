@@ -49,7 +49,7 @@
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $category_attribute->name }}</td>
                                     <td>{{ $category_attribute->unit }}</td>
-                                    <td>{{ $category_attribute->category->name }}</td>
+                                    <td>{{ $category_attribute->category->name ?? '-' }}</td>
                                     <td class="width-22-rem text-left">
                                         <a href="{{ route('admin.market.value.index', $category_attribute->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> ویژگی
                                             ها</a>

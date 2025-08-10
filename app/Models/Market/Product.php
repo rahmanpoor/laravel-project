@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Content\Comment;
 use App\Models\Market\Guarantee;
 use App\Models\Market\AmazingSale;
+use App\Models\Market\CategoryValue;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,13 +32,13 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(ProductCategory::class , 'category_id');
+        return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class , 'brand_id');
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
 
@@ -52,7 +53,7 @@ class Product extends Model
     }
 
 
-     public function guarantees()
+    public function guarantees()
     {
         return $this->hasMany(Guarantee::class);
     }
@@ -64,26 +65,34 @@ class Product extends Model
     }
 
 
-     public function values()
+
+    public function comments()
     {
-        return $this->hasMany(CategoryValue::class);
+        return $this->morphMany('App\Models\Content\Comment', 'commentable');
     }
 
-
-
-    public function amazingSales(){
+    public function amazingSales()
+    {
         return $this->hasMany(AmazingSale::class);
     }
 
 
-    public function activeAmazingSales(){
+    public function activeAmazingSales()
+    {
         return $this->amazingSales()->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->first();
     }
 
 
 
+    public function values()
+    {
+        return $this->hasMany(CategoryValue::class, 'product_id');
+    }
 
 
 
-
+    public function activeComments()
+    {
+        return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
+    }
 }

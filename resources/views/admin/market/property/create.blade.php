@@ -66,7 +66,6 @@
                             <div class="form-group">
                                 <label for="">انتخاب دسته</label>
                                 <select name="category_id" id="" class="form-control form-control-sm">
-                                    <option value="">دسته را انتخاب کنید</option>
                                     @foreach ($productCategories as $productCategory)
                                     <option value="{{ $productCategory->id }}" @if(old('category_id') == $productCategory->id) selected @endif>{{ $productCategory->name }}</option>
                                     @endforeach
