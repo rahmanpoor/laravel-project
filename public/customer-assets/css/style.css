@@ -843,3 +843,10 @@ body {
 .no-underline {
     text-decoration: none;
 }
+
+
+/* sweet alert center text */
+.swal2-title,
+.swal2-html-container {
+    text-align: center !important;
+}

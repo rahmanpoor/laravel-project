@@ -58,7 +58,7 @@
                         @enderror
                         </section>
                         <section class="col-12">
-                            <button class="btn btn-primary btn-sm">ثبت</button>
+                            <button type="submit" class="btn btn-primary btn-sm">ثبت</button>
                         </section>
                     </section>
                 </form>

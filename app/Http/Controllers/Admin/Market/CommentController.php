@@ -22,7 +22,7 @@ class CommentController extends Controller
             $result = $unSeenComment->save();
         }
         $comments = Comment::orderBy('created_at', 'desc')->where('commentable_type', 'App\Models\Market\Product')->simplePaginate(15);
-        return view('admin.content.comment.index', compact('comments'));
+        return view('admin.market.comment.index', compact('comments'));
     }
 
     /**
@@ -130,6 +130,7 @@ class CommentController extends Controller
 
     public function answer(CommentRequest $request, Comment $comment)
     {
+
         if ($comment->parent_id == null) {
 
 

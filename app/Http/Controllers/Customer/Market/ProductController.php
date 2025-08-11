@@ -28,6 +28,6 @@ class ProductController extends Controller
         $inputs['commentable_id'] = $product->id;
         $inputs['commentable_type'] = Product::class;
         Comment::create($inputs);
-        return back()->with('swal-success', 'نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده خواهد شد');
+        return back()->with('swal-success', 'پس از تایید نظر شما نمایش داده خواهد شد');
     }
 }

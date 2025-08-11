@@ -1,6 +1,7 @@
 @extends('customer.layouts.master-two-col')
 
 @section('head-tag')
+    <link href="{{ asset('admin-asset\sweetalert\sweetalert2.css') }}" rel="stylesheet" />
     <title>{{ $product->name }}</title>
 @endsection
 
@@ -75,12 +76,17 @@
                                     @endphp
 
                                     @if ($colors->count() != 0)
-                                        <p><span>رنگ : {{ $colors->first()->color_name }}</span></p>
+                                        <p><span>رنگ انتخاب شده : <span id="selected_color_name">{{ $colors->first()->color_name }}</span></span></p>
                                         <p>
                                             @foreach ($colors as $key => $color)
-                                                <span style="background-color: {{ $color->color ?? '#ffffff' }};"
+                                                <label for="{{ 'color_' . $color->id }}"
+                                                    style="background-color: {{ $color->color ?? '#ffffff' }};"
                                                     class="product-info-colors me-1" data-bs-toggle="tooltip"
-                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"></span>
+                                                    data-bs-placement="bottom" title="{{ $color->color_name }}"></label>
+                                                <input class="d-none" type="radio" name="color"
+                                                    id="{{ 'color_' . $color->id }}" value="{{ $color->id }}"
+                                                    data-color-name="{{ $color->color_name }}"
+                                                    @if ($key == 0) checked @endif>
                                             @endforeach
                                         </p>
                                     @endif
@@ -354,7 +360,8 @@
                                                     <section class="modal-body">
                                                         <p>کاربر گرامی لطفا برای ثبت نظر ابتدا وارد حساب کاربری خود شوید</p>
                                                         <p>لینک ثبت نام یا ورود
-                                                            <a href="{{ route('auth.customer.login-register-form') }}">کلیک کنید</a>
+                                                            <a href="{{ route('auth.customer.login-register-form') }}">کلیک
+                                                                کنید</a>
                                                         </p>
 
                                                     </section>
@@ -400,36 +407,80 @@
                                     </section>
                                 </section>
                                 @foreach ($product->activeComments() as $activeComment)
-                                <section class="product-comment">
-                                    <section class="product-comment-header d-flex justify-content-start">
-                                        <section class="product-comment-date">{{ jalaliDate($activeComment->created_at) }}</section>
-                                        @php
-                                            $author = $activeComment->user()->first();
-                                        @endphp
-                                        <section class="product-comment-title">
-                                            @if (empty($author->first_name) && empty($author->last_name))
-                                            ناشناس
-                                            @else
-                                            {{ $author->first_name }} {{ $author->last_name }}
-                                            @endif
+                                    <section class="product-comment">
+                                        <section class="product-comment-header d-flex justify-content-start">
+                                            <section class="product-comment-date">
+                                                {{ jalaliDate($activeComment->created_at) }}</section>
+                                            @php
+                                                $author = $activeComment->user()->first();
+                                            @endphp
+                                            <section class="product-comment-title">
+                                                @if (empty($author->first_name) && empty($author->last_name))
+                                                    ناشناس
+                                                @else
+                                                    {{ $author->first_name }} {{ $author->last_name }}
+                                                @endif
+                                            </section>
                                         </section>
+                                        <section
+                                            class="product-comment-body @if ($activeComment->answers()->count() > 0) border-bottom @endif">
+                                            {!! $activeComment->body !!}
+                                        </section>
+
+                                        @foreach ($activeComment->answers()->get() as $commentAnswer)
+                                            <section class="product-comment">
+                                                <section class="product-comment-header d-flex justify-content-start">
+                                                    <section class="product-comment-date">
+                                                        {{ jalaliDate($commentAnswer->created_at) }}</section>
+                                                    @php
+                                                        $author = $commentAnswer->user()->first();
+                                                    @endphp
+                                                    <section class="product-comment-title text-success">
+                                                        پاسخ ادمین
+                                                    </section>
+                                                </section>
+                                                <section class="product-comment-body" style="margin-right: 2rem">
+                                                    {!! $commentAnswer->body !!}
+                                                </section>
+                                            </section>
+                                        @endforeach
                                     </section>
-                                    <section class="product-comment-body">
-                                        با این تخفیف قیمت خیلی خوبه
-                                    </section>
-                                </section>
                                 @endforeach
 
-                                </section>
-
-
                             </section>
-                        </section>
 
+                        </section>
                     </section>
+
                 </section>
             </section>
         </section>
     </section>
+    </section>
     <!-- end description, features and comments -->
+@endsection
+
+
+@section('scripts')
+    @include('admin.alerts.sweetalert.success')
+    @include('admin.alerts.sweetalert.error')
+    <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            bill();
+            $('input[name="color"]').change(function() {
+                bill();
+            });
+        })
+
+        function bill() {
+            var selected_color = $('input[name="color"]:checked');
+            $("#selected_color_name").html(selected_color.attr('data-color-name'));
+
+        }
+
+    </script>
 @endsection

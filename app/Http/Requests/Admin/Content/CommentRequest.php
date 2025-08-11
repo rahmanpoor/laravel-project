@@ -23,8 +23,9 @@ class CommentRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-             'description' => 'required|min:2|max:1000|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u'
+             'body' => 'required|min:2|max:1000|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u'
         ];
     }
 }
