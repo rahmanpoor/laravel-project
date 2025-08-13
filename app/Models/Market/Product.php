@@ -3,6 +3,7 @@
 namespace App\Models\Market;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Content\Comment;
 use App\Models\Market\Guarantee;
 use App\Models\Market\AmazingSale;
@@ -94,5 +95,9 @@ class Product extends Model
     public function activeComments()
     {
         return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
+    }
+
+    public function user() {
+        return $this->belongsToMany(User::class);
     }
 }
