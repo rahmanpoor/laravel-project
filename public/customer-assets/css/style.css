@@ -1,14 +1,16 @@
 @font-face {
     font-family: IRANSans;
-    src: url("../fonts/IRANSans/IRANSansWeb_Light.woff"),
-        url("../fonts/IRANSans/IRANSansWeb_Light.woff") format("truetype");
+    src:  url("../fonts/IRANSans/IRANSansWeb_Light.woff2") format('woff2'),
+          url("../fonts/IRANSans/IRANSansWeb_Light.woff"),
+          url("../fonts/IRANSans/IRANSansWeb_Light.ttf") format("truetype");
     font-weight: normal;
+    font-display: swap;
 }
 
 * {
     direction: rtl;
     text-align: right;
-    font-family: IRANSans;
+    font-family: IRANSans, Tahoma, sans-serif;
 }
 
 /*
