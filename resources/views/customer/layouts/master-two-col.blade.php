@@ -14,12 +14,23 @@
         @yield('customer.layouts.sidebar')
     </section>
 
+
+
+
+
     <main id="main-body-one-col" class="main-body">
         @yield('content')
     </main>
 
 
+
+
+
     @include('customer.layouts.footer')
+
+
+
+
 
 
     @include('customer.layouts.scripts')
