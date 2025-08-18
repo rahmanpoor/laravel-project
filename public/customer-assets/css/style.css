@@ -4,6 +4,7 @@
           url("../fonts/IRANSans/IRANSansWeb_Light.woff"),
           url("../fonts/IRANSans/IRANSansWeb_Light.ttf") format("truetype");
     font-weight: normal;
+    font-style: normal;
     font-display: swap;
 }
 
