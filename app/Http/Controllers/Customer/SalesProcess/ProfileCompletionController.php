@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Customer\SalesProcess;
 
-use App\Http\Controllers\Controller;
-use App\Models\Market\CartItem;
 use Illuminate\Http\Request;
+use App\Models\Market\CartItem;
+use App\Http\Controllers\Controller;
+use App\Http\Middleware\ProfileCompletion;
+use App\Http\Requests\Customer\SalesProcess\ProfileCompletionRequest;
 
 class ProfileCompletionController extends Controller
 {
@@ -15,12 +17,7 @@ class ProfileCompletionController extends Controller
         return view('customer.sales-process.profile-completion', compact('user', 'cartItems'));
     }
 
-    public function update(Request $request) {
-             $request->validate([
-            'first_name' => 'sometimes|required',
-            'last_name' => 'sometimes|required',
-            'mobile' => 'sometimes|required|min:10|max:13||unique:users,mobile',
-        ]);
+    public function update(ProfileCompletionRequest $request) {
 
         $user = auth()->user();
         $inputs = $request->all();

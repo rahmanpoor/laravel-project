@@ -74,13 +74,13 @@
                                        @php
                                         $totalPrice = 0;
                                         $totalDiscount = 0;
-                                    @endphp
+                                        @endphp
 
                                     @foreach($cartItems as $key => $cartItem)
 
                                        @php
-                                        $totalPrice += $cartItem->cartItemProductPrice();
-                                        $totalDiscount += $cartItem->cartItemProductDiscount();
+                                        $totalPrice += $cartItem->cartItemProductPrice() * $cartItem->number;
+                                        $totalDiscount += $cartItem->cartItemProductDiscount() * $cartItem->number;
                                     @endphp
 
                                     <section class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
