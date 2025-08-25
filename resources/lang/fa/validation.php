@@ -198,6 +198,8 @@ return [
         'position'                  => 'موقعیت',
         'color_name'                => 'نام رنگ',
         'color'                     => 'رنگ',
+        'postal_code'                => 'کد پستی',
+        'national_code'              => 'کد ملی'
 
 
     ],

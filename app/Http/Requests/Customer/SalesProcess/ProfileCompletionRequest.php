@@ -27,7 +27,7 @@ class ProfileCompletionRequest extends FormRequest
             'first_name' => 'sometimes|required',
             'last_name' => 'sometimes|required',
             'mobile' => 'sometimes|required|min:10|max:13||unique:users,mobile',
-            'email' => 'nullable|email|unique:users,email'
+            'email' => 'sometimes|nullable|email|unique:users,email'
         ];
     }
 }
