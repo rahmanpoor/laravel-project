@@ -32,9 +32,9 @@ class StoreAddressRequest extends FormRequest
             'no' => 'required',
             'unit' => 'required',
             'receiver' => 'sometimes',
-            'recipient_first_name' => 'required_with:receiver,on',
-            'recipient_last_name' => 'required_with:receiver,on',
-            'mobile' => 'required_with:receiver,on',
+            'recipient_first_name' => 'required_if:receiver,on|nullable',
+            'recipient_last_name'  => 'required_if:receiver,on|nullable',
+            'mobile'               => 'required_if:receiver,on|nullable',
         ];
     }
 
@@ -48,9 +48,9 @@ class StoreAddressRequest extends FormRequest
     public function messages()
     {
         return [
-            'recipient_first_name.required_with' => '⚠️ :attribute الزامی است زمانی که گیرنده سفارش خودم نیستم انتخاب شده باشد.',
-            'recipient_last_name.required_with'  => '⚠️ :attribute الزامی است زمانی که گیرنده سفارش خودم نیستم انتخاب شده باشد.',
-            'mobile.required_with'               => '⚠️ :attribute الزامی است زمانی که گیرنده سفارش خودم نیستم انتخاب شده باشد.',
+            'recipient_first_name.required_if' => '⚠️ :attribute الزامی است زمانی که گیرنده سفارش خودم نیستم انتخاب شده باشد.',
+            'recipient_last_name.required_if'  => '⚠️ :attribute الزامی است زمانی که گیرنده سفارش خودم نیستم انتخاب شده باشد.',
+            'mobile.required_if'               => '⚠️ :attribute الزامی است زمانی که گیرنده سفارش خودم نیستم انتخاب شده باشد.',
         ];
     }
 }

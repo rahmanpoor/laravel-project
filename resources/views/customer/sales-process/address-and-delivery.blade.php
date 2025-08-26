@@ -70,7 +70,11 @@
                                         <label for="a1" class="address-wrapper mb-2 p-2">
                                             <section class="mb-2">
                                                 <i class="fa fa-map-marker-alt mx-1"></i>
-                                                آدرس : {{ $address->address ?? '-' }}
+                                                آدرس : {{ $address->city->province->name ?? '-' }} {{ $address->city->name ?? '-' }} {{ $address->address ?? '-' }}
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa fa-envelope mx-1"></i>
+                                                کد پستی : {{ $address->postal_code ?? '-' }}
                                             </section>
                                             <section class="mb-2">
                                                 <i class="fa fa-user-tag mx-1"></i>
@@ -362,5 +366,20 @@
                 })
             })
         })
+    </script>
+
+    <script>
+        $(document).ready(function(){
+    let fields = $("#first_name, #last_name, #mobile");
+    fields.prop("disabled", true);
+
+    $("#receiver").on("change", function(){
+        if($(this).is(":checked")){
+            fields.prop("disabled", false);
+        } else {
+            fields.prop("disabled", true).val('');
+        }
+    });
+});
     </script>
 @endsection

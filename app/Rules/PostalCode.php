@@ -38,6 +38,6 @@ class PostalCode implements Rule
      */
     public function message()
     {
-        return ':atribute معتبر نمی باشد';
+        return ':attribute معتبر نمی باشد';
     }
 }

@@ -53,8 +53,21 @@ class AddressController extends Controller
 
 
     public function addAddress(StoreAddressRequest $request) {
+
         $inputs = $request->all();
         $inputs['user_id'] = auth()->user()->id;
+
+        //fill reciver info if null
+        if( $request->input('recipient_first_name') == null) {
+            $inputs['recipient_first_name'] = auth()->user()->first_name;
+        }
+        if($request->input('recipient_first_name')== null) {
+            $inputs['recipient_last_name'] = auth()->user()->last_name;
+        }
+        if($request->input('mobile') == null) {
+            $inputs['mobile'] = '0'. auth()->user()->mobile;
+        }
+
         $address = Address::create($inputs);
         return redirect()->back();
     }
