@@ -198,8 +198,12 @@ return [
         'position'                  => 'موقعیت',
         'color_name'                => 'نام رنگ',
         'color'                     => 'رنگ',
-        'postal_code'                => 'کد پستی',
-        'national_code'              => 'کد ملی'
+        'postal_code'               => 'کد پستی',
+        'national_code'             => 'کد ملی',
+        'city_id'                   => 'شهر',
+        'province_id'               => 'استان',
+        'recipient_first_name'      => 'نام گیرنده',
+        'recipient_last_name'      => 'نام خانوادگی گیرنده',
 
 
     ],

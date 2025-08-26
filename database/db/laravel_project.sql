@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 09, 2025 at 11:39 AM
+-- Generation Time: Aug 26, 2025 at 11:31 AM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.27
 
@@ -35,14 +35,22 @@ CREATE TABLE `addresses` (
   `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recipient_first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recipient_last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recipient_first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recipient_last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `addresses`
+--
+
+INSERT INTO `addresses` (`id`, `user_id`, `city_id`, `postal_code`, `address`, `no`, `unit`, `recipient_first_name`, `recipient_last_name`, `mobile`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 14, 1, '7918992703', 'پیامبر اعظم، مجتمع سرافراز', '4', '1', NULL, NULL, '09170766430', 1, NULL, NULL, NULL),
+(8, 7, 1, '7967117594', 'روستای تدرویه - محله بالا', '8', '8', 'هاشمی', NULL, NULL, 0, '2025-08-26 11:29:07', '2025-08-26 11:29:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -67,7 +75,7 @@ CREATE TABLE `amazing_sales` (
 --
 
 INSERT INTO `amazing_sales` (`id`, `product_id`, `percentage`, `status`, `start_date`, `end_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 9, 90, 1, '2025-08-05 11:31:18', '2025-08-12 11:31:18', '2025-08-09 11:23:28', '2025-08-09 11:31:28', NULL);
+(1, 9, 90, 1, '2025-08-18 11:22:14', '2025-09-10 11:22:14', '2025-08-09 11:23:28', '2025-08-18 11:22:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -160,6 +168,20 @@ CREATE TABLE `cart_items` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`id`, `user_id`, `product_id`, `color_id`, `guarantee_id`, `number`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(16, 11, 9, 4, 2, 4, '2025-08-17 10:45:02', '2025-08-20 04:07:58', NULL),
+(17, 11, 8, NULL, NULL, 1, '2025-08-18 10:37:33', '2025-08-18 10:37:33', NULL),
+(18, 11, 7, NULL, NULL, 1, '2025-08-18 10:38:02', '2025-08-18 10:38:02', NULL),
+(19, 11, 6, NULL, NULL, 1, '2025-08-18 10:38:18', '2025-08-20 04:07:58', NULL),
+(20, 12, 8, NULL, NULL, 1, '2025-08-25 06:54:12', '2025-08-25 06:54:12', NULL),
+(21, 13, 9, 4, 2, 1, '2025-08-25 06:58:41', '2025-08-25 06:58:41', NULL),
+(22, 14, 8, NULL, NULL, 1, '2025-08-26 03:00:04', '2025-08-26 03:00:04', NULL),
+(23, 7, 9, 4, 2, 1, '2025-08-26 09:14:44', '2025-08-26 09:14:44', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -217,7 +239,9 @@ CREATE TABLE `category_attributes` (
 --
 
 INSERT INTO `category_attributes` (`id`, `name`, `type`, `unit`, `category_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'اندازه صفحه', 0, 'اینچ', 1, '2025-07-13 14:27:07', '2025-07-13 14:27:07', NULL);
+(1, 'اندازه صفحه', 0, 'اینچ', 1, '2025-07-13 14:27:07', '2025-08-10 03:16:42', '2025-08-10 03:16:42'),
+(2, 'سیستم عامل', 0, 'اندروید', 2, '2025-08-10 03:17:54', '2025-08-10 03:21:53', '2025-08-10 03:21:53'),
+(3, 'حافظه', 0, 'گیگ', 2, '2025-08-10 03:21:48', '2025-08-10 03:21:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -256,7 +280,9 @@ CREATE TABLE `category_values` (
 --
 
 INSERT INTO `category_values` (`id`, `product_id`, `category_attribute_id`, `value`, `type`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, '{\"value\":\"9\",\"price_increase\":\"500000\"}', 0, '2025-07-13 14:29:34', '2025-07-13 14:29:34', NULL);
+(1, 1, 1, '{\"value\":\"9\",\"price_increase\":\"500000\"}', 0, '2025-07-13 14:29:34', '2025-07-13 14:29:34', NULL),
+(2, 9, 3, '{\"value\":\"8\",\"price_increase\":\"10000000\"}', 0, '2025-08-10 03:22:14', '2025-08-12 03:03:28', NULL),
+(3, 2, 3, '{\"value\":\"16\",\"price_increase\":\"20000000\"}', 0, '2025-08-10 03:22:28', '2025-08-12 03:03:19', '2025-08-12 03:03:19');
 
 -- --------------------------------------------------------
 
@@ -272,6 +298,19 @@ CREATE TABLE `cities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cities`
+--
+
+INSERT INTO `cities` (`id`, `name`, `province_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'بستک', 1, NULL, NULL, NULL),
+(2, 'بندرعباس', 1, NULL, NULL, NULL),
+(3, 'رودان', 1, NULL, NULL, NULL),
+(4, 'جاسک', 1, NULL, NULL, NULL),
+(5, 'داراب', 2, NULL, NULL, NULL),
+(6, 'لارستان', 2, NULL, NULL, NULL),
+(7, 'جهرم', 2, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -293,6 +332,15 @@ CREATE TABLE `comments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `body`, `parent_id`, `author_id`, `commentable_id`, `commentable_type`, `seen`, `approved`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(15, 'عالی', NULL, 7, 9, 'App\\Models\\Market\\Product', 1, 1, 1, '2025-08-10 11:24:55', '2025-08-12 02:57:05', NULL),
+(17, 'خرسندیم', 15, 1, 9, 'App\\Models\\Market\\Product', 1, 1, 1, '2025-08-12 02:52:34', '2025-08-12 02:52:34', NULL),
+(18, 'مرسی', NULL, 10, 9, 'App\\Models\\Market\\Product', 1, 1, 0, '2025-08-12 03:00:37', '2025-08-17 09:11:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -343,7 +391,6 @@ CREATE TABLE `copans` (
 INSERT INTO `copans` (`id`, `code`, `amount`, `amount_type`, `discount_ceiling`, `type`, `status`, `start_date`, `end_date`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'iran', '50', 0, 0, 0, 0, '2025-07-18 12:16:05', '2025-07-18 12:16:05', 1, '2025-07-18 12:15:16', NULL, NULL),
 (2, 'takhfif-p', '80', 0, 1000000, 0, 1, '2025-06-21 16:13:48', '2025-06-27 16:13:48', NULL, '2025-07-18 16:19:18', '2025-07-18 16:19:18', NULL),
-(3, 'takhfif-private', '2000000', 1, 2000000, 0, 1, '2025-06-28 16:19:28', '2025-07-04 16:19:28', 2, '2025-07-18 16:21:13', '2025-07-18 16:21:13', NULL),
 (4, 'sddsadsa', '20', 0, 2000000, 0, 0, '2025-07-18 16:25:23', '2025-07-18 16:25:23', 1, '2025-07-18 16:28:32', '2025-07-18 16:28:32', NULL),
 (5, 'sddsadsa', '30', 0, 2000000, 0, 0, '2025-07-18 16:25:23', '2025-07-18 16:25:23', 1, '2025-07-18 16:29:25', '2025-07-18 16:29:25', NULL),
 (6, 'salam', '90', 0, 2000000, 0, 0, '2025-07-18 16:31:17', '2025-07-18 16:31:17', NULL, '2025-07-18 16:31:33', '2025-07-18 16:31:33', NULL),
@@ -682,45 +729,34 @@ CREATE TABLE `otps` (
 --
 
 INSERT INTO `otps` (`id`, `token`, `user_id`, `otp_code`, `login_id`, `type`, `used`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'bghdj8mfQLUo4sKwl1Dp0HgKt9FSpLuIFtZrGtmeazEToDsk3IAsO5N0Lixa', 6, '9322', '9011614349', 0, 0, 0, '2025-07-25 13:16:58', '2025-07-25 13:16:58'),
-(2, 'CF7KnT1Vm5Sp6FxSKiV8Dy0WrTFa7pduyhT7DuLVyevZTGydnurPlIpneXua', 6, '7826', '9011614349', 0, 0, 0, '2025-07-25 13:18:03', '2025-07-25 13:18:03'),
-(3, '7jTreQ7T1KcymZb6LDH9O80tFSYGh04K0iuwWPwdSR5qvMhxqMi3QK4TLJow', 7, '4806', '9170766430', 0, 0, 0, '2025-07-25 13:18:28', '2025-07-25 13:18:28'),
-(4, 'bbikKtnvdt7hJkAmbvb2aL0i0YgiERLJhrgZLKWW6MtJ0IhZfWZA35EabAvZ', 7, '7303', '9170766430', 0, 0, 0, '2025-07-25 13:20:55', '2025-07-25 13:20:55'),
-(5, '0vgciwbios7K1j6JAh1jJCif3Sc6kM70J0TOFtARuNbsCbuZTCGrSIl8g0ER', 6, '8462', '9011614349', 0, 0, 0, '2025-07-25 13:22:30', '2025-07-25 13:22:30'),
-(6, 'oUC5WEEK4KoUWYktpswk6A72aUYQt6stXQ338asuUwWIpohrnyWrN0N2XNm8', 7, '3766', '9170766430', 0, 0, 0, '2025-07-25 13:58:02', '2025-07-25 13:58:02'),
-(7, '4JW8cSNyZypnEPR6XEZN8dULgjmhDYrGlcYu4B55rQGoGU2dKTpimEEXdMJ1', 7, '4946', '9170766430', 0, 0, 0, '2025-07-25 13:58:58', '2025-07-25 13:58:58'),
-(8, 'rMNMdk1dSB2TAz9SnOeiMAG8WERVSQWIE9fWt3QZH6tcBl5w7Bc0jOMPEBug', 7, '7677', '9170766430', 0, 0, 0, '2025-07-25 14:04:47', '2025-07-25 14:04:47'),
-(9, 'dzkQy3eUvwstnzOzIE3sW9S3sSCzGhSZu2qNn6VP1BKLmqP4dNfrCUs8jKt7', 7, '3704', '9170766430', 0, 0, 0, '2025-07-26 11:03:10', '2025-07-26 11:03:10'),
-(10, '3SPw8kfPIopCN4iFRhwy1Qn4FXs3wTFeeAoaWRTsfUQwEytS9Uzlq2MbyiAK', 7, '6210', '9170766430', 0, 0, 0, '2025-07-26 11:03:51', '2025-07-26 11:03:51'),
-(11, 'RO7aGi31r5PxXpE4xF6emuvGcxqFYdJHoE9Z5LYX4GfIDC7du8yKT7Y3Nz3b', 6, '3014', '9011614349', 0, 0, 0, '2025-07-26 11:04:58', '2025-07-26 11:04:58'),
-(12, 't504HO7BV7OSiTHtGJiBryUeurToz5DrxjXRQuQOKmncsVFIHHR8EP8Pdq2f', 6, '8954', '9011614349', 0, 0, 0, '2025-07-26 11:05:16', '2025-07-26 11:05:16'),
-(13, 'ayuYIzUv1lHWdDexYlH0imxIN5FHzbCjvIPpQKnHwoLafzPmu0aVWt06I9ti', 6, '2544', '9011614349', 0, 0, 0, '2025-07-26 11:05:56', '2025-07-26 11:05:56'),
-(14, 'UQ423WfD59pUxJaDq4RgkbHSq0mcppGQQ2ttCDoTComnnQc7CHe7M2yk4Y9h', 7, '2165', '9170766430', 0, 0, 0, '2025-07-31 07:46:57', '2025-07-31 07:46:57'),
-(15, 'VfrKZau9s8dGenMd2bfeITanuwWiJ5d2fpTAD3uDTL4krrTbXYDYEL0HOeqJ', 8, '8571', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-07-31 09:14:07', '2025-07-31 09:14:07'),
-(16, 'hlXTkFX22D1hdeTMlTMtFa3bvXl7LoDFPCfymEfM7ZL6mV07Qf9ZmHWpNhPE', 8, '5665', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-07-31 09:17:22', '2025-07-31 09:17:22'),
-(17, 'K7NXFbpdBsoC9DYLy2ajiSBWcniPb5tchQA5H5r9duGCzrGJOkeeid7DIpg2', 7, '5901', '9170766430', 0, 0, 0, '2025-08-01 15:14:16', '2025-08-01 15:14:16'),
-(18, 'AU1ndAvJShS3SkW9aTmEOxjnbLKgFHE3iZqfZVNCj5xoAfTuRvNTlRhppn1H', 7, '6258', '9170766430', 0, 0, 0, '2025-08-01 15:19:37', '2025-08-01 15:19:37'),
-(19, 'ehkoTnxqgQbiPuNafnhAO2ezpElJz0nhCTAZjUH7MRJdegHn5b3aBhyGvMNh', 6, '3287', '9011614349', 0, 0, 0, '2025-08-01 15:20:17', '2025-08-01 15:20:17'),
-(20, 'HCo0q4qd01QYufaQZEXP9RSk96g3aEXONBOvgfQLROcbWKL2QrQY2TeASOZ6', 8, '2137', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-01 15:26:44', '2025-08-01 15:26:44'),
-(21, 'GMu7XHcC2JhjXOocVBRCmu33YOu1ouz4EXXZ9zuMtiY9rXNyBLymKotP0dm9', 7, '9175', '9170766430', 0, 0, 0, '2025-08-01 16:07:16', '2025-08-01 16:07:16'),
-(22, 'GjIaeHuFAGnbdpOHssqGZhTkd0BC7UNKLWBPswPoQ6QMSMEvjhE8xbGAJCfx', 7, '5685', '9170766430', 0, 0, 0, '2025-08-01 16:14:10', '2025-08-01 16:14:10'),
-(23, 'KX0DQl0dzOEcpXAivddSO5MfOdUCdvyvV5qSHWYfrYS1VD1Cb1wX0wqPpaSy', 7, '3355', '9170766430', 0, 0, 0, '2025-08-01 16:14:46', '2025-08-01 16:14:46'),
-(24, 'LLwH1AXAp2qEsOKegpa2GXSVAvXE5XOgPkmZ5VBuT8ZXbNGqnEgPETcq56pe', 8, '8087', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-01 16:21:06', '2025-08-01 16:21:06'),
-(25, 'LLvf2WRTtqM1CXAGQSVLYlRTKmNd0L1fgehCSEm7EsNuUn7VeOzv5CSy1iPt', 8, '8041', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-01 16:30:13', '2025-08-01 16:30:13'),
-(26, 'PpP6qAEHRnHYmOQh06DYZj1gBHlPyQdFg83TsQR60xybYNJvtIxA71ZIiPA9', 8, '8218', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-01 17:13:20', '2025-08-01 17:16:30'),
-(27, 'jhxNQq2wt2XUDZZ2azq9Q59wxuhWnBT60nRF5EkS8jBYUxRgnV9amm29o41K', 6, '4821', '9011614349', 0, 1, 0, '2025-08-01 17:16:54', '2025-08-01 17:21:16'),
-(28, 'ONt8pmLuDyE63zd0sH0PfOUO3A3vpzzow0yAQ1Msk5mlfxRvbTHkaWM8JHXm', 6, '5604', '9011614349', 0, 1, 0, '2025-08-01 17:23:18', '2025-08-01 17:24:32'),
-(29, 'ow2RUBaaylIQSNYkPonP0k452pmnDewkxz81bvYNludIkzwlvpGvEz8X9kUt', 6, '4963', '9011614349', 0, 0, 0, '2025-08-01 17:27:25', '2025-08-01 17:27:25'),
-(30, 'M5AXdrO8IIX7UWmw48uyEqYu4T8IVDnbz4X8PvvNZ2aLGi1REAevKmdoYjsP', 6, '8579', '9011614349', 0, 0, 0, '2025-08-02 12:50:58', '2025-08-02 12:50:58'),
-(31, '9Wi6pQw61yOYK1ZhhY6BlN91xMZDkt1M82bXXWBV7XnOuh6FWlTdFFQuOW5c', 9, '4967', '9179766430', 0, 0, 0, '2025-08-02 14:13:25', '2025-08-02 14:13:25'),
-(32, 'NxnbCJaxStdUhKAEL0l7QkWml4B5qq32sdYtpsiLSDY2rAEGXY0aLdgZVjpU', 8, '6740', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-02 14:18:07', '2025-08-02 14:18:07'),
-(33, 'rVyUCad7ezVRMOLy9RWY0Ni2k6YbWTQ0MTW0tQ7d9fQxKTWpnsLEwGcLZzja', 9, '1851', '9179766430', 0, 0, 0, '2025-08-02 14:44:44', '2025-08-02 14:44:44'),
-(34, 'lv5EUntD655NwSuAQntvlRLSGVXsTGwrasUEoByFWP7uW7NybwgulcBCd6y0', 7, '6730', '9170766430', 0, 1, 0, '2025-08-02 14:45:06', '2025-08-02 14:45:21'),
-(35, 'Qhx47o7JM9F2HmOHrBwmQ4FbVcmycuDKz4ivBpcHwrTEDA3zS5BW8r3VZeRH', 7, '4980', '9170766430', 0, 1, 0, '2025-08-02 14:59:37', '2025-08-02 15:02:41'),
-(36, 'Glk7aFGjIJGjsq5VVyvywu9xFTP4iOITmIEXqZixwxygJVj0R5jS8xvDnkvb', 9, '4708', '9179766430', 0, 0, 0, '2025-08-02 15:07:06', '2025-08-02 15:07:06'),
-(37, '0mMUIkJWE2SHWS0J9GX4BJ4KJG73E1neJf5zNgV9huhSl7OVls478V4GKVLI', 7, '8312', '9170766430', 0, 1, 0, '2025-08-02 15:07:26', '2025-08-02 15:07:44'),
-(38, 'CR8SzGs2BGer9J2AGqguqHjWCitaNNlKl8HNgmzAIbfCvYhtXWsw90SKCAnk', 8, '7441', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-04 17:24:08', '2025-08-04 17:25:25'),
-(39, 'Vgo2qFDvuv1E19e2fu3kNb88zgC1Ou0q9WLFAWMsm4QTk5epMHojVQhK5Ifp', 8, '1737', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-04 17:36:16', '2025-08-04 17:36:16');
+(44, 'jRwS2J5ZMgHMd3Swv6xXWwhOMSDmkyI6Aqqz1OJKWX1hYd3IDN5fEQIPGBee', 7, '4500', '9170766430', 0, 1, 0, '2025-08-10 08:20:24', '2025-08-10 08:20:42'),
+(45, 'lytsWQOMR4MXCk87lVFJaVmXpPMIdpitU8tcrBu8xGbTsaYlOHrxwKLHbzvb', 10, '5033', 'a.rahmanpour@gmail.com', 1, 1, 0, '2025-08-12 02:51:10', '2025-08-12 02:51:30'),
+(46, 'QyQe4Zysdnza1HhJEtWOTOOHebCTjxIkHM1Ixl5sEV1A0iy6FH6XvvrpQlQZ', 10, '9351', 'a.rahmanpour@gmail.com', 1, 1, 0, '2025-08-13 07:37:16', '2025-08-13 07:37:58'),
+(47, 'I3F7IeMruHq55qsNas9f8e5LuycA2mxVJQHZlIWE8Git8at0nsuCnAIhFx0s', 10, '9815', 'a.rahmanpour@gmail.com', 1, 0, 0, '2025-08-13 11:08:44', '2025-08-13 11:08:44'),
+(48, 'Wsa0J76x2Ufv1MiWRjX7lwQoYdxthGxjjZrczLw41XquCbTLfDVpLRMnIe3G', 10, '1354', 'a.rahmanpour@gmail.com', 1, 1, 0, '2025-08-13 11:10:12', '2025-08-13 11:10:30'),
+(49, 'a7P1fEtqk3LJWMoeqaLqvWKPkxBKe9Q6WTRWDGZgompOAG6P9zbi9JDa1ZdC', 11, '8448', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-17 08:49:57', '2025-08-17 08:49:57'),
+(50, 'vtHUGdtBccir0fbg6MniEuVBMcZgkSBDnL25blnb5lBTL20f5WzTtk5UBujv', 11, '9158', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-17 09:08:16', '2025-08-17 09:08:42'),
+(51, 'uWQHM085HgtQOWDu6XJZeQSA3HzVH7ln1L6Hhs4eiJsxShNIjHT09GiZvshM', 11, '1777', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-17 11:24:50', '2025-08-17 11:24:50'),
+(52, 'VSpJSTbZ7SYKZD5gMT4VfSLCl6qQr74mgZhClhAn8ynEVeadpp2VoOLz58J1', 11, '1683', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-18 08:35:02', '2025-08-18 08:35:02'),
+(53, 'D0MOB2On0hs3J1QBf2v5opwbU6B1K1YcX4HuZoBtkHdToAmldyX4AJvBZhHw', 7, '3112', '9170766430', 0, 0, 0, '2025-08-18 08:36:26', '2025-08-18 08:36:26'),
+(54, 'u8efxZDC79bignMWEz1efXEfgOxW1J91ROPE8KQcPFLdeU0XVNN7cATzOWNf', 11, '5850', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-18 08:37:47', '2025-08-18 08:38:05'),
+(55, 'Z8w7JSj3zsH27AIJ1ZQ65qwi0qlpgFjcXPV3mxuQG9XfpAlWPujITiepzMfJ', 11, '6288', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-18 08:41:09', '2025-08-18 08:41:09'),
+(56, 'CcNtmycPGQJAy11ZuOikg3f3U8Lb6k13ezNQxjqJRdB3OMgyF2ZgCJRh5A64', 11, '3622', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-18 08:41:32', '2025-08-18 08:41:32'),
+(57, 'CUupqO2pxoezEHGbZZRP5nafblvjMfh6HYEN0w8DeIoKv7bLnvA2MCJxTeMO', 11, '3284', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-18 08:41:55', '2025-08-18 08:42:17'),
+(58, 'K8af7vpS21CoOzbe051DtcgUFTyGnYoca0IkbahsBw6uZd80peDymF4JNpxt', 11, '5066', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-20 03:09:06', '2025-08-20 03:09:42'),
+(59, 'VtlGo96cL67CLD5BBL57A1YLz8U1Y1o08thxRhvdbmzgMdbpcUAzkEZJvtHK', 7, '1481', '9170766430', 0, 0, 0, '2025-08-20 08:49:37', '2025-08-20 08:49:37'),
+(60, '2mb8mPUQ7ViiV8dOqbL9QsamEXtkUP06jFM4qMCchDoVuevuK8UDFOWljda4', 11, '7488', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-20 08:50:47', '2025-08-20 08:53:18'),
+(61, 'bbZHyoEtlwK8qpTqizB3IyeVlyXpwvceEs6C5N5FwYTTtnOG7am7x1iDTWpv', 11, '5069', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-20 10:59:59', '2025-08-20 11:00:27'),
+(62, 'GpJep8tsr4job6zdEsRfiXSTsBbT2on7BSMdkR9BsUW5eefeiABbI2bgHXZl', 12, '3825', 'a.abdi@gmail.com', 1, 1, 0, '2025-08-25 06:53:34', '2025-08-25 06:53:53'),
+(63, 'l1tNVO2LzKVWogAxhda0Z0NsNGzK4LkgRW8rZOuauqTVFmntXzM871klwpRK', 13, '3078', 's.saeidi@gmail.com', 1, 1, 0, '2025-08-25 06:58:18', '2025-08-25 06:58:32'),
+(64, 'o7tiYYqaOkwDHS5S9V9hJEezWfY4jO2g8fBVJL760hlolPsG5KLBk1BkQ39c', 11, '6279', 'a.rahmanpour.dev@gmail.com', 1, 1, 0, '2025-08-25 09:08:33', '2025-08-25 09:08:49'),
+(65, 'BaeRbz6CNA6RLxEBcLoCgX3PfQ7GXHCgXQ6Ojck63yLmQ7xrnfCBQmaZ2PLx', 11, '3947', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-26 02:57:38', '2025-08-26 02:57:38'),
+(66, 'qYSXDxj2F0fl2fakVUNuWNyx3LyyvfUdbj5Cs8Jt38UPH9tdxcFa2h7QHRV9', 11, '5220', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-26 02:58:00', '2025-08-26 02:58:00'),
+(67, 't4yRhHXftm5BxZv0PWYLVyjxa9iAGwmcABl6VqUHZ3xDR1PBVXoHVAx6qBce', 14, '9110', '9011612020', 0, 1, 0, '2025-08-26 02:58:26', '2025-08-26 02:59:46'),
+(68, 'yf0QDjvPBsmJutbiqVBmz3mG6t98CnnfjwOmJpzIxj4kqBKkim5hDDOmP77o', 11, '6826', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-26 09:06:14', '2025-08-26 09:06:14'),
+(69, 'SMy6BizaQBdwTQpDH7pAjCHkEVnGfeJCGGwERpjMyBkzOOxPg48jFXswR5yB', 7, '9340', '9170766430', 0, 0, 0, '2025-08-26 09:06:38', '2025-08-26 09:06:38'),
+(70, 'gpPY8HKF7z6OKlNB6nsUqsBaZgO4W7dzryHyZRc75miXtLH7beFRHiuvx5jA', 11, '3142', 'a.rahmanpour.dev@gmail.com', 1, 0, 0, '2025-08-26 09:13:15', '2025-08-26 09:13:15'),
+(71, 'nvEgRUWzOyHpe9RdegRnnktUk8Qjf85ulOsfmyCYYBSSlMiTVXjbjrRLGVMN', 7, '3753', '9170766430', 0, 1, 0, '2025-08-26 09:13:44', '2025-08-26 09:14:31');
 
 -- --------------------------------------------------------
 
@@ -916,10 +952,10 @@ INSERT INTO `products` (`id`, `name`, `introduction`, `slug`, `image`, `weight`,
 (3, 'گوشی موبایل شیائومی مدل POCO M3 M2010J19CG', '<p>گوشی موبایل شیائومی مدل POCO M3 M2010J19CG دو سیم&zwnj; کارت دارای قابلیت های بسیاری می باشد.</p>', 'osh-mob-l-sh-om-mdl-poco-m3-m2010j19cg', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\\\\1754413775_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\05\\\\1754413775\",\"currentImage\":\"medium\"}', 1.00, 9.0, 5.0, 9.0, 9000000.000, 1, 1, 'شیائومی,موبایل', 0, 0, 0, 2, 2, '2025-08-05 17:09:20', '2025-08-05 17:09:36', '2025-08-05 17:09:36', NULL),
 (4, 'کیف هندزفری جانتا مدل 141مجموعه 3 عددی', '<p>کیف هندزفری جانتا مدل 141مجموعه 3 عددی بسیار با کیفیت و جادار می باشد.</p>', 'f-hndzfr-g-nt-mdl-141mgmoaah-3-aadd', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\\\\1754466516_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\\\\1754466516_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\\\\1754466516_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466516\",\"currentImage\":\"medium\"}', 2.00, 15.0, 10.0, 7.0, 370000.000, 1, 1, 'کیف', 0, 0, 0, 6, 3, '2025-08-06 07:45:52', '2025-08-06 07:48:36', '2025-08-06 07:48:36', NULL),
 (5, 'کیف رودوشی چرم جانتا مدل D078', '<p>کیف رودوشی چرم جانتا مدل D078 بسیار کاربردی میباشد.</p>', 'f-rodosh-rm-g-nt-mdl-d078', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\\\\1754466636_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\\\\1754466636_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\\\\1754466636_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466636\",\"currentImage\":\"medium\"}', 1.00, 14.0, 20.0, 15.0, 760000.000, 1, 1, 'کیف,رودوشی', 0, 0, 0, 6, 3, '2025-08-06 07:49:00', '2025-08-06 07:50:37', '2025-08-06 07:50:37', NULL),
-(6, 'مجموعه کتاب من پیش از تو پس از تو باز هم من', '<p>مجموعه کتاب من پیش از تو، پس از تو، باز هم من یکی از جذاب ترین کتاب ها می باشد.</p>', 'mgmoaah-t-b-mn-sh-z-to-s-z-to-b-z-hm-mn', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 240000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:54:58', '2025-08-06 07:55:26', '2025-08-06 07:55:26', NULL),
-(7, 'کتاب سلخ اثر غزاله شکوهی', '<p>کتاب سلخ اثر غزاله شکوهی یکی از جدیدترین کتاب ها می باشد.</p>', 't-b-slkh-thr-ghz-lh-sh-oh', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 210000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:56:06', '2025-08-06 07:57:12', '2025-08-06 07:57:12', NULL),
-(8, 'کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون', '<p>کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون یکی از تاثیرگذاترین کتاب ها می باشد.</p>', 't-b-tkhtkho-bt-r-mrtb-n-thr-nr-l-o-l-m-m-r-on', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 345000.000, 1, 1, 'کتاب', 0, 0, 0, 11, 4, '2025-08-06 07:57:39', '2025-08-06 08:00:19', '2025-08-06 08:00:19', NULL),
-(9, 'گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F DS', '<p>گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F/DS d یکی از بروزترین گوشی های بازار می باشد.</p>', 'osh-mob-l-s-mson-mdl-galaxy-a12-sm-a125f-ds', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\",\"currentImage\":\"medium\"}', 1.00, 15.0, 20.0, 20.0, 3799000.000, 1, 1, 'سامسونگ,موبایل', 0, 0, 10, 12, 2, '2025-08-06 08:02:43', '2025-08-06 08:03:04', '2025-08-09 08:06:37', NULL);
+(6, 'مجموعه کتاب من پیش از تو پس از تو باز هم من', '<p>مجموعه کتاب من پیش از تو، پس از تو، باز هم من یکی از جذاب ترین کتاب ها می باشد.</p>', 'mgmoaah-t-b-mn-sh-z-to-s-z-to-b-z-hm-mn', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\\\\1754466925_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754466925\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 240000.000, 1, 1, 'کتاب', 0, 0, 3, 11, 4, '2025-08-06 07:54:58', '2025-08-06 07:55:26', '2025-08-18 10:37:16', NULL),
+(7, 'کتاب سلخ اثر غزاله شکوهی', '<p>کتاب سلخ اثر غزاله شکوهی یکی از جدیدترین کتاب ها می باشد.</p>', 't-b-slkh-thr-ghz-lh-sh-oh', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\\\\1754467032_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467032\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 210000.000, 1, 1, 'کتاب', 0, 0, 1, 11, 4, '2025-08-06 07:56:06', '2025-08-06 07:57:12', '2025-08-18 10:36:56', NULL),
+(8, 'کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون', '<p>کتاب تختخوابت را مرتب کن اثر ژنرال ویلیام مک ریون یکی از تاثیرگذاترین کتاب ها می باشد.</p>', 't-b-tkhtkho-bt-r-mrtb-n-thr-nr-l-o-l-m-m-r-on', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\\\\1754467219_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467219\",\"currentImage\":\"medium\"}', 1.00, 30.0, 25.0, 30.0, 345000.000, 1, 1, 'کتاب', 0, 0, 1, 11, 4, '2025-08-06 07:57:39', '2025-08-06 08:00:19', '2025-08-18 10:36:36', NULL),
+(9, 'گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F DS', '<p>بدون هیچ تعریف اضافی باید بگوییم که تنوع بالای گوشی&zwnj;های هوشمند میان&zwnj;رده شرکت سامسونگ، پاسخ&zwnj;گوی سلایق مختلف با توقعات مختلف است که سامسونگ Galaxy A25 یکی از این میان&zwnj;رده&zwnj;ها است که به نسبت قیمت در نظر گرفته شده، از مشخصات فنی بسیار مناسب و کاملا قابل قبولی بهره برده است. طراحی در نظر گرفته شده برای Galaxy A25، طراحی آشنایی است که پیش از این هم چنین طراحی را در گوشی&zwnj;های هوشمند سامسونگ شاهد بودیم. در نمای رو&zwnj;به&zwnj;رویی این گوشی به صفحه&zwnj;نمایش 6.5 اینچ با رزولوشن 1080&times;2340 پیکسل از نوع سوپرامولد مجهز شده است. صفحه&zwnj;نمایش با توانایی نمایش 396 پیکسل در هر اینچ، نرخ بروزرسانی 120 هرتز و حداکثر روشنایی 1000 نیت (nits). با توجه به مشخصات در نظر گرفته شده، با یکی از بهترین صفحات&zwnj;نمایش در بین گوشی&zwnj;های میان&zwnj;رده رو&zwnj;به&zwnj;رو هستید. در قسمت پشتی هم یک سنسور دوربین اصلی با رزولوشن 50 مگاپیکسل در کنار سنسور 8 مگاپیکسل فوق&zwnj;عریض و سنسور 2 مگاپیکسل ماکرو در نظر گرفته شده. دوربین اصلی این گوشی به&zwnj;خوبی توقعات شما را در حد و اندازه یک گوشی میا&zwnj;ن&zwnj;رده برای عکاسی نور روز و نور شب بر&zwnj;آورده می&zwnj;کند. فیلمبرداری 4K هم از دیگر مشخصات این گوشی است. دوربین سلفی 13 مگاپیکسل این گوشی هم عملکرد کاملا قابل قبولی دارد. در بخش مشخصات سخت&zwnj;افزاری هم این گوشی به پردازنده اگزینوس 1280 مجهز شده است. پردازنده&zwnj;ای که سبب شده تا این گوشی در اجرای بازی&zwnj;های محبوب و نرم&zwnj;افزار&zwnj;های کاربردی، عملکرد روان و بسیار خوبی داشته باشد. باتری با میزان ظرفیت 5000 میلی&zwnj;آمپر&zwnj;ساعت هم به ازای هر بار شارژ صد درصدی، زمان آماده به&zwnj;کار دو روز را در حالت استفاده معمولی در اختیارتان قرار می&zwnj;دهد. در مجموع باید بگوییم که اگر به دنبال خرید گوشی میان&zwnj;رده&zwnj;ای هستید که به صفحه&zwnj;نمایش بسیار باکیفیت، دوربین اصلی قدرتمند، پردازنده و باتری مناسب مجهز شده باشد، سامسونگ Galaxy A25 می&zwnj;تواند گزینه بسیار مناسبی برای شما باشد.</p>', 'osh-mob-l-s-mson-mdl-galaxy-a12-sm-a125f-ds', '{\"indexArray\":{\"large\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_large.jpg\",\"medium\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_medium.jpg\",\"small\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\\\\1754467383_small.jpg\"},\"directory\":\"images\\\\product\\\\2025\\\\08\\\\06\\\\1754467383\",\"currentImage\":\"medium\"}', 1.00, 15.0, 20.0, 20.0, 3799000.000, 1, 1, 'سامسونگ,موبایل', 0, 0, 10, 12, 2, '2025-08-10 02:58:29', '2025-08-06 08:03:04', '2025-08-10 02:58:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -950,7 +986,8 @@ INSERT INTO `product_categories` (`id`, `name`, `description`, `slug`, `image`, 
 (1, 'لوازم الکترونیکی', '<p>توضیحات لوازم</p>', 'لوازم-الکترونیکی', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\\\\1752416038_large.png\",\"medium\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\\\\1752416038_medium.png\",\"small\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\\\\1752416038_small.png\"},\"directory\":\"images\\\\product-category\\\\2025\\\\07\\\\13\\\\1752416038\",\"currentImage\":\"medium\"}', 1, 1, 'لوازم', NULL, '2025-07-13 14:14:01', '2025-08-05 16:47:43', '2025-08-05 16:47:43'),
 (2, 'موبایل', '<p>موبایل</p>', 'mob-l', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\\\\1754453944_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\\\\1754453944_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\\\\1754453944_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453944\",\"currentImage\":\"medium\"}', 1, 1, 'موبایل', NULL, '2025-08-05 16:49:17', '2025-08-06 04:19:04', NULL),
 (3, 'کیف', '<p>کیف</p>', 'f', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\\\\1754453927_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\\\\1754453927_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\\\\1754453927_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754453927\",\"currentImage\":\"medium\"}', 1, 1, 'کیف', NULL, '2025-08-06 04:18:49', '2025-08-06 04:18:49', NULL),
-(4, 'کتاب', '<p>کتاب</p>', 't-b', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\",\"currentImage\":\"medium\"}', 1, 1, 'کتاب', NULL, '2025-08-06 07:51:44', '2025-08-06 07:51:44', NULL);
+(4, 'کتاب', '<p>کتاب</p>', 't-b', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\\\\1754466704_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\06\\\\1754466704\",\"currentImage\":\"medium\"}', 1, 1, 'کتاب', NULL, '2025-08-06 07:51:44', '2025-08-06 07:51:44', NULL),
+(5, 'تست', '<p>تست تست</p>', 'tst', '{\"indexArray\":{\"large\":\"images\\\\product-category\\\\2025\\\\08\\\\10\\\\1754815211\\\\1754815211_large.jpg\",\"medium\":\"images\\\\product-category\\\\2025\\\\08\\\\10\\\\1754815211\\\\1754815211_medium.jpg\",\"small\":\"images\\\\product-category\\\\2025\\\\08\\\\10\\\\1754815211\\\\1754815211_small.jpg\"},\"directory\":\"images\\\\product-category\\\\2025\\\\08\\\\10\\\\1754815211\",\"currentImage\":\"medium\"}', 1, 0, 'تست', NULL, '2025-08-10 08:40:14', '2025-08-10 08:40:20', '2025-08-10 08:40:20');
 
 -- --------------------------------------------------------
 
@@ -981,7 +1018,8 @@ INSERT INTO `product_colors` (`id`, `color_name`, `color`, `product_id`, `price_
 (2, 'قرمز', NULL, 1, 10000.00, 0, 0, 0, 0, '2025-08-04 16:49:15', '2025-08-04 16:49:15', NULL),
 (3, 'آبی', '#0754ed', 1, 45000.00, 0, 0, 0, 0, '2025-08-04 16:50:59', '2025-08-04 16:50:59', NULL),
 (4, 'قرمز', '#f90606', 9, 250000.00, 0, 0, 0, 0, '2025-08-09 03:00:57', '2025-08-09 03:00:57', NULL),
-(5, 'آبی', '#0a57f0', 9, 100000.00, 0, 0, 0, 0, '2025-08-09 03:01:25', '2025-08-09 03:20:29', '2025-08-09 03:20:29');
+(5, 'آبی', '#0a57f0', 9, 100000.00, 0, 0, 0, 0, '2025-08-09 03:01:25', '2025-08-09 03:20:29', '2025-08-09 03:20:29'),
+(6, 'آبی', '#0623f9', 9, 100000.00, 0, 0, 0, 0, '2025-08-12 03:02:06', '2025-08-12 03:02:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1074,7 @@ INSERT INTO `product_meta` (`id`, `meta_key`, `meta_value`, `product_id`, `creat
 (6, 'جنس', 'کاغذ', 6, '2025-08-06 07:55:26', '2025-08-06 07:55:26', NULL),
 (7, 'جنس', 'کاغذ', 7, '2025-08-06 07:57:12', '2025-08-06 07:57:12', NULL),
 (8, 'جنس', 'کاغذ', 8, '2025-08-06 08:00:19', '2025-08-06 08:00:19', NULL),
-(9, 'ضد آب', 'هست', 9, '2025-08-06 08:03:04', '2025-08-06 08:03:04', NULL);
+(9, 'ضد آب', 'هست', 9, '2025-08-06 08:03:04', '2025-08-10 02:58:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -1048,6 +1086,19 @@ CREATE TABLE `product_user` (
   `product_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_user`
+--
+
+INSERT INTO `product_user` (`product_id`, `user_id`) VALUES
+(3, 10),
+(4, 10),
+(5, 10),
+(7, 10),
+(8, 10),
+(9, 10),
+(9, 11);
 
 -- --------------------------------------------------------
 
@@ -1062,6 +1113,14 @@ CREATE TABLE `provinces` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `provinces`
+--
+
+INSERT INTO `provinces` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'هرمزگان', NULL, NULL, NULL),
+(2, 'فارس', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1171,7 +1230,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1KUCgtBYYnFtjfCiGm1COCceaaLjUvuzqzn3OSXh', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQWhGSnFRTHFXT1JuSEVyazEwYnV2OGVuenl6OW1iMUtwZ3Y2VXBqQSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0L2Ytcm9kb3NoLXJtLWctbnQtbWRsLWQwNzgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1754739470);
+('EBoPHhCrhRT2RHFqWeEp016XVUXuMvXQDyX1hb8i', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoieEF0N2tqQWNaMWQ0dGZqYmJrT1FwRVQwd0VkYTVqWHc1aFo4NFJHUCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZGRyZXNzLWFuZC1kZWxpdmVyeSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc7fQ==', 1756207792);
 
 -- --------------------------------------------------------
 
@@ -1217,12 +1276,7 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `subject`, `description`, `status`, `seen`, `reference_id`, `user_id`, `category_id`, `priority_id`, `ticket_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'مشکل در خرید', 'نمیتونم بخرم', 0, 1, 1, 2, 1, 1, NULL, '2025-06-30 14:09:19', '2025-06-30 14:23:33', NULL),
-(2, 'مشکل در خرید', 'با درگاه پرداخت', 0, 1, 1, 1, 1, 1, NULL, '2025-06-30 14:10:30', '2025-06-30 14:10:30', NULL),
-(3, 'مشکل در خرید', 'زرین پال', 0, 1, 1, 1, 1, 1, 1, '2025-06-30 14:12:32', '2025-06-30 14:12:32', NULL),
-(4, 'مشکل در خرید', 'پرداخت آنلاین کن', 0, 1, 1, 1, 1, 1, 1, '2025-06-30 14:21:13', '2025-06-30 14:21:13', NULL),
-(5, 'مشکل ثبت نام', 'چطور ثبت نام کنم؟', 0, 0, 1, 2, 1, 1, NULL, '2025-06-30 14:21:35', '2025-06-30 14:23:37', NULL),
-(6, 'مشکل ثبت نام', 'از قسمت بالا گوشه سمت راست', 0, 1, 1, 1, 1, 1, 5, '2025-06-30 14:23:10', '2025-06-30 14:23:10', NULL);
+(2, 'مشکل در خرید', 'با درگاه پرداخت', 0, 1, 1, 1, 1, 1, NULL, '2025-06-30 14:10:30', '2025-06-30 14:10:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -1345,15 +1399,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `mobile`, `national_code`, `first_name`, `last_name`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `slug`, `profile_photo_path`, `email_verified_at`, `mobile_verified_at`, `activation`, `activation_date`, `user_type`, `status`, `remember_token`, `current_team_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'a.rahmanpour@protonmail.com', '09170766430', NULL, 'عبدالعظیم', 'رحمان پور', '$2y$10$D.zwPM1FxnCc5aBze9fPEuc8b2zmIlvLsLfsrfx0d1hVJo35trWry', NULL, NULL, NULL, NULL, 'images\\users\\2025\\06\\30\\1751292330.png', NULL, NULL, 1, NULL, 1, 0, NULL, NULL, '2025-06-30 14:05:34', '2025-06-30 14:05:34', NULL),
-(2, 's.tajik@protonmail.com', '09170766095', NULL, 'سعید', 'تاجیک', '$2y$10$vW5tJvya4qVCnMp/oLjLT.4K2zhTEMm/QFvmouPcPeCuTB2d4Z3.q', NULL, NULL, NULL, NULL, 'images\\users\\2025\\06\\30\\1751292402.png', NULL, NULL, 1, NULL, 0, 1, NULL, NULL, '2025-06-30 14:06:42', '2025-06-30 14:06:48', NULL),
-(3, 'a.rahman@gmail.com', '09375432321', NULL, 'عبدالعظیم', 'رحمان پور', '$2y$10$eQ2XqSDrL10MzcgAQ5ylUucjV7UkGbK8Oh19oKh6ZtMx3XWy378Y.', NULL, NULL, NULL, NULL, 'images\\users\\2025\\07\\23\\1753283690.jpg', NULL, NULL, 1, NULL, 0, 1, NULL, NULL, '2025-07-23 15:14:52', '2025-07-23 15:15:01', NULL),
-(4, 'a.rahman4@gmail.com', '09994321254', NULL, 'آرمان', 'رضایی', '$2y$10$OuXuPJpLXEQhVT2hsB63e.RARAJdzYmkx16YCf31WUWuhuIvR6r6y', NULL, NULL, NULL, NULL, 'images\\users\\2025\\07\\23\\1753283884.jpg', NULL, NULL, 1, NULL, 0, 0, NULL, NULL, '2025-07-23 15:18:04', '2025-07-23 15:18:04', NULL),
-(5, 'a.rahmanpour86@protonmail.com', '09876543221', NULL, 'مهدی', 'حسنی', '$2y$10$iwnaLvJrD79n03yIj1AHM.FA4hl3zgJrWJWG9psWZeo814D.2lS9y', NULL, NULL, NULL, NULL, 'images\\users\\2025\\07\\23\\1753289612.jpg', NULL, NULL, 1, NULL, 0, 0, NULL, NULL, '2025-07-23 16:53:32', '2025-07-23 16:53:32', NULL),
-(6, NULL, '9011614349', NULL, NULL, NULL, '98355154', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-01 17:21:16', 1, NULL, 0, 0, NULL, NULL, '2025-07-25 13:16:58', '2025-08-01 17:21:16', NULL),
-(7, NULL, '9170766430', NULL, NULL, NULL, '98355154', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-02 14:45:22', 1, NULL, 0, 0, NULL, NULL, '2025-07-25 13:18:28', '2025-08-02 14:45:22', NULL),
-(8, 'a.rahmanpour.dev@gmail.com', NULL, NULL, NULL, NULL, '98355154', NULL, NULL, NULL, NULL, NULL, '2025-08-01 17:16:30', NULL, 1, NULL, 0, 0, NULL, NULL, '2025-07-31 09:14:07', '2025-08-01 17:16:30', NULL),
-(9, NULL, '9179766430', NULL, NULL, NULL, '98355154', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0, 0, NULL, NULL, '2025-08-02 14:13:25', '2025-08-02 14:13:25', NULL);
+(1, 'a.rahmanpour@protonmail.com', '09170766430', NULL, 'عظیم', 'ریحانی', '$2y$10$D.zwPM1FxnCc5aBze9fPEuc8b2zmIlvLsLfsrfx0d1hVJo35trWry', NULL, NULL, NULL, NULL, 'images\\users\\2025\\06\\30\\1751292330.png', NULL, NULL, 1, NULL, 1, 0, NULL, NULL, '2025-06-30 14:05:34', '2025-06-30 14:05:34', NULL),
+(7, NULL, '9170766430', NULL, 'علی', 'هاشمی', '98355154', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-02 14:45:22', 1, NULL, 0, 0, NULL, NULL, '2025-07-25 13:18:28', '2025-08-02 14:45:22', NULL),
+(10, 'a.rahmanpour@gmail.com', NULL, NULL, 'مجید', 'مجیدی', '98355154', NULL, NULL, NULL, NULL, NULL, '2025-08-12 02:51:30', NULL, 1, NULL, 0, 0, NULL, NULL, '2025-08-12 02:51:10', '2025-08-12 02:51:30', NULL),
+(11, 'a.rahmanpour.dev@gmail.com', '09170766330', NULL, 'ارسلان', 'نامدار', '98355154', NULL, NULL, NULL, NULL, NULL, '2025-08-17 09:08:42', NULL, 1, NULL, 0, 0, NULL, NULL, '2025-08-17 08:49:56', '2025-08-20 08:53:49', NULL),
+(12, 'a.abdi@gmail.com', '9174563546', NULL, 'احمد', 'عبدی', '98355154', NULL, NULL, NULL, NULL, NULL, '2025-08-25 06:53:53', NULL, 1, NULL, 0, 0, NULL, NULL, '2025-08-25 06:53:34', '2025-08-25 06:55:45', NULL),
+(13, 's.saeidi@gmail.com', '9175463567', NULL, 'سعید', 'سعیدی', '98355154', NULL, NULL, NULL, NULL, NULL, '2025-08-25 06:58:32', NULL, 1, NULL, 0, 0, NULL, NULL, '2025-08-25 06:58:18', '2025-08-25 07:13:00', NULL),
+(14, NULL, '9011612020', NULL, 'رضا', 'احمدی', '98355154', NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 02:59:46', 1, NULL, 0, 0, NULL, NULL, '2025-08-26 02:58:26', '2025-08-26 03:00:29', NULL);
 
 --
 -- Indexes for dumped tables
@@ -1773,7 +1825,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `amazing_sales`
@@ -1797,7 +1849,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `cart_item_selected_attributes`
@@ -1815,7 +1867,7 @@ ALTER TABLE `cash_payments`
 -- AUTO_INCREMENT for table `category_attributes`
 --
 ALTER TABLE `category_attributes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `category_attribute_default_values`
@@ -1827,19 +1879,19 @@ ALTER TABLE `category_attribute_default_values`
 -- AUTO_INCREMENT for table `category_values`
 --
 ALTER TABLE `category_values`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `common_discount`
@@ -1923,7 +1975,7 @@ ALTER TABLE `order_item_selected_attributes`
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -1971,13 +2023,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product_images`
@@ -1995,7 +2047,7 @@ ALTER TABLE `product_meta`
 -- AUTO_INCREMENT for table `provinces`
 --
 ALTER TABLE `provinces`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `public_mail`
@@ -2061,7 +2113,7 @@ ALTER TABLE `ticket_priorities`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

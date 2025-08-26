@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Customer\SalesProcess;
 
+use App\Models\Address;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Models\Market\CartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Cache\Store;
+use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
 
 class AddressController extends Controller
 {
@@ -46,6 +49,14 @@ class AddressController extends Controller
             ]);
         }
 
+    }
+
+
+    public function addAddress(StoreAddressRequest $request) {
+        $inputs = $request->all();
+        $inputs['user_id'] = auth()->user()->id;
+        $address = Address::create($inputs);
+        return redirect()->back();
     }
 
 
