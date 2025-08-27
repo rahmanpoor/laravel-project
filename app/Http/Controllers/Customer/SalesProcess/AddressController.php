@@ -30,7 +30,7 @@ class AddressController extends Controller
 
 
         //show address page
-        return view('customer.sales-process.address-and-delivery', compact('cartItems', 'provinces'));
+        return view('customer.sales-process.address-and-delivery', compact('cartItems', 'provinces', 'user'));
     }
 
 
@@ -57,6 +57,9 @@ class AddressController extends Controller
         $inputs = $request->all();
         $inputs['user_id'] = auth()->user()->id;
 
+        $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
+        $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
+
         //fill reciver info if null
         if( $request->input('recipient_first_name') == null) {
             $inputs['recipient_first_name'] = auth()->user()->first_name;
@@ -70,6 +73,11 @@ class AddressController extends Controller
 
         $address = Address::create($inputs);
         return redirect()->back();
+    }
+
+
+    public function editAddress(){
+
     }
 
 
