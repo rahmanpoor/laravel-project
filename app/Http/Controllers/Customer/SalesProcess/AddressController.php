@@ -6,10 +6,12 @@ use App\Models\Address;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Models\Market\CartItem;
+use App\Models\Market\Delivery;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Cache\Store;
 use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
+use App\Http\Requests\Customer\SalesProcess\UpdateAddressRequest;
 
 class AddressController extends Controller
 {
@@ -22,6 +24,8 @@ class AddressController extends Controller
 
         $cartItems = CartItem::where('user_id', $user->id)->get();
 
+        $deliveryMethods = Delivery::where('status', 1)->get();
+
         //check cart
         $cartItemsCount  = CartItem::where('user_id', $user->id)->count();
         if (empty($cartItemsCount)) {
@@ -30,7 +34,7 @@ class AddressController extends Controller
 
 
         //show address page
-        return view('customer.sales-process.address-and-delivery', compact('cartItems', 'provinces', 'user'));
+        return view('customer.sales-process.address-and-delivery', compact('cartItems', 'provinces', 'user', 'deliveryMethods'));
     }
 
 
@@ -76,7 +80,26 @@ class AddressController extends Controller
     }
 
 
-    public function editAddress(){
+    public function updateAddress(Address $address, UpdateAddressRequest $request) {
+
+        $inputs = $request->all();
+
+        $inputs['user_id'] = auth()->user()->id;
+
+        $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
+        $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
+
+        if ($request->input('recipient_first_name') == null || $request->input('recipient_last_name') == null) {
+            $inputs['recipient_first_name'] = auth()->user()->first_name;
+            $inputs['recipient_last_name'] = auth()->user()->last_name;
+            $inputs['mobile'] = '0'. auth()->user()->mobile;
+
+        }
+
+
+        $address->update($inputs);
+
+        return redirect()->back();
 
     }
 

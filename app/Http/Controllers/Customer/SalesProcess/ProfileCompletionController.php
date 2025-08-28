@@ -15,9 +15,11 @@ class ProfileCompletionController extends Controller
     public function profileCompletion()
     {
         $user = Auth::user();
+        if ($user == null) {
+            return redirect()->route('auth.customer.login-register-form');
+        }
         $cartItems = CartItem::where('user_id', $user->id)->get();
         return view('customer.sales-process.profile-completion', compact('user', 'cartItems'));
-
     }
 
     public function update(ProfileCompletionRequest $request)

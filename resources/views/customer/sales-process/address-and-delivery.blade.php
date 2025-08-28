@@ -65,9 +65,10 @@
 
 
                                     @foreach (auth()->user()->addresses as $address)
-                                        <input type="radio" name="address" value="1" id="a1" />
+                                        <input type="radio" form="myForm" name="address_id" value="{{ $address->id }}"
+                                            id="a-{{ $address->id }}" />
                                         <!--checked="checked"-->
-                                        <label for="a1" class="address-wrapper mb-2 p-2">
+                                        <label for="a-{{ $address->id }}" class="address-wrapper mb-2 p-2">
                                             <section class="mb-2">
                                                 <i class="fa fa-map-marker-alt mx-1"></i>
                                                 آدرس : {{ $address->city->province->name ?? '-' }}
@@ -92,13 +93,14 @@
                                             <span class="address-selected">کالاها به این آدرس ارسال می شوند</span>
                                         </label>
 
+
                                         <!-- start edit address Modal -->
                                         <section class="modal fade" id="edit-address-{{ $address->id }}" tabindex="-1"
                                             aria-labelledby="add-address-label" aria-hidden="true">
                                             <section class="modal-dialog">
                                                 <section class="modal-content">
                                                     <section class="modal-header">
-                                                        <h5 class="modal-title" id="add-address-label"><i
+                                                        <h5 class="modal-title" id="edit-address-label"><i
                                                                 class="fa fa-plus"></i> ویرایش آدرس </h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -107,13 +109,17 @@
                                                         <form class="row" method="POST"
                                                             action="{{ route('customer.sales-process.update-address', $address->id) }}">
                                                             @csrf
+                                                            @method('PUT')
                                                             <section class="col-6 mb-2">
-                                                                <label for="province" class="form-label mb-1">استان</label>
+                                                                <label for="province-{{ $address->id }}"
+                                                                    class="form-label mb-1">استان</label>
                                                                 <select name="province_id"
-                                                                    class="form-select form-select-sm" id="province">
-                                                                    <option selected>استان را انتخاب کنید</option>
+                                                                    class="form-select form-select-sm"
+                                                                    id="province-{{ $address->id }}">
                                                                     @foreach ($provinces as $province)
-                                                                        <option value="{{ $province->id }}"
+                                                                        <option
+                                                                            {{ $province->id == $address->city->province_id ? 'selected' : '' }}
+                                                                            value="{{ $province->id }}"
                                                                             data-url="{{ route('customer.sales-process.get-cities', $province->id) }}">
                                                                             {{ $province->name }}</option>
                                                                     @endforeach
@@ -124,35 +130,38 @@
                                                             <section class="col-6 mb-2">
                                                                 <label for="city" class="form-label mb-1">شهر</label>
                                                                 <select name="city_id" class="form-select form-select-sm"
-                                                                    id="city">
+                                                                    id="city-{{ $address->id }}">
                                                                     <option selected>شهر را انتخاب کنید</option>
                                                                 </select>
                                                             </section>
                                                             <section class="col-12 mb-2">
                                                                 <label for="address" class="form-label mb-1">نشانی</label>
-                                                                <textarea name="address" class="form-control form-control-sm" id="address" placeholder="نشانی">{{ $address->address }}</textarea>
+                                                                <textarea name="address" autocomplete="off" class="form-control form-control-sm" id="address" placeholder="نشانی">{{ $address->address }}</textarea>
                                                             </section>
 
                                                             <section class="col-6 mb-2">
                                                                 <label for="postal_code" class="form-label mb-1">کد
                                                                     پستی</label>
-                                                                <input type="text" value="{{ $address->postal_code }}"
-                                                                    name="postal_code" class="form-control form-control-sm"
-                                                                    id="postal_code" placeholder="کد پستی">
+                                                                <input type="text" autocomplete="off"
+                                                                    value="{{ $address->postal_code }}" name="postal_code"
+                                                                    class="form-control form-control-sm" id="postal_code"
+                                                                    placeholder="کد پستی">
                                                             </section>
 
                                                             <section class="col-3 mb-2">
                                                                 <label for="no" class="form-label mb-1">پلاک</label>
-                                                                <input type="text" value="{{ $address->no }}"
-                                                                    name="no" class="form-control form-control-sm"
-                                                                    id="no" placeholder="پلاک">
+                                                                <input type="text" autocomplete="off"
+                                                                    value="{{ $address->no }}" name="no"
+                                                                    class="form-control form-control-sm" id="no"
+                                                                    placeholder="پلاک">
                                                             </section>
 
                                                             <section class="col-3 mb-2">
                                                                 <label for="unit" class="form-label mb-1">واحد</label>
-                                                                <input type="text" value="{{ $address->unit }}"
-                                                                    name="unit" class="form-control form-control-sm"
-                                                                    id="unit" placeholder="واحد">
+                                                                <input type="text" autocomplete="off"
+                                                                    value="{{ $address->unit }}" name="unit"
+                                                                    class="form-control form-control-sm" id="unit"
+                                                                    placeholder="واحد">
                                                             </section>
 
                                                             <section class="border-bottom mt-2 mb-3"></section>
@@ -161,8 +170,8 @@
                                                                 <section class="form-check">
 
                                                                     <input
-                                                                        {{ $address->recipient_first_name !== $user->first_name ? 'checked' : '' }}
-                                                                        class="form-check-input" name="receiver"
+                                                                        {{ $address->recipient_first_name !== $user->first_name || $address->recipient_last_name !== $user->last_name ? 'checked' : '' }}
+                                                                        class="receiver form-check-input" name="receiver"
                                                                         type="checkbox" id="receiver">
                                                                     <label class="form-check-label" for="receiver">
                                                                         گیرنده سفارش خودم نیستم (اطلاعات زیر تکمیل شود)
@@ -173,7 +182,7 @@
                                                             <section class="col-6 mb-2">
                                                                 <label for="first_name" class="form-label mb-1">نام
                                                                     گیرنده</label>
-                                                                <input type="text"
+                                                                <input type="text" autocomplete="off"
                                                                     value="{{ $address->recipient_first_name }}"
                                                                     name="recipient_first_name"
                                                                     class="form-control form-control-sm" id="first_name"
@@ -185,7 +194,8 @@
                                                                     خانوادگی گیرنده</label>
                                                                 <input
                                                                     value="{{ $address->recipient_last_name ?? $address->recipient_last_name }}"
-                                                                    type="text" name="recipient_last_name"
+                                                                    type="text" autocomplete="off"
+                                                                    name="recipient_last_name"
                                                                     class="form-control form-control-sm" id="last_name"
                                                                     placeholder="نام خانوادگی گیرنده">
                                                             </section>
@@ -193,7 +203,7 @@
                                                             <section class="col-6 mb-2">
                                                                 <label for="mobile" class="form-label mb-1">شماره
                                                                     موبایل</label>
-                                                                <input type="text"
+                                                                <input type="text" autocomplete="off"
                                                                     value="{{ $address->mobile ?? $address->mobile }}"
                                                                     name="mobile" class="form-control form-control-sm"
                                                                     id="mobile" placeholder="شماره موبایل">
@@ -222,6 +232,10 @@
                                         <button class="address-add-button" type="button" data-bs-toggle="modal"
                                             data-bs-target="#add-address"><i class="fa fa-plus"></i> ایجاد آدرس
                                             جدید</button>
+
+
+
+
                                         <!-- start add address Modal -->
                                         <section class="modal fade" id="add-address" tabindex="-1"
                                             aria-labelledby="add-address-label" aria-hidden="true">
@@ -262,13 +276,13 @@
                                                             <section class="col-12 mb-2">
                                                                 <label for="address"
                                                                     class="form-label mb-1">نشانی</label>
-                                                                <textarea name="address" class="form-control form-control-sm" id="address" placeholder="نشانی"></textarea>
+                                                                <textarea name="address" autocomplete="off" class="form-control form-control-sm" id="address" placeholder="نشانی"></textarea>
                                                             </section>
 
                                                             <section class="col-6 mb-2">
                                                                 <label for="postal_code" class="form-label mb-1">کد
                                                                     پستی</label>
-                                                                <input type="text" name="postal_code"
+                                                                <input type="text" autocomplete="off" name="postal_code"
                                                                     class="form-control form-control-sm" id="postal_code"
                                                                     placeholder="کد پستی">
                                                             </section>
@@ -291,8 +305,8 @@
 
                                                             <section class="col-12 mb-2">
                                                                 <section class="form-check">
-                                                                    <input class="form-check-input" name="receiver"
-                                                                        type="checkbox" id="receiver">
+                                                                    <input class="receiver form-check-input"
+                                                                        name="receiver" type="checkbox" id="receiver">
                                                                     <label class="form-check-label" for="receiver">
                                                                         گیرنده سفارش خودم نیستم (اطلاعات زیر تکمیل شود)
                                                                     </label>
@@ -300,15 +314,17 @@
                                                             </section>
 
                                                             <section class="col-6 mb-2">
-                                                                <label for="first_name" class="form-label mb-1">نام
+                                                                <label for="first_name"
+                                                                    class="field  first_name form-label mb-1">نام
                                                                     گیرنده</label>
-                                                                <input type="text" name="recipient_first_name"
+                                                                <input type="text" autocomplete="off" name="recipient_first_name"
                                                                     class="form-control form-control-sm" id="first_name"
                                                                     placeholder="نام گیرنده">
                                                             </section>
 
                                                             <section class="col-6 mb-2">
-                                                                <label for="last_name" class="form-label mb-1">نام
+                                                                <label for="last_name"
+                                                                    class="field  last_name form-label mb-1">نام
                                                                     خانوادگی گیرنده</label>
                                                                 <input type="text" name="recipient_last_name"
                                                                     class="form-control form-control-sm" id="last_name"
@@ -316,7 +332,8 @@
                                                             </section>
 
                                                             <section class="col-6 mb-2">
-                                                                <label for="mobile" class="form-label mb-1">شماره
+                                                                <label for="mobile"
+                                                                    class="field  mobile form-label mb-1">شماره
                                                                     موبایل</label>
                                                                 <input type="text" name="mobile"
                                                                     class="form-control form-control-sm" id="mobile"
@@ -367,38 +384,34 @@
                                         </secrion>
                                     </section>
 
-                                    <input type="radio" name="delivery_type" value="1" id="d1" />
-                                    <label for="d1" class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
+                                    @foreach ($deliveryMethods as $deliveryMethod)
+
+
+                                    <input type="radio" form="myForm" name="delivery_id" value="{{ $deliveryMethod->id }}" id="d-{{ $deliveryMethod->id }}" />
+                                    <label for="d-{{ $deliveryMethod->id }}" class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
                                         <section class="mb-2">
                                             <i class="fa fa-shipping-fast mx-1"></i>
-                                            پست پیشتاز
+                                            {{ $deliveryMethod->name }}
                                         </section>
                                         <section class="mb-2">
                                             <i class="fa fa-calendar-alt mx-1"></i>
-                                            تامین کالا از 4 روز کاری آینده
+                                            تامین کالا از {{ $deliveryMethod->delivery_time }} {{ $deliveryMethod->delivery_time_unit }} کاری آینده
                                         </section>
                                     </label>
 
-                                    <input type="radio" name="delivery_type" value="2" id="d2" />
-                                    <label for="d2" class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-shipping-fast mx-1"></i>
-                                            تیپاکس
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            تامین کالا از 2 روز کاری آینده
-                                        </section>
-                                    </label>
-
+                                     @endforeach
 
                                 </section>
                             </section>
 
 
-
+                             <form id="myForm" action="{{ route('customer.sales-process.payment') }}" ></form>
 
                         </section>
+
+
+
+
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
                                 @php
@@ -492,27 +505,78 @@
                     }
                 })
             })
+
+            // edit
+            var addresses = {!! auth()->user()->addresses !!};
+
+            addresses.map(function(address) {
+                var id = address.id;
+                var target = `#province-${id}`;
+                var selected = `${target} option:selected`;
+
+                function loadCities(provinceElement, selectedCityId) {
+                    var url = provinceElement.attr('data-url');
+
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        success: function(response) {
+                            if (response.status) {
+                                let cities = response.cities;
+                                let citySelect = $(`#city-${id}`);
+                                citySelect.empty();
+
+                                cities.map(function(city) {
+                                    citySelect.append(
+                                        `<option value="${city.id}">${city.name}</option>`
+                                    );
+                                });
+
+                                // انتخاب شهر ذخیره‌شده
+                                if (selectedCityId) {
+                                    citySelect.val(selectedCityId);
+                                }
+                            } else {
+                                errorToast('مشکلی پیش آمد');
+                            }
+                        },
+                        error: function() {
+                            errorToast('مشکلی پیش آمد');
+                        }
+                    });
+                }
+
+                // وقتی کاربر استان رو تغییر میده
+                $(target).change(function() {
+                    var element = $(this).find("option:selected");
+                    loadCities(element, null);
+                });
+
+                // بارگذاری اولیه (نمایش شهر کاربر وقتی مدال باز میشه)
+                var element = $(selected);
+                loadCities(element, address.city_id);
+            });
         })
     </script>
 
     <script>
-        $(document).ready(function() {
-            let fields = $("#first_name, #last_name, #mobile");
+        $(function() {
+            $(".modal").each(function() {
+                const modal = $(this);
+                const fields = modal.find("#first_name, #last_name, #mobile");
+                const receiver = modal.find(".receiver");
 
-
-
-            if ($("#receiver").is(":checked")) {
-            fields.prop("disabled", false);
-            }else {
-                    fields.prop("disabled", true).val('');
-             };
-
-            $("#receiver").on("change", function() {
-                if ($(this).is(":checked")) {
-                    fields.prop("disabled", false);
-                } else {
-                    fields.prop("disabled", true).val('');
+                function toggleFields() {
+                    const enabled = receiver.is(":checked");
+                    fields.prop("disabled", !enabled);
+                    if (!enabled) fields.val('');
                 }
+
+                // بارگذاری اولیه
+                toggleFields();
+
+                // تغییر وضعیت
+                receiver.on("change", toggleFields);
             });
         });
     </script>
