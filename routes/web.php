@@ -428,6 +428,7 @@ Route::namespace('SalesProcess')->group(function () {
         Route::post('/add-address', [AddressController::class, 'addAddress'])->name('customer.sales-process.add-address');
         Route::put('/update-address/{address}', [AddressController::class, 'updateAddress'])->name('customer.sales-process.update-address');
         Route::get('/get-cities/{province}', [AddressController::class, 'getCities'])->name('customer.sales-process.get-cities');
+        Route::post('/choose-address-and-delivery', [AddressController::class, 'chooseAddressAndDelivery'])->name('customer.sales-process.choose-address-and-delivery');
 
 
         //paymeny

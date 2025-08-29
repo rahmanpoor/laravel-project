@@ -2,50 +2,67 @@
 
 
 @section('head-tag')
-    <title>سبد خرید شما</title>
+    <title>
+        سبد خرید شما</title>
 @endsection
 
 
 
 @section('content')
+    <!-- start cart -->
+    <section class="mb-4">
+        <section class="container-xxl">
+            <section class="row">
+                <section class="col">
 
- <!-- start cart -->
-        <section class="mb-4">
-            <section class="container-xxl" >
-                <section class="row">
-                    <section class="col">
-
-                        {{-- add alert section success --}}
-                         @include('admin.alerts.alert-section.success')
+                    {{-- add alert section success --}}
+                    @include('admin.alerts.alert-section.success')
 
 
-                        <!-- start vontent header -->
-                        <section class="content-header">
-                            <section class="d-flex justify-content-between align-items-center">
-                                <h2 class="content-header-title">
-                                    <span>سبد خرید شما</span>
-                                </h2>
-                                <section class="content-header-link">
-                                    <!--<a href="#">مشاهده همه</a>-->
-                                </section>
+
+                    @if ($cartItems->isEmpty())
+                        <div class="alert alert-warning" role="alert">
+                            سبد خرید شما خالی است
+                        </div>
+
+                    @else
+
+
+
+                    <!-- start vontent header -->
+                    <section class="content-header">
+                        <section class="d-flex justify-content-between align-items-center">
+                            <h2 class="content-header-title">
+                                <span>سبد خرید شما</span>
+                            </h2>
+                            <section class="content-header-link">
+                                <!--<a href="#">مشاهده همه</a>-->
                             </section>
                         </section>
-
-                        <section class="row mt-4">
-                            <section class="col-md-9 mb-3">
-                                <form action="" id="cart_items" method="POST" class="content-wrapper bg-white p-3 rounded-2">
-                                    @csrf
-
-                                    @php
-                                        $totalPrice = 0;
-                                        $totalDiscount = 0;
-                                    @endphp
+                    </section>
 
 
 
+                    <section class="row mt-4">
+                        <section class="col-md-9 mb-3">
 
-                                    @foreach ($cartItems as $key => $cartItem)
 
+                            <form action="" id="cart_items" method="POST"
+                                class="content-wrapper bg-white p-3 rounded-2">
+                                @csrf
+
+
+
+                                @php
+                                    $totalPrice = 0;
+                                    $totalDiscount = 0;
+                                @endphp
+
+
+
+
+
+                                @foreach ($cartItems as $key => $cartItem)
                                     @php
                                         $totalPrice += $cartItem->cartItemProductPrice();
                                         $totalDiscount += $cartItem->cartItemProductDiscount();
@@ -53,104 +70,126 @@
 
                                     <section class="cart-item d-md-flex py-3">
                                         <section class="cart-img align-self-start flex-shrink-1"><img
-                                            src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
-                                            alt="{{ asset($cartItem->product->image['indexArray']['medium']) . '-' . ($key + 1) }}"></section>
+                                                src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
+                                                alt="{{ asset($cartItem->product->image['indexArray']['medium']) . '-' . ($key + 1) }}">
+                                        </section>
                                         <section class="align-self-start w-100">
                                             <p class="fw-bold">{{ $cartItem->product->name }}</p>
                                             @if (!empty($cartItem->color))
-                                                <p><span style="background-color: {{ $cartItem->color->color }};" class="cart-product-selected-color me-1"></span> <span>{{ $cartItem->color->color_name }}</span></p>
+                                                <p><span style="background-color: {{ $cartItem->color->color }};"
+                                                        class="cart-product-selected-color me-1"></span>
+                                                    <span>{{ $cartItem->color->color_name }}</span>
+                                                </p>
                                             @endif
 
 
                                             <p>
                                                 @if (!empty($cartItem->guarantee))
-                                                <i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span>{{ $cartItem->guarantee->name }}</span>
-                                                @endif</p>
-                                            <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در انبار</span></p>
+                                                    <i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i>
+                                                    <span>{{ $cartItem->guarantee->name }}</span>
+                                                @endif
+                                            </p>
+                                            <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا
+                                                    موجود در انبار</span></p>
                                             <section>
                                                 <section class="cart-product-number d-inline-block ">
                                                     <button class="cart-number cart-number-down" type="button">-</button>
-                                                    <input class="number" name="number[{{ $cartItem->id }}]" data-product-price="{{ $cartItem->cartItemProductPrice() }}" data-product-discount="{{ $cartItem->cartItemProductDiscount() }}" type="number" min="1" max="5" step="1"    value="{{ $cartItem->number }}" readonly="readonly">
+                                                    <input class="number" name="number[{{ $cartItem->id }}]"
+                                                        data-product-price="{{ $cartItem->cartItemProductPrice() }}"
+                                                        data-product-discount="{{ $cartItem->cartItemProductDiscount() }}"
+                                                        type="number" min="1" max="5" step="1"
+                                                        value="{{ $cartItem->number }}" readonly="readonly">
                                                     <button class="cart-number cart-number-up" type="button">+</button>
                                                 </section>
-                                                <a class="text-decoration-none ms-4 cart-delete" href="{{ route('customer.sales-process.remove-from-cart', $cartItem) }}"><i class="fa fa-trash-alt"></i> حذف از سبد</a>
+                                                <a class="text-decoration-none ms-4 cart-delete"
+                                                    href="{{ route('customer.sales-process.remove-from-cart', $cartItem) }}"><i
+                                                        class="fa fa-trash-alt"></i> حذف از سبد</a>
                                             </section>
                                         </section>
                                         <section class="align-self-end flex-shrink-1">
                                             @if (!empty($cartItem->product->activeAmazingSales()))
-                                            <section class="cart-item-discount text-danger text-nowrap mb-1">{{ priceFormat($cartItem->cartItemProductDiscount()) }} تخفیف</section>
-                                             @endif
-                                            <section class="text-nowrap fw-bold">{{ priceFormat($cartItem->cartItemProductPrice()) }} تومان</section>
+                                                <section class="cart-item-discount text-danger text-nowrap mb-1">
+                                                    {{ priceFormat($cartItem->cartItemProductDiscount()) }} تخفیف</section>
+                                            @endif
+                                            <section class="text-nowrap fw-bold">
+                                                {{ priceFormat($cartItem->cartItemProductPrice()) }} تومان</section>
                                         </section>
                                     </section>
-
-                                    @endforeach
-
-
-                                </form>
-                            </section>
-                            <section class="col-md-3">
-                                <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">قیمت کالاها ({{ count($cartItems) }})</p>
-                                        <p class="text-muted" id="total_product_price">{{ priceFormat($totalPrice) }} تومان</p>
-                                    </section>
-
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">تخفیف کالاها</p>
-                                        <p class="text-danger fw-bolder" id="total_discount">{{ priceFormat($totalDiscount) }} تومان</p>
-                                    </section>
-                                    <section class="border-bottom mb-3"></section>
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted">جمع سبد خرید</p>
-                                        <p class="fw-bolder" id="total_price">{{ priceFormat($totalPrice - $totalDiscount) }} تومان</p>
-                                    </section>
-
-                                    <p class="my-3">
-                                        <i class="fa fa-info-circle me-1"></i>کاربر گرامی  خرید شما هنوز نهایی نشده است. برای ثبت سفارش و تکمیل خرید باید ابتدا آدرس خود را انتخاب کنید و سپس نحوه ارسال را انتخاب کنید. نحوه ارسال انتخابی شما محاسبه و به این مبلغ اضافه شده خواهد شد. و در نهایت پرداخت این سفارش صورت میگیرد.
-                                    </p>
+                                @endforeach
 
 
-                                    <section class="">
-                                        <a onclick="document.getElementById('cart_items').submit();"  class="btn btn-danger d-block">تکمیل فرآیند خرید</a>
-                                    </section>
-
+                            </form>
+                        </section>
+                        <section class="col-md-3">
+                            <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
+                                <section class="d-flex justify-content-between align-items-center">
+                                    <p class="text-muted">قیمت کالاها ({{ count($cartItems) }})</p>
+                                    <p class="text-muted" id="total_product_price">{{ priceFormat($totalPrice) }} تومان</p>
                                 </section>
+
+                                <section class="d-flex justify-content-between align-items-center">
+                                    <p class="text-muted">تخفیف کالاها</p>
+                                    <p class="text-danger fw-bolder" id="total_discount">{{ priceFormat($totalDiscount) }}
+                                        تومان</p>
+                                </section>
+                                <section class="border-bottom mb-3"></section>
+                                <section class="d-flex justify-content-between align-items-center">
+                                    <p class="text-muted">جمع سبد خرید</p>
+                                    <p class="fw-bolder" id="total_price">{{ priceFormat($totalPrice - $totalDiscount) }}
+                                        تومان</p>
+                                </section>
+
+                                <p class="my-3">
+                                    <i class="fa fa-info-circle me-1"></i>کاربر گرامی خرید شما هنوز نهایی نشده است. برای ثبت
+                                    سفارش و تکمیل خرید باید ابتدا آدرس خود را انتخاب کنید و سپس نحوه ارسال را انتخاب کنید.
+                                    نحوه ارسال انتخابی شما محاسبه و به این مبلغ اضافه شده خواهد شد. و در نهایت پرداخت این
+                                    سفارش صورت میگیرد.
+                                </p>
+
+
+                                <section class="">
+                                    <a onclick="document.getElementById('cart_items').submit();"
+                                        class="btn btn-danger d-block">تکمیل فرآیند خرید</a>
+                                </section>
+
                             </section>
                         </section>
                     </section>
+
+
                 </section>
-
             </section>
+
         </section>
-        <!-- end cart -->
+    </section>
+    <!-- end cart -->
 
 
 
 
 
-         <section class="mb-4">
-            <section class="container-xxl" >
-                <section class="row">
-                    <section class="col">
-                        <section class="content-wrapper bg-white p-3 rounded-2">
-                            <!-- start vontent header -->
-                            <section class="content-header">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <h2 class="content-header-title">
-                                        <span>کالاهای مرتبط با سبد خرید شما</span>
-                                    </h2>
-                                    <section class="content-header-link">
-                                        <!--<a href="#">مشاهده همه</a>-->
-                                    </section>
+    <section class="mb-4">
+        <section class="container-xxl">
+            <section class="row">
+                <section class="col">
+                    <section class="content-wrapper bg-white p-3 rounded-2">
+                        <!-- start vontent header -->
+                        <section class="content-header">
+                            <section class="d-flex justify-content-between align-items-center">
+                                <h2 class="content-header-title">
+                                    <span>کالاهای مرتبط با سبد خرید شما</span>
+                                </h2>
+                                <section class="content-header-link">
+                                    <!--<a href="#">مشاهده همه</a>-->
                                 </section>
                             </section>
-                            <!-- start vontent header -->
-                            <section class="lazyload-wrapper" >
-                                <section class="lazyload light-owl-nav owl-carousel owl-theme">
+                        </section>
+                        <!-- start vontent header -->
+                        <section class="lazyload-wrapper">
+                            <section class="lazyload light-owl-nav owl-carousel owl-theme">
 
 
-                                   @foreach ($relatedProducts as $key => $relatedProduct)
+                                @foreach ($relatedProducts as $key => $relatedProduct)
                                     <section class="item">
                                         <section class="lazyload-item-wrapper">
                                             <section class="product">
@@ -217,30 +256,26 @@
                                     </section>
                                 @endforeach
 
-                                </section>
                             </section>
                         </section>
                     </section>
                 </section>
             </section>
         </section>
-
-
+    </section>
+     @endif
 @endsection
 
 
 
 @section('scripts')
-
-
-
-<script>
-        $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
             bill();
 
 
 
-            $('.cart-number').click(function () {
+            $('.cart-number').click(function() {
                 bill();
             })
 
@@ -256,15 +291,15 @@
 
 
 
-            $('.number').each(function () {
-               var productPrice = parseFloat($(this).data('product-price'));
-               var productDiscount = parseFloat($(this).data('product-discount'));
-               var number = parseFloat($(this).val());
+            $('.number').each(function() {
+                var productPrice = parseFloat($(this).data('product-price'));
+                var productDiscount = parseFloat($(this).data('product-discount'));
+                var number = parseFloat($(this).val());
 
 
 
-               total_product_price += productPrice * number;
-               total_discount += productDiscount * number;
+                total_product_price += productPrice * number;
+                total_discount += productDiscount * number;
             });
 
             total_price = total_product_price - total_discount;
@@ -278,38 +313,36 @@
 
 
 
-         function toFarsiNumber(number) {
+        function toFarsiNumber(number) {
             const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             //add comma
             number = new Intl.NumberFormat().format(number);
             //conver to persian
             return number.toString().replace(/\d/g, d => farsiDigits[d]);
         }
-</script>
+    </script>
 
 
-<script>
-            $('.product-add-to-favorite button').click(function() {
-                var url = $(this).attr('data-url');
-                var element = $(this);
-                $.ajax({
-                    url: url,
-                    success: function(result) {
-                        if (result.status == 1) {
-                            $(element).children().first().addClass('text-danger');
-                            $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
-                            $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
-                        } else if (result.status == 2) {
-                            $(element).children().first().removeClass('text-danger')
-                            $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
-                            $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
-                        } else if (result.status == 3) {
-                            $('.toast').toast('show');
-                        }
+    <script>
+        $('.product-add-to-favorite button').click(function() {
+            var url = $(this).attr('data-url');
+            var element = $(this);
+            $.ajax({
+                url: url,
+                success: function(result) {
+                    if (result.status == 1) {
+                        $(element).children().first().addClass('text-danger');
+                        $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
+                        $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
+                    } else if (result.status == 2) {
+                        $(element).children().first().removeClass('text-danger')
+                        $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
+                        $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
+                    } else if (result.status == 3) {
+                        $('.toast').toast('show');
                     }
-                })
+                }
             })
-        </script>
-
+        })
+    </script>
 @endsection
-

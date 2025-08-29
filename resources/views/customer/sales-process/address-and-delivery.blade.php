@@ -405,7 +405,7 @@
                             </section>
 
 
-                             <form id="myForm" action="{{ route('customer.sales-process.payment') }}" ></form>
+
 
                         </section>
 
@@ -456,9 +456,12 @@
                                 </p>
 
 
+                                <form id="myForm" action="{{ route('customer.sales-process.choose-address-and-delivery') }}" method="POST">
+                                @csrf
+                                </form>
                                 <section class="">
                                     <button type="button"
-                                        onclick="document.getElementById('profile_completion').submit();"
+                                        onclick="document.getElementById('myForm').submit();"
                                         class="btn btn-danger d-block w-100">تکمیل فرآیند خرید</button>
                                 </section>
 

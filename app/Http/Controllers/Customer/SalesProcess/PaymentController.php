@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class PaymentController extends Controller
 {
     public function payment(){
-        dd('payment');
+        return view('customer.sales-process.payment');
     }
 }

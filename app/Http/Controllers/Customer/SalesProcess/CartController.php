@@ -95,5 +95,6 @@ class CartController extends Controller
         return back()->with('alert-section-success', 'محصول از سبد خرید حذف شد');
 
 
+
     }
 }
