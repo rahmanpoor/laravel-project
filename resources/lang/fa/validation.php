@@ -203,7 +203,9 @@ return [
         'city_id'                   => 'شهر',
         'province_id'               => 'استان',
         'recipient_first_name'      => 'نام گیرنده',
-        'recipient_last_name'      => 'نام خانوادگی گیرنده',
+        'recipient_last_name'       => 'نام خانوادگی گیرنده',
+        'address_id'                => 'آدرس',
+        'delivery_id'               => 'نحوه ارسال'
 
 
     ],

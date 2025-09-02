@@ -433,6 +433,7 @@ Route::namespace('SalesProcess')->group(function () {
 
         //paymeny
         Route::get('/payment', [CustomerPaymentController::class, 'payment'])->name('customer.sales-process.payment');
+        Route::post('/copan-discount', [CustomerPaymentController::class, 'copanDiscount'])->name('customer.sales-process.copan-discount');
 
     });
 
