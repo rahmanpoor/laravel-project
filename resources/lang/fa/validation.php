@@ -205,7 +205,8 @@ return [
         'recipient_first_name'      => 'نام گیرنده',
         'recipient_last_name'       => 'نام خانوادگی گیرنده',
         'address_id'                => 'آدرس',
-        'delivery_id'               => 'نحوه ارسال'
+        'delivery_id'               => 'نحوه ارسال',
+        'copan'                     => 'کد تخفیف',
 
 
     ],

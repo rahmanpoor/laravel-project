@@ -2,6 +2,7 @@
 
 
 @section('head-tag')
+    <link href="{{ asset('admin-asset\sweetalert\sweetalert2.css') }}" rel="stylesheet" />
     <title>تکمیل اطلاعات پرداخت</title>
 @endsection
 
@@ -27,6 +28,13 @@
                     </section>
 
                     <section class="row mt-4">
+                        <ul>
+                            @if ($errors->any())
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-danger">{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        </ul>
                         <section class="col-md-9">
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
 
@@ -54,7 +62,7 @@
                                         <form action="{{ route('customer.sales-process.copan-discount') }}" method="POST">
                                         @csrf
                                         <section class="input-group input-group-sm">
-                                            <input type="text" name="copan" class="form-control" placeholder="کد تخفیف را وارد کنید">
+                                            <input type="text" name="code" class="form-control" placeholder="کد تخفیف را وارد کنید">
                                             <button class="btn btn-primary" type="submit">اعمال کد</button>
                                         </section>
                                         </form>
@@ -194,7 +202,9 @@
 
 
 @section('scripts')
-   <script>
 
-   </script>
+    @include('admin.alerts.sweetalert.success')
+    @include('admin.alerts.sweetalert.error')
+    <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
+
 @endsection
