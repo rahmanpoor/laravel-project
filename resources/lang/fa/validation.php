@@ -207,6 +207,7 @@ return [
         'address_id'                => 'آدرس',
         'delivery_id'               => 'نحوه ارسال',
         'copan'                     => 'کد تخفیف',
+        'payment_type'              => 'نوع پرداخت',
 
 
     ],

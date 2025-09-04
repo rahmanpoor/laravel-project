@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer\SalesProcess;
 use App\Models\Market\Copan;
 use App\Models\Market\Order;
 use Illuminate\Http\Request;
+use App\Models\Market\CartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,10 @@ class PaymentController extends Controller
 {
     public function payment()
     {
-        return view('customer.sales-process.payment');
+        $user = auth()->user();
+        $cartItems = CartItem::where('user_id', $user->id)->get();
+        $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
+        return view('customer.sales-process.payment', compact('cartItems', 'order'));
     }
 
     public function copanDiscount(Request $request)
@@ -33,7 +37,7 @@ class PaymentController extends Controller
 
                 $copan = Copan::where([['code', $request->code], ['status', 1], ['end_date', '>', now()], ['start_date', '<', now()], ['user_id', auth()->user()->id]])->first();
                 if ($copan == null) {
-                    return redirect()->back()->with('swal-error', 'کد تخفیف شما معتبر نیست');
+                    return redirect()->back()->withErrors(['code' => 'کد تخفیف شما معتبر نیست']);
                 }
             }
 
@@ -62,10 +66,35 @@ class PaymentController extends Controller
 
                 return redirect()->back()->with('swal-success', 'کد تخفیف شما با موفقیت اعمال شد');
             } else {
-                return redirect()->back()->with('swal-error', 'کد تخفیف شما معتبر نیست');
+                return redirect()->back()->withErrors(['code' => 'کد تخفیف شما معتبر نیست']);
             }
         } else {
-            return redirect()->back()->with('swal-error', 'کد تخفیف اشتباه است');
+            return redirect()->back()->withErrors(['code' => 'کد تخفیف شما معتبر نیست']);
+        }
+    }
+
+    public function paymentSubmit(Request $request)
+    {
+        $request->validate(
+            ['payment_type' => 'required']
+        );
+
+        $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+        switch ($request->payment_type) {
+            case '1':
+                dd('online');
+                break;
+            case '2':
+                dd('offline');
+                break;
+            case '3':
+                dd('cash');
+                break;
+
+            default:
+                return redirect()->back();
+                break;
         }
     }
 }
