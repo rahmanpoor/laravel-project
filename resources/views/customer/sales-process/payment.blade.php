@@ -97,21 +97,39 @@
                                             کنید.
                                         </secrion>
                                     </section>
-                                    <form action="{{ route('customer.sales-process.payment-submit') }}" method="POST" id="payment_submit">
-                                    @csrf
-                                    <input type="radio" name="payment_type" value="1" id="d1" />
-                                    <label for="d1" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-credit-card mx-1"></i>
-                                            پرداخت آنلاین
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            درگاه پرداخت زرین پال
-                                        </section>
-                                    </label>
+                                    <form action="{{ route('customer.sales-process.payment-submit') }}" method="POST"
+                                        id="payment_submit">
+                                        @csrf
+                                        <input type="radio" name="payment_type" value="1" id="d1" />
+                                        <label for="d1" class="col-12 col-md-4 payment-wrapper mb-2 pt-2 d-flex flex-row  justify-content-between p-1">
+                                           <div class="payment-text">
+                                            <section class="mb-2 ">
+                                                <i class="fa fa-credit-card mx-1"></i>
+                                                پرداخت آنلاین
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                درگاه پرداخت زرین پال
+                                            </section>
+                                           </div>
+                                            <section class="mb-1">
+                                                      <style>
+                                                    #zarinpal {
+                                                        margin: auto;
+                                                        flex-shrink: 0;
+                                                    }
 
-                                    <section class="mb-2"></section>
+                                                    #zarinpal img {
+                                                        width: 35px;
+                                                    }
+                                                </style>
+                                                <div id="zarinpal" class="">
+                                                    <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+                                                </div>
+                                            </section>
+                                        </label>
+
+                                        <section class="mb-2"></section>
 
                                         <input type="radio" name="payment_type" value="2" id="d2" />
                                         <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
@@ -248,9 +266,9 @@
     @include('admin.alerts.sweetalert.success')
     @include('admin.alerts.sweetalert.error')
     <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
-     <script>
-        $(function(){
-            $('#cash_payment').click(function(){
+    <script>
+        $(function() {
+            $('#cash_payment').click(function() {
                 var newDiv = document.createElement('div');
                 newDiv.innerHTML = `
                 <section class="input-group input-group-sm">

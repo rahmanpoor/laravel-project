@@ -151,8 +151,8 @@ class PaymentController extends Controller
         $amountInTooman = ($order->order_final_amount * 10);
         $response = $zarinpal->requestPayment(
             $amountInTooman,
-            'خرید',
-            ['mobile' => $order->user->mobile, 'email' => $order->user->email]
+            'پرداخت سفارش #' . $order->id,
+            ['mobile' => Auth::user()->mobile, 'email' => Auth::user()->email]
         );
 
         if (isset($response['data']['authority']) && $response['data']['code'] == 100) {
