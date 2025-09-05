@@ -1,7 +1,9 @@
 @extends('customer.layouts.master-one-col')
 
 
-
+@section('head-tag')
+    <link href="{{ asset('admin-asset\sweetalert\sweetalert2.css') }}" rel="stylesheet" />
+@endsection
 
 @section('content')
     <!-- start slideshow -->
@@ -338,6 +340,8 @@
 
 
     @section('scripts')
+    @include('admin.alerts.sweetalert.success')
+    <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
         <script>
             $('.product-add-to-favorite button').click(function() {
                 var url = $(this).attr('data-url');

@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Customer\SalesProcess;
 use App\Models\Market\Copan;
 use App\Models\Market\Order;
 use Illuminate\Http\Request;
+use App\Models\Market\Payment;
 use App\Models\Market\CartItem;
+use App\Models\Market\CashPayment;
 use App\Http\Controllers\Controller;
+use App\Models\Market\OnlinePayment;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Market\OfflinePayment;
 
 class PaymentController extends Controller
 {
@@ -83,18 +87,49 @@ class PaymentController extends Controller
         $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
         switch ($request->payment_type) {
             case '1':
-                dd('online');
+                $targetModel = OnlinePayment::class;
+                $type = 0;
                 break;
             case '2':
-                dd('offline');
+                $targetModel = OfflinePayment::class;
+                $type = 1;
                 break;
             case '3':
-                dd('cash');
+                $targetModel = CashPayment::class;
+                $type = 2;
                 break;
 
             default:
-                return redirect()->back();
+                return redirect()->back()->withErrors(['error' => 'خطا']);
                 break;
         }
+
+        $paymented = $targetModel::create([
+            'amount' => $order->order_final_amount,
+            'user_id' => Auth::user()->id,
+            'pay_date' => now(),
+            'status' => 1
+        ]);
+
+        $payment = Payment::create([
+            'amount' => $order->order_final_amount,
+            'user_id' => Auth::user()->id,
+            'pay_date' => now(),
+            'type' => $type,
+            'paymentable_id' => $paymented->id,
+            'paymentable_type' => $targetModel,
+            'status' => 1
+        ]);
+
+        $order->update([
+            'order_status' => 3
+        ]);
+
+
+        foreach ($cartItems as $key => $cartItem) {
+            $cartItem->delete();
+        }
+
+        return redirect()->route('customer.home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
     }
 }
