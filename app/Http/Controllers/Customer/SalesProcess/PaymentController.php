@@ -12,6 +12,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Market\OnlinePayment;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Market\OfflinePayment;
+use App\Http\Services\Payment\ZarinpalService;
+
+
+
 
 class PaymentController extends Controller
 {
@@ -114,6 +118,10 @@ class PaymentController extends Controller
             'status' => 1
         ]);
 
+        if ($request->payment_type == 1) {
+            return redirect()->route('customer.sales-process.pay', $order);
+        }
+
         $payment = Payment::create([
             'amount' => $order->order_final_amount,
             'user_id' => Auth::user()->id,
@@ -135,4 +143,43 @@ class PaymentController extends Controller
 
         return redirect()->route('customer.home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
     }
-}
+
+
+
+    public function pay(ZarinpalService $zarinpal, Order $order)
+    {
+        $amountInTooman = ($order->order_final_amount * 10);
+        $response = $zarinpal->requestPayment(
+            $amountInTooman,
+            'خرید',
+            ['mobile' => $order->user->mobile, 'email' => $order->user->email]
+        );
+
+        if (isset($response['data']['authority']) && $response['data']['code'] == 100) {
+            // ریدایرکت به صفحه پرداخت
+            return redirect("https://www.zarinpal.com/pg/StartPay/" . $response['data']['authority']);
+        }
+
+        return $response;
+    }
+
+    public function callback(Request $request, ZarinpalService $zarinpal)
+    {
+        $authority = $request->get('Authority');
+        $status = $request->get('Status');
+
+        if ($status === 'OK') {
+            $result = $zarinpal->verifyPayment(1100, $authority);
+
+            if (isset($result['data']['code']) && $result['data']['code'] == 100) {
+                return "پرداخت موفق: " . $result['data']['ref_id'];
+            }
+
+            return "خطا در وریفای: " . json_encode($result);
+        }
+
+        return "پرداخت ناموفق!";
+    }
+
+
+};

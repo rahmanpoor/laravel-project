@@ -16,7 +16,9 @@
         "laravel/jetstream": "^2.9",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "morilog/jalali": "^3.4"
+        "morilog/jalali": "^3.4",
+        "zarinpal/zarinpal": "^1.0",
+        "zarinpal/zarinpal-php-sdk": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -66,7 +68,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
