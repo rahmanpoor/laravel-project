@@ -81,10 +81,11 @@ class PaymentController extends Controller
         }
     }
 
-    public function paymentSubmit(Request $request)
+    public function paymentSubmit(Request $request, ZarinpalService $zarinpalService)
     {
         $request->validate(
-            ['payment_type' => 'required']
+
+            ['payment_type' => 'required|in:1,2,3']
         );
 
         $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
@@ -118,9 +119,6 @@ class PaymentController extends Controller
             'status' => 1
         ]);
 
-        if ($request->payment_type == 1) {
-            return redirect()->route('customer.sales-process.pay', $order);
-        }
 
         $payment = Payment::create([
             'amount' => $order->order_final_amount,
@@ -131,6 +129,25 @@ class PaymentController extends Controller
             'paymentable_type' => $targetModel,
             'status' => 1
         ]);
+
+
+        //zarinpal start
+        if ($request->payment_type == 1) {
+            // return redirect()->route('customer.sales-process.pay', $order);
+
+            $response = $zarinpalService->requestPayment(
+                $order->order_final_amount * 10,
+                'پرداخت سفارش #' . $order->id,
+                ['mobile' => Auth::user()->mobile, 'email' => Auth::user()->email]
+            );
+
+            if (isset($response['data']['authority']) && $response['data']['code'] == 100) {
+                // ریدایرکت به صفحه پرداخت
+                return redirect("https://www.zarinpal.com/pg/StartPay/" . $response['data']['authority']);
+            }
+
+            return $response;
+        }
 
         $order->update([
             'order_status' => 3
@@ -146,30 +163,26 @@ class PaymentController extends Controller
 
 
 
-    public function pay(ZarinpalService $zarinpal, Order $order)
+
+    public function callback(Request $request, ZarinpalService $zarinpalService, Order $order, OnlinePayment $onlinePayment)
     {
-        $amountInTooman = ($order->order_final_amount * 10);
-        $response = $zarinpal->requestPayment(
-            $amountInTooman,
-            'پرداخت سفارش #' . $order->id,
-            ['mobile' => Auth::user()->mobile, 'email' => Auth::user()->email]
-        );
-
-        if (isset($response['data']['authority']) && $response['data']['code'] == 100) {
-            // ریدایرکت به صفحه پرداخت
-            return redirect("https://www.zarinpal.com/pg/StartPay/" . $response['data']['authority']);
-        }
-
-        return $response;
-    }
-
-    public function callback(Request $request, ZarinpalService $zarinpal)
-    {
+        $onlinePayment->update([
+            'bank_first_response' => $request
+        ]);
         $authority = $request->get('Authority');
         $status = $request->get('Status');
 
         if ($status === 'OK') {
-            $result = $zarinpal->verifyPayment(1100, $authority);
+
+
+
+            $result = $zarinpalService->verifyPayment($order->order_final_amount, $authority);
+
+            $onlinePayment->update([
+                'status' => $result['data']['code'],
+                'ref_id' => $result['data']['ref_id'],
+                'bank_second_response' => $result
+            ]);
 
             if (isset($result['data']['code']) && $result['data']['code'] == 100) {
                 return "پرداخت موفق: " . $result['data']['ref_id'];
@@ -180,6 +193,4 @@ class PaymentController extends Controller
 
         return "پرداخت ناموفق!";
     }
-
-
 };

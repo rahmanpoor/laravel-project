@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Payment;
 
+use App\Models\Market\OnlinePayment;
 use Illuminate\Support\Facades\Http;
 
 class ZarinpalService
