@@ -119,6 +119,11 @@ class PaymentController extends Controller
             'status' => 1
         ]);
 
+        $callbackUrl = route('customer.sales-process.payment-callback', [
+            'order' => $order->id,
+            'onlinePayment' => $paymented->id,
+        ]);
+
 
         $payment = Payment::create([
             'amount' => $order->order_final_amount,
@@ -134,63 +139,108 @@ class PaymentController extends Controller
         //zarinpal start
         if ($request->payment_type == 1) {
             // return redirect()->route('customer.sales-process.pay', $order);
-
+            //convert price to tooman IR
+            $tooman = $paymented->amount * 10;
             $response = $zarinpalService->requestPayment(
-                $order->order_final_amount * 10,
+                $tooman,
                 'پرداخت سفارش #' . $order->id,
-                ['mobile' => Auth::user()->mobile, 'email' => Auth::user()->email]
+                ['mobile' => Auth::user()->mobile, 'email' => Auth::user()->email],
+                $callbackUrl
             );
 
             if (isset($response['data']['authority']) && $response['data']['code'] == 100) {
+
+
+
+                $paymented->update([
+                    'bank_first_response' => json_encode($response, JSON_UNESCAPED_UNICODE)
+                ]);
                 // ریدایرکت به صفحه پرداخت
                 return redirect("https://www.zarinpal.com/pg/StartPay/" . $response['data']['authority']);
             }
 
             return $response;
+        } else {
+            $order->update(
+                ['order_status' => 3]
+            );
+
+            CartItem::where('user_id', Auth::id())->delete();
+            return redirect()->route('customer.home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
         }
-
-        $order->update([
-            'order_status' => 3
-        ]);
-
-
-        foreach ($cartItems as $key => $cartItem) {
-            $cartItem->delete();
-        }
-
-        return redirect()->route('customer.home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
     }
 
 
 
-
-    public function callback(Request $request, ZarinpalService $zarinpalService, Order $order, OnlinePayment $onlinePayment)
+    public function paymentCallback(Request $request, ZarinpalService $zarinpalService, Order $order, OnlinePayment $onlinePayment)
     {
-        $onlinePayment->update([
-            'bank_first_response' => $request
-        ]);
+
         $authority = $request->get('Authority');
         $status = $request->get('Status');
+
+
+
+
 
         if ($status === 'OK') {
 
 
 
-            $result = $zarinpalService->verifyPayment($order->order_final_amount, $authority);
+            $result = $zarinpalService->verifyPayment($order->order_final_amount * 10, $authority);
 
-            $onlinePayment->update([
-                'status' => $result['data']['code'],
-                'ref_id' => $result['data']['ref_id'],
-                'bank_second_response' => $result
-            ]);
+
+            $onlinePayment->update(['bank_second_response' => json_encode($result, JSON_UNESCAPED_UNICODE)]);
+
+
 
             if (isset($result['data']['code']) && $result['data']['code'] == 100) {
-                return "پرداخت موفق: " . $result['data']['ref_id'];
+                  $refId = $result['data']['ref_id']; // کد رهگیری
+                 CartItem::where('user_id', Auth::id())->delete();
+                $order->update(
+                    ['order_status' => 3]
+                );
+                return redirect()->route('customer.home')->with('swal-success', "پرداخت شما با موفقیت انجام شد. کد رهگیری: $refId");
+                // return "پرداخت موفق: " . $result['data']['ref_id'];
             }
 
-            return "خطا در وریفای: " . json_encode($result);
+             return redirect()->route('customer.home')->with('swal-error', 'خطا در وریفای تراکنش.');
         }
+        $order->update(['order_status' => 2]); // پرداخت ناموفق
+        return redirect()->route('customer.home')->with('swal-error', 'پرداخت ناموفق یا لغو شد');
 
-        return "پرداخت ناموفق!";
     }
+
+    // public function callback(Request $request, ZarinpalService $zarinpalService, Order $order, OnlinePayment $onlinePayment)
+    // {
+    //     $authority = $request->get('Authority');
+    //     $status = $request->get('Status');
+
+
+
+
+
+    //     if ($status === 'OK') {
+
+
+
+    //         $result = $zarinpalService->verifyPayment($order->order_final_amount * 10, $authority);
+
+    //         $onlinePayment->update(['bank_second_response' => json_encode($result, JSON_UNESCAPED_UNICODE)]);
+
+
+
+    //         if (isset($result['data']['code']) && $result['data']['code'] == 100) {
+    //             $order->update(
+    //                 ['order_status' => 3]
+    //             );
+    //             CartItem::where('user_id', Auth::id())->delete();
+    //             return redirect()->route('customer.home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
+    //             // return "پرداخت موفق: " . $result['data']['ref_id'];
+    //         }
+
+    //         return back()->with('swal-error', 'خطا در وریفای تراکنش.');
+    //     }
+    //     $onlinePayment->update(['status' => 0]); // پرداخت ناموفق
+    //     return back()->with('swal-error', 'پرداخت ناموفق یا لغو شد.');
+    // }
 };

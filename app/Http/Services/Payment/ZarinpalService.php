@@ -26,7 +26,7 @@ class ZarinpalService
     /**
      * ارسال درخواست پرداخت
      */
-    public function requestPayment(int $amount, string $description, array $metadata = [])
+    public function requestPayment(int $amount, string $description, array $metadata = [], string $callbackUrl = null)
     {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
@@ -35,10 +35,11 @@ class ZarinpalService
         ])->post("{$this->baseUrl}/payment/request.json", [
             'merchant_id' => $this->merchantId,
             'amount' => $amount,
-            'callback_url' => $this->callbackUrl,
+            'callback_url' => $callbackUrl ?? $this->callbackUrl,
             'description' => $description,
             'metadata' => $metadata,
         ]);
+
 
         return $response->json();
     }

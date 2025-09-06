@@ -341,6 +341,7 @@
 
     @section('scripts')
     @include('admin.alerts.sweetalert.success')
+    @include('admin.alerts.sweetalert.error')
     <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
         <script>
             $('.product-add-to-favorite button').click(function() {
