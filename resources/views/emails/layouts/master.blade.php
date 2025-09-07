@@ -8,9 +8,7 @@
 </head>
 <body>
 
-    <!-- start header -->
-    @include('emails.layouts.header')
-    <!-- end header -->
+
 
 
     <!-- start main one col -->
@@ -20,9 +18,7 @@
     <!-- end main one col -->
 
 
-    <!-- start footer -->
-    @include('emails.layouts.footer')
-    <!-- end footer -->
+
 
 </body>
 </html>

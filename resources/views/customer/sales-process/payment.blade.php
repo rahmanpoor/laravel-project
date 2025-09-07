@@ -93,8 +93,8 @@
                                         role="alert">
                                         <i class="fa fa-info-circle flex-shrink-0 me-2"></i>
                                         <secrion>
-                                            برای پیشگیری از انتقال ویروس کرونا پیشنهاد می کنیم روش پرداخت اینترنتی رو پرداخت
-                                            کنید.
+                                          درگاه پرداخت اینترنتی را انتخاب کنید
+
                                         </secrion>
                                     </section>
                                     <form action="{{ route('customer.sales-process.payment-submit') }}" method="POST"
@@ -129,7 +129,7 @@
                                             </section>
                                         </label>
 
-                                        <section class="mb-2"></section>
+                                        {{-- <section class="mb-2"></section>
 
                                         <input type="radio" name="payment_type" value="2" id="d2" />
                                         <label for="d2" class="col-12 col-md-4 payment-wrapper mb-2 pt-2">
@@ -155,7 +155,7 @@
                                                 <i class="fa fa-calendar-alt mx-1"></i>
                                                 پرداخت به پیک هنگام دریافت کالا
                                             </section>
-                                        </label>
+                                        </label> --}}
                                     </form>
 
 

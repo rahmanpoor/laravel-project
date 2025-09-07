@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Config;
 use App\Http\Services\Message\MessageService;
 use App\Http\Services\Message\SMS\SmsService;
 use App\Http\Services\Message\Email\EmailService;
+use App\Http\Services\Message\SMS\MeliPayamkServiceApi;
 use App\Http\Requests\Auth\Customer\LoginRegisterRequest;
 
 class LoginRegisterController extends Controller
@@ -23,7 +24,7 @@ class LoginRegisterController extends Controller
         return view('customer.auth.login-register');
     }
 
-    public function loginRegister(LoginRegisterRequest $request)
+    public function loginRegister(LoginRegisterRequest $request, MeliPayamkServiceApi $meliPayamkServiceApi)
     {
 
         $inputs = $request->all();
@@ -65,8 +66,21 @@ class LoginRegisterController extends Controller
         }
 
 
+
+
         //create otp code
-        $otpCode = rand(1000, 9999);
+        if ($type == 0) {
+            $response = $meliPayamkServiceApi->sendOtp('0' . $inputs['id']);
+            $otpCode = $response['code'];
+        } else {
+            $otpCode = rand(1000, 9999);
+        }
+
+
+
+
+        //$otpCode = rand(1000, 9999);
+
         $token = Str::random(60);
         $otpInputs = [
             'token' => $token,
@@ -82,22 +96,43 @@ class LoginRegisterController extends Controller
 
         //send email or sms
 
-        if ($type == 0) {
-            //send SMS
-            $smsService = new SmsService();
-            $smsService->setFrom(Config::get('sms.otp_from'));
-            $smsService->setText("سعید مارکت\n کد تایید: $otpCode");
-            $smsService->setTo(['0' . $user->mobile]);
-            $smsService->setIsFlash(true);
+        // if ($type == 0) {
+        //send SMS
+        // $smsService = new SmsService();
+        // $smsService->setFrom(Config::get('sms.otp_from'));
+        // $smsService->setText("سعید مارکت\n کد تایید: $otpCode");
+        // $smsService->setTo(['0' . $user->mobile]);
+        // $smsService->setIsFlash(true);
 
 
-            $messagesService = new MessageService($smsService);
-        } elseif ($type == 1) {
+        // $messagesService = new MessageService($smsService);
+        // } elseif ($type == 1) {
+        //     //send Email
+        //     $emailService = new EmailService();
+        //     $details = [
+        //         'title' => 'ایمیل فعال سازی',
+        //         'body' => "سعید مارکت\n کد تایید: $otpCode"
+        //     ];
+
+        //     $emailService->setSubject('کد احراز هویت');
+        //     $emailService->setFrom('noreply@example.com', 'example');
+        //     $emailService->setTo($inputs['id']);
+        //     $emailService->setDetails($details);
+
+
+
+        //     $messagesService = new MessageService($emailService);
+        // }
+
+        // $messagesService->send();
+
+
+        if ($type == 1) {
             //send Email
             $emailService = new EmailService();
             $details = [
                 'title' => 'ایمیل فعال سازی',
-                'body' => "سعید مارکت\n کد تایید: $otpCode"
+                'body' => "$otpCode"
             ];
 
             $emailService->setSubject('کد احراز هویت');
@@ -108,9 +143,11 @@ class LoginRegisterController extends Controller
 
 
             $messagesService = new MessageService($emailService);
+            $messagesService->send();
         }
 
-        $messagesService->send();
+
+
 
 
         return redirect()->route('auth.customer.login-confirm-form', $token);
@@ -158,7 +195,7 @@ class LoginRegisterController extends Controller
     }
 
 
-    public function loginResendOtp($token)
+    public function loginResendOtp($token, MeliPayamkServiceApi $meliPayamkServiceApi)
     {
         $otp = Otp::where('token', $token)->where('created_at', '<=', Carbon::now()->subMinutes(5)->toDateTimeString())->first();
         if (empty($otp)) {
@@ -167,7 +204,17 @@ class LoginRegisterController extends Controller
 
         $user = $otp->user()->first();
         //create otp code
-        $otpCode = rand(1000, 9999);
+        //create otp code
+        if ($otp->type == 0) {
+            $response = $meliPayamkServiceApi->sendOtp('0' . $user->mobile);
+            $otpCode = $response['code'];
+        } else {
+            $otpCode = rand(1000, 9999);
+        }
+
+
+
+
         $token = Str::random(60);
         $otpInputs = [
             'token' => $token,
@@ -183,22 +230,12 @@ class LoginRegisterController extends Controller
 
         //send email or sms
 
-        if ($otp->type == 0) {
-            //send SMS
-            $smsService = new SmsService();
-            $smsService->setFrom(Config::get('sms.otp_from'));
-            $smsService->setText("سعید مارکت\n کد تایید: $otpCode");
-            $smsService->setTo(['0' . $user->mobile]);
-            $smsService->setIsFlash(true);
-
-
-            $messagesService = new MessageService($smsService);
-        } elseif ($otp->type == 1) {
+        if  ($otp->type == 1) {
             //send Email
             $emailService = new EmailService();
             $details = [
                 'title' => 'ایمیل فعال سازی',
-                'body' => "سعید مارکت\n کد تایید: $otpCode"
+                'body' => "$otpCode"
             ];
 
             $emailService->setSubject('کد احراز هویت');
@@ -209,15 +246,17 @@ class LoginRegisterController extends Controller
 
 
             $messagesService = new MessageService($emailService);
+            $messagesService->send();
         }
 
-        $messagesService->send();
+
 
 
         return redirect()->route('auth.customer.login-confirm-form', $token);
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('customer.home');
     }

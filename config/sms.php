@@ -11,8 +11,15 @@ return [
 'password' => '90YEP',
 
 
-'otp_from' => '50002710066430'
+'otp_from' => '50002710066430',
 
+
+'api_key' => env('MELIPAYAMAK_API_KEY'),
 
 
 ];
+
+
+
+
+

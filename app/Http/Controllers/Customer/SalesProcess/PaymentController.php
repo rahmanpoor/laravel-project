@@ -199,7 +199,7 @@ class PaymentController extends Controller
                 $order->update(
                     ['order_status' => 3]
                 );
-                return redirect()->route('customer.home')->with('swal-success', "پرداخت شما با موفقیت انجام شد. کد رهگیری: $refId");
+                return redirect()->route('customer.home')->with('swal-success', "کد رهگیری: $refId");
                 // return "پرداخت موفق: " . $result['data']['ref_id'];
             }
 
