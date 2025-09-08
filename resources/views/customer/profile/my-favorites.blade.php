@@ -49,7 +49,7 @@
                             <section class="cart-img align-self-start flex-shrink-1"><img src="{{ asset($product->image['indexArray']['medium']) }}" alt=""></section>
                             <section class="align-self-start w-100">
                                 <p class="fw-bold">{{ $product->name }}</p>
-                                <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در انبار</span></p>
+                                <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>{{ $product->marketable_number !=0 ? 'کالا موجود در انبار' : 'ناموجود' }}</span></p>
                                 <section>
                                     <a class="text-decoration-none cart-delete text-danger" href="{{ route('customer.profile.my-favorites.delete', $product) }}"><i class="fa fa-trash-alt"></i> حذف از لیست علاقه ها</a>
                                 </section>
