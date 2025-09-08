@@ -40,7 +40,7 @@
                                     @if(empty($user->first_name))
                                     <section class="col-12 col-md-6 my-2">
                                         <div class="form-group">
-                                            <label for="first_name">نام</label>
+                                            <label for="first_name">نام <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control form-control-sm" name="first_name" id="first_name" value="{{ old('first_name') }}">
                                         </div>
                                         @error('first_name')
@@ -57,7 +57,7 @@
                                     @if(empty($user->last_name))
                                     <section class="col-12 col-md-6 my-2">
                                         <div class="form-group">
-                                            <label for="last_name">نام خانوادگی</label>
+                                            <label for="last_name">نام خانوادگی <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control form-control-sm" name="last_name" id="last_name" value="{{ old('last_name') }}">
                                         </div>
                                         @error('last_name')
@@ -74,7 +74,7 @@
                                     @if(empty($user->mobile))
                                     <section class="col-12 col-md-6 my-2">
                                         <div class="form-group">
-                                            <label for="mobile">موبایل</label>
+                                            <label for="mobile">موبایل <span class="text-danger">*</span> </label>
                                             <input type="text" class="form-control form-control-sm" name="mobile" id="mobile" value="{{ old('mobile') }}">
                                         </div>
                                         @error('mobile')

@@ -2,16 +2,22 @@
 
 
 @section('head-tag')
-    <title> سفارشات شما</title>
+    <title>لیست علاقه های من</title>
 @endsection
 
 
 
 @section('content')
+
+
+
     <!-- start body -->
     <section class="">
         <section id="main-body-two-col" class="container-xxl body-container">
+             @include('admin.alerts.alert-section.success');
             <section class="row">
+
+
 
 
                <!-- aside include -->
@@ -37,39 +43,35 @@
                         <!-- end vontent header -->
 
 
+                        @forelse (auth()->user()->products as $product)
+
                         <section class="cart-item d-flex py-3">
-                            <section class="cart-img align-self-start flex-shrink-1"><img src="assets/images/products/16.jpg" alt=""></section>
+                            <section class="cart-img align-self-start flex-shrink-1"><img src="{{ asset($product->image['indexArray']['medium']) }}" alt=""></section>
                             <section class="align-self-start w-100">
-                                <p class="fw-bold">گوشی موبایل سامسونگ مدل Galaxy A12 SM-A125F/DS دو ...</p>
-                                <p><span style="background-color: #CCCCCC;" class="cart-product-selected-color me-1"></span> <span> توسی روشن</span></p>
-                                <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span> گارانتی اصالت و سلامت فیزیکی کالا</span></p>
+                                <p class="fw-bold">{{ $product->name }}</p>
                                 <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در انبار</span></p>
                                 <section>
-                                    <a class="text-decoration-none cart-delete" href="#"><i class="fa fa-trash-alt"></i> حذف از لیست علاقه ها</a>
+                                    <a class="text-decoration-none cart-delete text-danger" href="{{ route('customer.profile.my-favorites.delete', $product) }}"><i class="fa fa-trash-alt"></i> حذف از لیست علاقه ها</a>
                                 </section>
                             </section>
                             <section class="align-self-end flex-shrink-1">
-                                <section class="text-nowrap fw-bold">3,799,000 تومان</section>
+                                <section class="text-nowrap fw-bold"> {{ priceFormat($product->price) }} تومان</section>
                             </section>
                         </section>
 
+                         @empty
 
-                        <section class="cart-item d-flex py-3">
-                            <section class="cart-img align-self-start flex-shrink-1"><img src="assets/images/products/18.jpg" alt=""></section>
-                            <section class="align-self-start w-100">
-                                <p class="fw-bold">کیف رودوشی چرم جانتا مدل D078</p>
-                                <p><span style="background-color: #FFFF00;" class="cart-product-selected-color me-1"></span> <span> زرد</span></p>
-                                <p><i class="fa fa-shield-alt cart-product-selected-warranty me-1"></i> <span> گارانتی اصالت و سلامت فیزیکی کالا</span></p>
-                                <p><i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا موجود در انبار</span></p>
-                                <section>
-                                    <a class="text-decoration-none cart-delete" href="#"><i class="fa fa-trash-alt"></i> حذف از لیست علاقه ها</a>
+
+
+                                <section class="order-item">
+                                    <div class="alert alert-info" role="alert">
+                                        هیچ سفارشی وجود ندارد
+                                    </div>
                                 </section>
-                            </section>
-                            <section class="align-self-end flex-shrink-1">
-                                <section class="cart-item-discount text-danger text-nowrap mb-1">تخفیف 313,000</section>
-                                <section class="text-nowrap fw-bold">432,000 تومان</section>
-                            </section>
-                        </section>
+
+                        @endforelse
+
+
 
 
                     </section>

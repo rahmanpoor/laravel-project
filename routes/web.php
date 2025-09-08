@@ -460,4 +460,5 @@ Route::namespace('market')->group(function () {
 Route::namespace('Profile')->group(function () {
      Route::get('/orders', [CustomerOrderController::class, 'index'])->name('customer.profile.orders');
      Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
+     Route::get('/my-favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
 });

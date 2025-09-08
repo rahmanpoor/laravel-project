@@ -7,6 +7,7 @@ use App\Models\User\Role;
 use App\Models\Market\Order;
 use App\Models\Ticket\Ticket;
 use App\Models\Market\Payment;
+use App\Models\Market\Product;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ticket\TicketAdmin;
 use Illuminate\Notifications\Notifiable;
@@ -94,5 +95,11 @@ class User extends Authenticatable
      public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+        public function products()
+    {
+
+        return $this->belongsToMany(Product::class);
     }
 }
