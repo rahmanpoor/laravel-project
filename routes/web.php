@@ -45,6 +45,7 @@ use App\Http\Controllers\Admin\Content\CommentController as ContentCommentContro
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Customer\Profile\OrderController as CustomerOrderController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
+use App\Http\Controllers\Customer\Profile\FavoriteController;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -458,4 +459,5 @@ Route::namespace('market')->group(function () {
 //profile]
 Route::namespace('Profile')->group(function () {
      Route::get('/orders', [CustomerOrderController::class, 'index'])->name('customer.profile.orders');
+     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
 });

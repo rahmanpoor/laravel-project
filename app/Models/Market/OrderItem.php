@@ -8,12 +8,15 @@ use App\Models\Market\Guarantee;
 use App\Models\Market\AmazingSale;
 use App\Models\Market\ProductColor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Market\OrderItemSelectedAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OrderItem extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $guarded = ['id'];
 
     public function order() {
         return $this->belongsTo(Order::class);
