@@ -43,6 +43,7 @@ use App\Http\Controllers\Customer\SalesProcess\ProfileCompletionController;
 use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
+use App\Http\Controllers\Customer\Profile\OrderController as CustomerOrderController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use Illuminate\Routing\RouteGroup;
 
@@ -452,4 +453,9 @@ Route::namespace('market')->group(function () {
     Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
     Route::post('/add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.add-comment');
     Route::get('/add-to-favorite/prodcut/{product:slug}', [MarketProductController::class, 'addToFavorite'])->name('customer.market.add-to-favorite');
+});
+
+//profile]
+Route::namespace('Profile')->group(function () {
+     Route::get('/orders', [CustomerOrderController::class, 'index'])->name('customer.profile.orders');
 });

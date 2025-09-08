@@ -7,6 +7,7 @@ use App\Models\Market\Order;
 use Illuminate\Http\Request;
 use App\Models\Market\Payment;
 use App\Models\Market\CartItem;
+use App\Models\Market\OrderItem;
 use App\Models\Market\CashPayment;
 use App\Http\Controllers\Controller;
 use App\Models\Market\OnlinePayment;
@@ -165,6 +166,31 @@ class PaymentController extends Controller
                 ['order_status' => 3]
             );
 
+            foreach ($cartItems as $cartItem) {
+                $product     = $cartItem->product;
+                $amazingSale = $product->activeAmazingSales();
+
+                $discountAmount    = $amazingSale ? $cartItem->cartItemProductPrice() * ($amazingSale->percentage / 100) : 0;
+                $finalProductPrice = $product->price - $discountAmount;
+                $finalTotalPrice   = $finalProductPrice * $cartItem->number;
+
+                OrderItem::create([
+                    'order_id'                     => $order->id,
+                    'product_id'                   => $product->id,
+                    'product'                      => $product,
+                    'amazing_sale_id'              => $amazingSale->id ?? null,
+                    'amazing_sale_object'          => $amazingSale,
+                    'amazing_sale_discount_amount' => $discountAmount,
+                    'number'                       => $cartItem->number,
+                    'final_product_price'          => $finalProductPrice,
+                    'final_total_price'            => $finalTotalPrice,
+                    'color_id'                     => $cartItem->color_id,
+                    'guarantee_id'                 => $cartItem->guarantee_id,
+                ]);
+
+                $cartItem->delete();
+            }
+
             CartItem::where('user_id', Auth::id())->delete();
             return redirect()->route('customer.home')->with('swal-success', 'سفارش شما با موفقیت ثبت شد');
         }
@@ -194,8 +220,33 @@ class PaymentController extends Controller
 
 
             if (isset($result['data']['code']) && $result['data']['code'] == 100) {
-                  $refId = $result['data']['ref_id']; // کد رهگیری
-                 CartItem::where('user_id', Auth::id())->delete();
+                $refId = $result['data']['ref_id']; // کد رهگیری
+                $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+                foreach ($cartItems as $cartItem) {
+                    $product     = $cartItem->product;
+                    $amazingSale = $product->activeAmazingSales();
+
+                    $discountAmount    = $amazingSale ? $cartItem->cartItemProductPrice() * ($amazingSale->percentage / 100) : 0;
+                    $finalProductPrice = $product->price - $discountAmount;
+                    $finalTotalPrice   = $finalProductPrice * $cartItem->number;
+
+                    OrderItem::create([
+                        'order_id'                     => $order->id,
+                        'product_id'                   => $product->id,
+                        'product'                      => $product,
+                        'amazing_sale_id'              => $amazingSale->id ?? null,
+                        'amazing_sale_object'          => $amazingSale,
+                        'amazing_sale_discount_amount' => $discountAmount,
+                        'number'                       => $cartItem->number,
+                        'final_product_price'          => $finalProductPrice,
+                        'final_total_price'            => $finalTotalPrice,
+                        'color_id'                     => $cartItem->color_id,
+                        'guarantee_id'                 => $cartItem->guarantee_id,
+                    ]);
+
+                    $cartItem->delete();
+                }
+
                 $order->update(
                     ['order_status' => 3]
                 );
@@ -203,11 +254,10 @@ class PaymentController extends Controller
                 // return "پرداخت موفق: " . $result['data']['ref_id'];
             }
 
-             return redirect()->route('customer.home')->with('swal-error', 'خطا در وریفای تراکنش.');
+            return redirect()->route('customer.home')->with('swal-error', 'خطا در وریفای تراکنش.');
         }
         $order->update(['order_status' => 2]); // پرداخت ناموفق
         return redirect()->route('customer.home')->with('swal-error', 'پرداخت ناموفق یا لغو شد');
-
     }
 
     // public function callback(Request $request, ZarinpalService $zarinpalService, Order $order, OnlinePayment $onlinePayment)

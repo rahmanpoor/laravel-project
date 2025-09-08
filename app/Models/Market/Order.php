@@ -57,7 +57,7 @@ class Order extends Model
         switch ($this->payment_status) {
             case 0:
                 $result = 'پرداخت نشده';
-                $badge_color = 'warning';
+                $badge_color = 'danger';
                 break;
             case 1:
                 $result = 'پرداخت شده';
