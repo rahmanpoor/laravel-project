@@ -65,7 +65,7 @@
 
                                 <section class="order-item">
                                     <div class="alert alert-info" role="alert">
-                                        هیچ سفارشی وجود ندارد
+                                        لیست علاقه های شما خالی است
                                     </div>
                                 </section>
 
