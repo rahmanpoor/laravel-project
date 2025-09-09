@@ -28,15 +28,6 @@
                     <section class="row mt-4">
 
 
-                        <ul>
-                            @if ($errors->any())
-                                @foreach ($errors->all() as $error)
-                                    <li class="text-danger">{{ $error }}</li>
-                                @endforeach
-                            @endif
-                        </ul>
-
-
                         <section class="col-md-9">
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
 
