@@ -6,6 +6,7 @@ use App\Models\Market\Brand;
 use Illuminate\Http\Request;
 use App\Models\Content\Banner;
 use App\Models\Market\Product;
+use App\Models\Setting\Setting;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -20,6 +21,8 @@ class HomeController extends Controller
         $brands = Brand::all();
         $mostVisitedProducts = Product::latest()->take(10)->get();
         $offerProducts = Product::latest()->take(10)->get();
+
+
 
         return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
     }

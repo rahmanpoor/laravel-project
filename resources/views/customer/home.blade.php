@@ -3,6 +3,9 @@
 
 @section('head-tag')
     <link href="{{ asset('admin-asset\sweetalert\sweetalert2.css') }}" rel="stylesheet" />
+    <meta name="description" content="{{ $setting->description }}">
+    <meta name="keywords" content="{{ $setting->keywords }}">
+    <title>{{ $setting->title }}</title>
 @endsection
 
 @section('content')
@@ -331,8 +334,6 @@
                 </div>
             </div>
         </section>
-
-
     @endsection
 
 
@@ -340,9 +341,9 @@
 
 
     @section('scripts')
-    @include('admin.alerts.sweetalert.success')
-    @include('admin.alerts.sweetalert.error')
-    <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
+        @include('admin.alerts.sweetalert.success')
+        @include('admin.alerts.sweetalert.error')
+        <script src="{{ asset('admin-asset\sweetalert\sweetalert2.min.js') }}"></script>
         <script>
             $('.product-add-to-favorite button').click(function() {
                 var url = $(this).attr('data-url');

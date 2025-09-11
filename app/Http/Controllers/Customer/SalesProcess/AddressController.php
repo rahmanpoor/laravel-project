@@ -23,7 +23,7 @@ class AddressController extends Controller
         //get login user
         $user = Auth::user();
 
-        $provinces = Province::all();
+        $provinces = Province::orderBy('name', 'asc')->get();
 
         $cartItems = CartItem::where('user_id', $user->id)->get();
 

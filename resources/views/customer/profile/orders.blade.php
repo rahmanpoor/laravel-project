@@ -75,7 +75,7 @@
                                                 {{ $order->id }}</section>
                                             <section
                                                 class="order-item-status text-{{ $order->paymentStatusValue['badge_color'] }}">
-                                                <i class="fa fa-clock"></i> {{ $order->paymentStatusValue['result'] }}
+                                                <i class="fa fa-clock text-{{ $order->paymentStatusValue['badge_color'] }} "></i> {{ $order->paymentStatusValue['result'] }}
                                             </section>
                                             <section class="order-item-products">
                                                 <a href="#"><img src="assets/images/products/1.jpg"

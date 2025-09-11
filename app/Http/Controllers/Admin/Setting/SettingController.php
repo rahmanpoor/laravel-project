@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Setting\Setting;
 use Database\Seeders\SettingSeeder;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Services\Image\ImageService;
 use App\Http\Requests\Admin\Setting\SettingRequest;
 
@@ -129,6 +130,9 @@ class SettingController extends Controller
         //icon end
 
         $setting->update($inputs);
+
+        // پاک کردن کش
+        Cache::forget('site_setting');
 
         return redirect()->route('admin.setting.index')->with('swal-success', 'تنظیمات با موفقیت ویرایش شد');
     }
