@@ -56,20 +56,20 @@ class Order extends Model
     {
         switch ($this->payment_status) {
             case 0:
-                $result = 'پرداخت نشده';
+                $result = 'پرداخت ناموفق';
                 $badge_color = 'danger';
                 break;
             case 1:
-                $result = 'پرداخت شده';
+                $result = 'پرداخت موفق';
                 $badge_color = 'success';
                 break;
             case 2:
                 $result = 'لغو شده';
                 $badge_color = 'danger';
                 break;
-            default:
-                $result = 'برگشت داده شده';
-                $badge_color = 'primary';
+            // default:
+            //     $result = 'برگشت داده شده';
+            //     $badge_color = 'primary';
         }
         return [
             'result' =>  $result,

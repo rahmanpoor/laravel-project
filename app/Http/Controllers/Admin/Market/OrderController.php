@@ -19,24 +19,30 @@ class OrderController extends Controller
     }
     public function sending()
     {
-        $orders = Order::where('delivery_status', 1)->get();
+        $orders = Order::where('order_status', 1)->get();
         return view('admin.market.order.index', compact('orders'));
     }
-    public function unpaid()
+
+     public function delivered()
     {
-        $orders = Order::where('payment_status', 0)->get();
+        $orders = Order::where('order_status', 2)->get();
         return view('admin.market.order.index', compact('orders'));
     }
+    // public function unpaid()
+    // {
+    //     $orders = Order::where('payment_status', 0)->get();
+    //     return view('admin.market.order.index', compact('orders'));
+    // }
     public function canceled()
     {
-        $orders = Order::where('order_status', 4)->get();
+        $orders = Order::where('order_status', 3)->get();
         return view('admin.market.order.index', compact('orders'));
     }
-    public function returned()
-    {
-        $orders = Order::where('order_status', 5)->get();
-        return view('admin.market.order.index', compact('orders'));
-    }
+    // public function returned()
+    // {
+    //     $orders = Order::where('order_status', 5)->get();
+    //     return view('admin.market.order.index', compact('orders'));
+    // }
     public function all()
     {
         $orders = Order::all();

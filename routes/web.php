@@ -126,6 +126,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [OrderController::class, 'all'])->name('admin.market.order.all');
             Route::get('/new-order', [OrderController::class, 'newOrders'])->name('admin.market.order.newOrders');
             Route::get('/sending', [OrderController::class, 'sending'])->name('admin.market.order.sending');
+            Route::get('/delivered', [OrderController::class, 'delivered'])->name('admin.market.order.delivered');
             Route::get('/unpaid', [OrderController::class, 'unpaid'])->name('admin.market.order.unpaid');
             Route::get('/canceled', [OrderController::class, 'canceled'])->name('admin.market.order.canceled');
             Route::get('/returned', [OrderController::class, 'returned'])->name('admin.market.order.returned');

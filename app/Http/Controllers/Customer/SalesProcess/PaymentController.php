@@ -249,6 +249,7 @@ class PaymentController extends Controller
                         $cartItem->delete();
                     }
 
+
                     $order->update(
                         ['order_status' => 1, 'payment_status' => 1]
                     );
@@ -257,10 +258,24 @@ class PaymentController extends Controller
                 }
             });
 
+
             return redirect()->route('customer.home')->with('swal-error', 'خطا در وریفای تراکنش.');
         }
-        $order->update(['order_status' => 3]); // پرداخت ناموفق
-        return redirect()->route('customer.home')->with('swal-error', 'پرداخت ناموفق یا لغو شد');
+
+        // ایجاد OrderItemها حتی در صورت پرداخت ناموفق
+        $cartItems = CartItem::where('user_id', Auth::id())->get();
+        foreach ($cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id'    => $order->id,
+                'product_id'  => $cartItem->product_id,
+                'product'     => $cartItem->product->toArray(),
+                'number'      => $cartItem->number,
+                'final_total_price' => $cartItem->cartItemProductPrice() * $cartItem->number,
+            ]);
+        }
+        // 3=> cancel |  0 => unpaid
+         $order->update(['order_status' => 3, 'payment_status' => 0]); // پرداخت ناموفق
+        return redirect()->route('customer.home')->with('swal-error', 'پرداخت انجام نشد. می‌توانید دوباره تلاش کنید.');
     }
 
     // public function callback(Request $request, ZarinpalService $zarinpalService, Order $order, OnlinePayment $onlinePayment)

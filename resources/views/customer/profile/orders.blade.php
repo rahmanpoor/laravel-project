@@ -112,13 +112,13 @@
                                                 {{ $order->paymentStatusValue['result'] }}
                                             </section>
                                             <section class="order-item-products">
-                                                @foreach ($order->orderItems as $orderitem)
+                                                @foreach ($order->orderItems as $orderItem)
 
-                                                    <a href="{{   route('customer.market.product', $orderitem->product['slug'])   }}">
+                                                    <a href="{{   route('customer.market.product', $orderItem->product['slug'])   }}">
                                                            <img
-                                                            src="{{ $orderitem->product['image']['indexArray']['medium'] }}"
+                                                            src="{{ $orderItem->product['image']['indexArray']['medium'] }}"
 
-                                                            alt="{{ $orderitem->product['name'] }}"></a>
+                                                            alt="{{ $orderItem->product['name'] }}"></a>
                                                 @endforeach
                                             </section>
                                         </section>
