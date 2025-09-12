@@ -14,6 +14,8 @@ use App\Models\Market\OnlinePayment;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Market\OfflinePayment;
 use App\Http\Services\Payment\ZarinpalService;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -163,7 +165,7 @@ class PaymentController extends Controller
             return $response;
         } else {
             $order->update(
-                ['order_status' => 3]
+                ['order_status' => 1]
             );
 
             foreach ($cartItems as $cartItem) {
@@ -210,53 +212,54 @@ class PaymentController extends Controller
 
         if ($status === 'OK') {
 
+            return DB::transaction(function () use ($zarinpalService, $order, $onlinePayment, $authority) {
+
+                $result = $zarinpalService->verifyPayment($order->order_final_amount * 10, $authority);
 
 
-            $result = $zarinpalService->verifyPayment($order->order_final_amount * 10, $authority);
-
-
-            $onlinePayment->update(['bank_second_response' => json_encode($result, JSON_UNESCAPED_UNICODE)]);
+                $onlinePayment->update(['bank_second_response' => json_encode($result, JSON_UNESCAPED_UNICODE)]);
 
 
 
-            if (isset($result['data']['code']) && $result['data']['code'] == 100) {
-                $refId = $result['data']['ref_id']; // کد رهگیری
-                $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
-                foreach ($cartItems as $cartItem) {
-                    $product     = $cartItem->product;
-                    $amazingSale = $product->activeAmazingSales();
+                if (isset($result['data']['code']) && $result['data']['code'] == 100) {
+                    $refId = $result['data']['ref_id']; // کد رهگیری
+                    $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+                    foreach ($cartItems as $cartItem) {
+                        $product     = $cartItem->product;
+                        $amazingSale = $product->activeAmazingSales();
 
-                    $discountAmount    = $amazingSale ? $cartItem->cartItemProductPrice() * ($amazingSale->percentage / 100) : 0;
-                    $finalProductPrice = $product->price - $discountAmount;
-                    $finalTotalPrice   = $finalProductPrice * $cartItem->number;
+                        $discountAmount    = $amazingSale ? $cartItem->cartItemProductPrice() * ($amazingSale->percentage / 100) : 0;
+                        $finalProductPrice = $product->price - $discountAmount;
+                        $finalTotalPrice   = $finalProductPrice * $cartItem->number;
 
-                    OrderItem::create([
-                        'order_id'                     => $order->id,
-                        'product_id'                   => $product->id,
-                        'product'                      => $product,
-                        'amazing_sale_id'              => $amazingSale->id ?? null,
-                        'amazing_sale_object'          => $amazingSale,
-                        'amazing_sale_discount_amount' => $discountAmount,
-                        'number'                       => $cartItem->number,
-                        'final_product_price'          => $finalProductPrice,
-                        'final_total_price'            => $finalTotalPrice,
-                        'color_id'                     => $cartItem->color_id,
-                        'guarantee_id'                 => $cartItem->guarantee_id,
-                    ]);
+                        OrderItem::create([
+                            'order_id'                     => $order->id,
+                            'product_id'                   => $product->id,
+                            'product'                      => $product,
+                            'amazing_sale_id'              => $amazingSale->id ?? null,
+                            'amazing_sale_object'          => $amazingSale,
+                            'amazing_sale_discount_amount' => $discountAmount,
+                            'number'                       => $cartItem->number,
+                            'final_product_price'          => $finalProductPrice,
+                            'final_total_price'            => $finalTotalPrice,
+                            'color_id'                     => $cartItem->color_id,
+                            'guarantee_id'                 => $cartItem->guarantee_id,
+                        ]);
 
-                    $cartItem->delete();
+                        $cartItem->delete();
+                    }
+
+                    $order->update(
+                        ['order_status' => 1, 'payment_status' => 1]
+                    );
+                    return redirect()->route('customer.home')->with('swal-success', "پرداخت موفق ✅ - کد رهگیری: $refId");
+                    // return "پرداخت موفق: " . $result['data']['ref_id'];
                 }
-
-                $order->update(
-                    ['order_status' => 3]
-                );
-                return redirect()->route('customer.home')->with('swal-success', "کد رهگیری: $refId");
-                // return "پرداخت موفق: " . $result['data']['ref_id'];
-            }
+            });
 
             return redirect()->route('customer.home')->with('swal-error', 'خطا در وریفای تراکنش.');
         }
-        $order->update(['order_status' => 2]); // پرداخت ناموفق
+        $order->update(['order_status' => 3]); // پرداخت ناموفق
         return redirect()->route('customer.home')->with('swal-error', 'پرداخت ناموفق یا لغو شد');
     }
 

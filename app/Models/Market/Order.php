@@ -64,7 +64,7 @@ class Order extends Model
                 $badge_color = 'success';
                 break;
             case 2:
-                $result = 'باطل شده';
+                $result = 'لغو شده';
                 $badge_color = 'danger';
                 break;
             default:
@@ -118,25 +118,25 @@ class Order extends Model
     {
         switch ($this->order_status) {
             case 1:
-                $result = 'در انتظار تایید';
+                $result = 'جاری';
                 $color = 'primary';
                 break;
             case 2:
-                $result = 'تاییده نشده';
-                $color = 'primary';
-                break;
-            case 3:
-                $result = 'تایید شده';
+                $result = 'تحویل شده';
                 $color = 'success';
                 break;
-            case 4:
-                $result = 'باطل شده';
+            case 3:
+                $result = 'لغو شده';
                 $color = 'danger';
                 break;
-            case 5:
-                $result = 'مرجوع شده';
-                $color = 'dark';
-                break;
+            // case 4:
+            //     $result = 'باطل شده';
+            //     $color = 'danger';
+            //     break;
+            // case 5:
+            //     $result = 'مرجوع شده';
+            //     $color = 'dark';
+            //     break;
             default:
                 $result = 'بررسی نشده';
                 $color = 'primary';

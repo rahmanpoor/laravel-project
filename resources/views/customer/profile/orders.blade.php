@@ -14,8 +14,8 @@
             <section class="row">
 
 
-               <!-- aside include -->
-               @include('customer.layouts.partials.profile-sidebar')
+                <!-- aside include -->
+                @include('customer.layouts.partials.profile-sidebar')
 
 
 
@@ -37,13 +37,45 @@
 
 
                         <section class="d-flex justify-content-center my-4">
-                            <a class="btn btn-outline-primary btn-sm mx-1" href="{{ route('customer.profile.orders') }}">همه سفارشات</a>
-                            <a class="btn btn-dark btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=0') }}">بررسی نشده</a>
-                            <a class="btn btn-info btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=1') }}">در انتظار تایید</a>
-                            <a class="btn btn-warning btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=2') }}">تایید نشده</a>
-                            <a class="btn btn-success btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=3') }}">تایید شده</a>
-                            <a class="btn btn-danger btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=4') }}">باطل شده</a>
-                            <a class="btn btn-primary btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=5') }}">مرجوع شده</a>
+
+                            {{-- current btn --}}
+                            <a type="button" class="btn btn-info btn-sm mx-2 position-relative"
+                                href="{{ route('customer.profile.orders', 'type=1') }}">
+                                جاری
+                                {{-- <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    4
+                                    <span class="visually-hidden">current order</span>
+                                </span> --}}
+                            </a>
+
+                            {{-- delivered btn --}}
+                            <a type="button" class="btn btn-success btn-sm mx-2 position-relative"
+                                href="{{ route('customer.profile.orders', 'type=2') }}">
+                                تحویل شده
+                                {{-- <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    4
+                                    <span class="visually-hidden">delivered order</span>
+                                </span> --}}
+                            </a>
+
+                            {{-- cancel btn --}}
+                            <a type="button" class="btn btn-danger btn-sm mx-2 position-relative"
+                                href="{{ route('customer.profile.orders', 'type=3') }}">
+                                لغو شده
+                                {{-- <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    4
+                                    <span class="visually-hidden">cancel order</span>
+                                </span> --}}
+                            </a>
+
+
+                            {{-- <a class="btn btn-outline-primary btn-sm mx-1" href="{{ route('customer.profile.orders') }}">همه سفارشات</a>
+                            <a class="btn btn-dark btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=0') }}">بررسی نشده</a> --}}
+                            {{-- <a class="btn btn-warning btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=2') }}">تایید نشده</a> --}}
+                            {{-- <a class="btn btn-primary btn-sm mx-1" href="{{ route('customer.profile.orders', 'type=5') }}">مرجوع شده</a> --}}
                         </section>
 
 
@@ -75,13 +107,19 @@
                                                 {{ $order->id }}</section>
                                             <section
                                                 class="order-item-status text-{{ $order->paymentStatusValue['badge_color'] }}">
-                                                <i class="fa fa-clock text-{{ $order->paymentStatusValue['badge_color'] }} "></i> {{ $order->paymentStatusValue['result'] }}
+                                                <i
+                                                    class="fa fa-clock text-{{ $order->paymentStatusValue['badge_color'] }} "></i>
+                                                {{ $order->paymentStatusValue['result'] }}
                                             </section>
                                             <section class="order-item-products">
-                                                <a href="#"><img src="assets/images/products/1.jpg"
-                                                        alt=""></a>
-                                                <a href="#"><img src="assets/images/products/2.jpg"
-                                                        alt=""></a>
+                                                @foreach ($order->orderItems as $orderitem)
+
+                                                    <a href="{{   route('customer.market.product', $orderitem->product['slug'])   }}">
+                                                           <img
+                                                            src="{{ $orderitem->product['image']['indexArray']['medium'] }}"
+
+                                                            alt="{{ $orderitem->product['name'] }}"></a>
+                                                @endforeach
                                             </section>
                                         </section>
                                         <section class="order-item-link"><a href="#">پرداخت سفارش</a></section>
@@ -94,8 +132,6 @@
                                         هیچ سفارشی وجود ندارد
                                     </div>
                                 </section>
-
-
                             @endforelse
 
                         </section>

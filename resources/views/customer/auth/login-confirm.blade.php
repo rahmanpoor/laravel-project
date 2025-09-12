@@ -2,6 +2,8 @@
 
 @section('head-tag')
 
+    <title>{{ $setting->title }}</title>
+
 <style>
     #resend-otp{
         font-size: 1rem;
