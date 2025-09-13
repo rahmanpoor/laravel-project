@@ -117,22 +117,37 @@
                 <i class="fas fa-bars"></i>
                 <span>مشتریان</span>
             </a>
-            <a href="{{ route('admin.user.role.index') }}" class="sidebar-link">
+
+            <section class="sidebar-group-link">
+                <section class="sidebar-dropdown-toggle">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span>سطوح دسترسی</span>
+                    <i class="fas fa-angle-left angle"></i>
+                </section>
+                <section class="sidebar-dropdown">
+                    <a href="{{ route('admin.user.role.index') }}">مدیریت نقش ها</a>
+                    <a href="{{ route('admin.user.permission.index') }}">مدیریت دسترسی ها</a>
+
+                </section>
+            </section>
+
+
+            {{-- <a href="{{ route('admin.user.role.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>سطوح دسترسی</span>
-            </a>
+            </a> --}}
 
 
 
             <section class="sidebar-part-title">تیکت ها</section>
-             <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
+            <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
-                <span>همه تیکت ها</span>            </a>
-             <a href="{{ route('admin.ticket.category.index') }}" class="sidebar-link">
+                <span>همه تیکت ها</span> </a>
+            <a href="{{ route('admin.ticket.category.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی تیکت ها</span>
             </a>
-             <a href="{{ route('admin.ticket.priority.index') }}" class="sidebar-link">
+            <a href="{{ route('admin.ticket.priority.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>اولویت تیکت ها</span>
             </a>
