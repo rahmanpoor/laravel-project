@@ -2,18 +2,29 @@
 
 namespace App\Traits\Permissions;
 
+use App\Models\User\Role;
+
 
 trait HasPermissionsTrait
 {
+      public function roles()
+    {
+
+        return $this->belongsToMany(Role::class);
+    }
+
     public function hasPermissionTo($permission)
     {
         return (bool) $this->permission->where('name', $permission->name)->count();
     }
 
-    protected function hasRole(...$role)
+    public function hasRole(...$roles)
     {
-       foreach ($role as $role) {
-           if ($this->roles()->conains('name', $role)) {
+
+       foreach ($roles as $role) {
+
+           if ($this->roles->contains('name', $role)) {
+
                return true;
            }
        }

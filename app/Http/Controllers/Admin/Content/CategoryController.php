@@ -20,6 +20,7 @@ class CategoryController extends Controller
 
     {
         $user = auth()->user();
+       dd( $user->hasRole('operator'));
         $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
         return view('admin.content.category.index', compact('postCategories'));
     }

@@ -120,7 +120,7 @@
 
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
-                    <i class="fas fa-chart-bar icon"></i>
+                    <i class="fas fa-user-shield icon"></i>
                     <span>سطوح دسترسی</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
