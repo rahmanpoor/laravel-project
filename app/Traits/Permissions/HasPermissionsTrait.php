@@ -18,6 +18,12 @@ trait HasPermissionsTrait
         return (bool) $this->permission->where('name', $permission->name)->count();
     }
 
+
+    public function hasPermissionToAny($permissions)
+    {
+        return $this->hasPermission($permissions) || $this->hasPermissionThroughRole($permissions);
+    }
+
     public function hasRole(...$roles)
     {
 
