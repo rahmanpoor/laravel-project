@@ -20,9 +20,15 @@ class CategoryController extends Controller
 
     {
         $user = auth()->user();
-       dd( $user->hasRole('operator'));
-        $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
-        return view('admin.content.category.index', compact('postCategories'));
+
+        if ($user->can('show-category')) {
+
+            $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
+            return view('admin.content.category.index', compact('postCategories'));
+
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -113,9 +119,8 @@ class CategoryController extends Controller
                 return redirect()->route('admin.content.category.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
-        }
-        else{
-            if (isset($inputs['currentImage']) && !empty($postCategory->image)){
+        } else {
+            if (isset($inputs['currentImage']) && !empty($postCategory->image)) {
                 $image = $postCategory->image;
                 $image['currentImage'] = $inputs['currentImage'];
                 $inputs['image'] = $image;

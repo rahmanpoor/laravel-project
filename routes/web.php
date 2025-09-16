@@ -423,7 +423,7 @@ Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
 
 //sales process
-Route::namespace('SalesProcess')->group(function () {
+Route::namespace('SalesProcess')->middleware('auth')->group(function () {
     //cart
     Route::get('/cart', [CartController::class, 'cart'])->name('customer.sales-process.cart');
     Route::post('/cart', [CartController::class, 'updateCart'])->name('customer.sales-process.update-cart');
@@ -463,7 +463,7 @@ Route::namespace('market')->group(function () {
 });
 
 //profile]
-Route::namespace('Profile')->group(function () {
+Route::namespace('Profile')->middleware('auth')->group(function () {
     Route::get('/orders', [CustomerOrderController::class, 'index'])->name('customer.profile.orders');
     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
     Route::get('/my-favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
