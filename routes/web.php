@@ -56,7 +56,7 @@ use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaym
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->namespace('Admin')->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware('role:admin')->group(function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');
     Route::prefix('market')->namespace('Market')->group(function () {
         //Category

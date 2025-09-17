@@ -19,16 +19,10 @@ class CategoryController extends Controller
     public function index()
 
     {
-        $user = auth()->user();
-
-        if ($user->can('show-category')) {
 
             $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
             return view('admin.content.category.index', compact('postCategories'));
 
-        } else {
-            abort(403);
-        }
     }
 
     /**
