@@ -73,8 +73,10 @@
                                         </label>
                                     </td>
                                     <td class="width-22-rem text-left">
+                                        <a class="btn btn-warning btn-sm" href="{{ route('admin.user.customer.upgrade-to-admin', $user->id) }}"><i class="fa fa-user-shield"></i> ارتقا به مدیر</a>
                                         <a href="{{ route('admin.user.customer.edit', $user->id) }}"
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                        </button>
                                         <form class="d-inline"
                                             action="{{ route('admin.user.customer.destroy', $user->id) }}" method="post">
                                             @csrf

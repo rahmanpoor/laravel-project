@@ -296,6 +296,7 @@ Route::prefix('admin')->namespace('Admin')->middleware('role:admin')->group(func
             Route::delete('/destroy/{user}', [CustomerController::class, 'destroy'])->name('admin.user.customer.destroy');
             Route::get('/status/{user}', [CustomerController::class, 'status'])->name('admin.user.customer.status');
             Route::get('/activation/{user}', [CustomerController::class, 'activation'])->name('admin.user.customer.activation');
+            Route::get('/upgrade-to-admin/{user}', [CustomerController::class, 'upgradeToAdmin'])->name('admin.user.customer.upgrade-to-admin');
         });
         //role
         Route::prefix('role')->group(function () {

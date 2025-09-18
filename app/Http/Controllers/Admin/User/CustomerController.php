@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Models\User;
+use App\Models\User\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\NewUserRegistered;
 use App\Http\Services\Image\ImageService;
 use App\Http\Requests\Admin\User\CustomerRequest;
-use App\Notifications\NewUserRegistered;
 
 class CustomerController extends Controller
 {
@@ -19,7 +20,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-         $users = User::where('user_type', 0)->get();
+        $users = User::where('user_type', 0)->get();
         return view('admin.user.customer.index', compact('users'));
     }
 
@@ -41,7 +42,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request, ImageService $imageService)
     {
-          $inputs = $request->all();
+        $inputs = $request->all();
 
 
         if ($request->hasFile('profile_photo_path')) {
@@ -87,7 +88,7 @@ class CustomerController extends Controller
      */
     public function edit(User $user)
     {
-         return view('admin.user.customer.edit', compact('user'));
+        return view('admin.user.customer.edit', compact('user'));
     }
 
     /**
@@ -99,7 +100,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request, User $user, ImageService $imageService)
     {
-         $inputs = $request->all();
+        $inputs = $request->all();
 
 
 
@@ -135,11 +136,11 @@ class CustomerController extends Controller
      */
     public function destroy(User $user)
     {
-         $result = $user->forceDelete();
+        $result = $user->forceDelete();
         return redirect()->route('admin.user.customer.index')->with('swal-success', ' مشتری با موفقیت حذف شد');
     }
 
-     public function status(User $user)
+    public function status(User $user)
     {
 
         $user->status = $user->status == 0 ? 1 : 0;
@@ -176,5 +177,23 @@ class CustomerController extends Controller
 
             return response()->json(['activation' => false]);
         }
+    }
+
+    public function upgradeToAdmin(User $user)
+    {
+        $user->update([
+            'user_type' => 1,
+        ]);
+
+        // پیدا کردن نقش ادمین
+        $adminRole = Role::where('name', 'admin')->first();
+
+        if ($adminRole) {
+            // اضافه کردن نقش به کاربر بدون پاک کردن نقش‌های قبلی
+            $user->roles()->syncWithoutDetaching([$adminRole->id]);
+        }
+
+
+        return redirect()->back()->with('swal-success', 'کاربر با موفقیت به مدیر ارتقا یافت.');
     }
 }
