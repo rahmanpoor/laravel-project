@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Customer\Profile\ProfileController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Customer\Profile\FavoriteController;
+use App\Http\Controllers\Admin\Footer\FooterFeatureController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Customer\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
@@ -56,7 +57,7 @@ use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaym
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->namespace('Admin')->middleware('role:admin')->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');
     Route::prefix('market')->namespace('Market')->group(function () {
         //Category
@@ -398,6 +399,14 @@ Route::prefix('admin')->namespace('Admin')->middleware('role:admin')->group(func
         Route::post('/answer/{ticket}', [TicketController::class, 'answer'])->name('admin.ticket.answer');
         Route::get('/change/{ticket}', [TicketController::class, 'change'])->name('admin.ticket.change');
     });
+
+           //footer
+        Route::prefix('footer')->group(function () {
+            Route::get('/', [FooterFeatureController::class, 'index'])->name('admin.footer.feature.index');
+            Route::get('/create', [FooterFeatureController::class, 'create'])->name('admin.footer.feature.create');
+            Route::post('/store', [FooterFeatureController::class, 'store'])->name('admin.footer.feature.store');
+            Route::delete('/destroy/{footer}', [FooterFeatureController::class, 'destroy'])->name('admin.footer.feature.destroy');
+        });
     //setting
     Route::prefix('setting')->namespace('Setting')->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('admin.setting.index');

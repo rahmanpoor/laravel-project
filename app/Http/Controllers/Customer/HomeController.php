@@ -8,15 +8,22 @@ use App\Models\Content\Banner;
 use App\Models\Market\Product;
 use App\Models\Setting\Setting;
 use App\Http\Controllers\Controller;
+use App\Models\Footer\FooterFeature;
 
 class HomeController extends Controller
 {
     public function home()
     {
+        //banner
         $slideShowImages = Banner::where('position', 0)->where('status', 1)->get();
         $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
         $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
+
+        //footer features
+        $footerFeatures = FooterFeature::all();
+
+
 
         $brands = Brand::all();
         $mostVisitedProducts = Product::latest()->take(10)->get();
@@ -24,6 +31,6 @@ class HomeController extends Controller
 
 
 
-        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
+        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts', 'footerFeatures'));
     }
 }
