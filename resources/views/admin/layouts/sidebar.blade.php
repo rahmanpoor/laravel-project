@@ -187,7 +187,23 @@
 
 
 
+
+
+
+
             <section class="sidebar-part-title">تنظیمات</section>
+            <section class="sidebar-group-link">
+                <section class="sidebar-dropdown-toggle">
+                    <i class="fas fa-user-shield icon"></i>
+                    <span>تنظیمات فوتر</span>
+                    <i class="fas fa-angle-left angle"></i>
+                </section>
+                <section class="sidebar-dropdown">
+                    <a href="{{ route('admin.user.role.index') }}">شبکه مجازی</a>
+                    <a href="{{ route('admin.user.permission.index') }}">لینک ها</a>
+
+                </section>
+            </section>
             <a href="{{ route('admin.setting.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>تنظیمات</span>
