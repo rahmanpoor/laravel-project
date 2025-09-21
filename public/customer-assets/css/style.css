@@ -1,8 +1,9 @@
 @font-face {
-    font-family: IRANSans;
-    src:  url("../fonts/IRANSans/IRANSansWeb_Light.woff2") format('woff2'),
-          url("../fonts/IRANSans/IRANSansWeb_Light.woff"),
-          url("../fonts/IRANSans/IRANSansWeb_Light.ttf") format("truetype");
+    font-family: IRANYekan;
+    src:  url("../fonts/IRANYekan/iranyekan.woff2") format('woff2'),
+          url("../fonts/IRANYekan/iranyekan.woff");
+
+
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -11,7 +12,7 @@
 * {
     direction: rtl;
     text-align: right;
-    font-family: IRANSans, Tahoma, sans-serif;
+    font-family: IRANYekan, Tahoma, sans-serif;
 }
 
 /*
@@ -382,12 +383,11 @@ body {
 }
 
 .navbar-item > a {
-    color: #333;
+    color: gray;
     text-decoration: none;
     padding: 0.8rem 0.6rem 0.6rem 0.6rem;
     display: block;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
-    font-weight: bold;
 }
 
 .navbar-item > a:hover {
@@ -553,7 +553,7 @@ body {
 
 .content-header-title {
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .content-header-title-small {
@@ -563,7 +563,7 @@ body {
 .content-header-title span {
     border-bottom: 2px solid #ff253a;
     padding: 0.3rem;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .content-header-link * {

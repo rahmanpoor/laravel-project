@@ -59,8 +59,8 @@
                                               class="fa fa-user-circle"></i>{{ Auth::user()->first_name ? Auth::user()->full_name : 'پروفایل کاربری' }}</a>
                                   </section>
                                   @role('admin')
-                                      <section><a class="dropdown-item" href="{{ route('admin.home') }}" target="_blank" rel="noopener noreferrer"><i
-                                                  class="fas fa-cogs"></i>پنل مدیریت</a></section>
+                                      <section><a class="dropdown-item" href="{{ route('admin.home') }}" target="_blank"
+                                              rel="noopener noreferrer"><i class="fas fa-cogs"></i>پنل مدیریت</a></section>
                                   @endrole
                                   <section><a class="dropdown-item" href="{{ route('customer.profile.orders') }}"><i
                                               class="fa fa-newspaper"></i>سفارشات</a></section>
@@ -117,7 +117,8 @@
                                               <img class="flex-shrink-1"
                                                   src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
                                                   alt="{{ asset($cartItem->product->image['indexArray']['medium']) . '-' . ($key + 1) }}">
-                                              <section class="w-100 text-truncate"><a class="text-decoration-none text-dark"
+                                              <section class="w-100 text-truncate"><a
+                                                      class="text-decoration-none text-dark"
                                                       href="{{ route('customer.market.product', $cartItem->product) }}">{{ $cartItem->product->name }}</a>
                                               </section>
                                               <section class="flex-shrink-1"><a
@@ -927,13 +928,34 @@
                           </section>
                       </section>
                       <section class="border-start my-2 mx-1"></section>
-                      <section class="navbar-item"><a href="#">سوپرمارکت</a></section>
-                      <section class="navbar-item"><a href="#">تخفیف ها و پیشنهادها</a></section>
-                      <section class="navbar-item"><a href="#">سعید مارکت من</a></section>
-                      <section class="navbar-item"><a href="#">سعید مارکت پلاس</a></section>
-                      <section class="navbar-item"><a href="#">درباره ما</a></section>
-                      <section class="navbar-item"><a href="#">فروشنده شوید</a></section>
-                      <section class="navbar-item"><a href="#">فرصت های شغلی</a></section>
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-shopping-basket"></i> سوپرمارکت</a>
+                      </section>
+
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-percent"></i> تخفیف ها و پیشنهادها</a>
+                      </section>
+
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-user"></i> سعید مارکت من</a>
+                      </section>
+
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-star"></i> سعید مارکت پلاس</a>
+                      </section>
+
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-info-circle"></i> درباره ما</a>
+                      </section>
+
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-store"></i> فروشنده شوید</a>
+                      </section>
+
+                      <section class="navbar-item">
+                          <a href="#"><i class="fas fa-briefcase"></i> فرصت های شغلی</a>
+                      </section>
+
 
                   </section>
 
@@ -943,7 +965,9 @@
                       aria-labelledby="offcanvasExampleLabel" style="z-index: 9999999;">
                       <section class="offcanvas-header">
                           <h5 class="offcanvas-title" id="offcanvasExampleLabel"><a class="text-decoration-none"
-                                  href="{{ route('customer.home') }}"><img src="{{ asset($setting->logo) }}" onerror="this.src='{{ asset('img/logo.png') }}'; this.onerror=null;" alt="logo"></a></h5>
+                                  href="{{ route('customer.home') }}"><img src="{{ asset($setting->logo) }}"
+                                      onerror="this.src='{{ asset('img/logo.png') }}'; this.onerror=null;"
+                                      alt="logo"></a></h5>
                           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                               aria-label="Close"></button>
                       </section>
