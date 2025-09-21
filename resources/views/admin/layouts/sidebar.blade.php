@@ -144,10 +144,10 @@
 
             <section class="sidebar-part-title">تیکت ها</section>
             <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
-                <i class="fas fa-ticket"></i>
+                <i class="fas fa-ticket-alt"></i>
                 <span>همه تیکت ها</span> </a>
             <a href="{{ route('admin.ticket.category.index') }}" class="sidebar-link">
-                <i class="fas fa-tree"></i>
+                <i class="fas fa-list"></i>
                 <span>دسته بندی تیکت ها</span>
             </a>
             <a href="{{ route('admin.ticket.priority.index') }}" class="sidebar-link">
@@ -192,7 +192,7 @@
             <section class="sidebar-part-title">تنظیمات</section>
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
-                    <i class="fas fa-shoe-prints icon"></i>
+                    <i class="fas fa-cog icon"></i>
                     <span>تنظیمات فوتر</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
