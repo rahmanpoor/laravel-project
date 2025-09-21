@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->tinyInteger('position')->default(0)->comment('developer explain 0 or 1 ... in admin\content\banner model');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

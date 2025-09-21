@@ -6,6 +6,7 @@ use App\Models\Notification;
 use App\Models\Content\Comment;
 use App\Models\Market\CartItem;
 use App\Models\Setting\Setting;
+use App\Models\Footer\FooterFeature;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
@@ -18,10 +19,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-
-    }
+    public function register() {}
 
     /**
      * Bootstrap any application services.
@@ -51,6 +49,13 @@ class AppServiceProvider extends ServiceProvider
                 $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
                 $view->with('cartItems', $cartItems);
             }
+        });
+
+        //footer
+        View::composer('*', function ($view) {
+            $view->with([
+                'footerFeatures' => FooterFeature::all()
+            ]);
         });
     }
 }

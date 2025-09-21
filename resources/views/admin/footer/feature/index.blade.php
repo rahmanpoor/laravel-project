@@ -39,7 +39,6 @@
                                 <th>عنوان ویژگی</th>
                                 <th>آدرس</th>
                                 <th>تصویر</th>
-                                <th>مکان</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
@@ -49,15 +48,13 @@
                                 <tr>
                                     <th>{{ $key += 1 }}</th>
                                     <td>{{ $feature->title }}</td>
-                                    <td>{{ $feature->url }}</td>
+                                    <td>{{ $feature->url ? $feature->url : '-' }}</td>
                                     <td>
                                         <img src="{{ asset($feature->image) }}"
                                             alt="" width="50" height="50">
                                     </td>
 
-                                    <td>
-                                        {{ $positions[$feature->position] }}
-                                    </td>
+
                                     <td class="width-16-rem text-left">
                                         <form class="d-inline"
                                             action="{{ route('admin.footer.feature.destroy', $feature->id) }}"

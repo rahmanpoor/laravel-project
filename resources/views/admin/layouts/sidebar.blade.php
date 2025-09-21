@@ -11,7 +11,7 @@
 
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
-                    <i class="fas fa-chart-bar icon"></i>
+                    <i class="fas fa-store icon"></i>
                     <span>ویترین</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
@@ -27,7 +27,7 @@
 
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
-                    <i class="fas fa-chart-bar icon"></i>
+                    <i class="fas fa-box-open icon"></i>
                     <span>سفارشات</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
@@ -44,7 +44,7 @@
 
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
-                    <i class="fas fa-chart-bar icon"></i>
+                    <i class="fas fa-credit-card  icon"></i>
                     <span>پرداخت ها</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
@@ -58,7 +58,7 @@
 
             <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
-                    <i class="fas fa-chart-bar icon"></i>
+                    <i class="fas fa-tags icon"></i>
                     <span>تخفیف ها</span>
                     <i class="fas fa-angle-left angle"></i>
                 </section>
@@ -70,7 +70,7 @@
             </section>
 
             <a href="{{ route('admin.market.delivery.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-truck"></i>
                 <span>روش های ارسال</span>
             </a>
 
@@ -80,18 +80,16 @@
 
 
             <a href="{{ route('admin.content.category.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-layer-group"></i>
                 <span>دسته بندی</span>
             </a>
 
-
-
             <a href="{{ route('admin.content.post.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-file-alt"></i>
                 <span>پست ها</span>
             </a>
             <a href="{{ route('admin.content.comment.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-comments"></i>
                 <span>نظرات</span>
             </a>
             <a href="{{ route('admin.content.menu.index') }}" class="sidebar-link">
@@ -99,15 +97,15 @@
                 <span>منو</span>
             </a>
             <a href="{{ route('admin.content.faq.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-question"></i>
                 <span>سوالات متداول</span>
             </a>
             <a href="{{ route('admin.content.page.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-pager"></i>
                 <span>پیج ساز</span>
             </a>
             <a href="{{ route('admin.content.banner.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-image"></i>
                 <span>بنرها</span>
             </a>
 
@@ -115,11 +113,11 @@
 
             <section class="sidebar-part-title">بخش کاربران</section>
             <a href="{{ route('admin.user.admin-user.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-crown"></i>
                 <span>کاربران ادمین</span>
             </a>
             <a href="{{ route('admin.user.customer.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-users-cog"></i>
                 <span>مشتریان</span>
             </a>
 
@@ -146,30 +144,30 @@
 
             <section class="sidebar-part-title">تیکت ها</section>
             <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-ticket"></i>
                 <span>همه تیکت ها</span> </a>
             <a href="{{ route('admin.ticket.category.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-tree"></i>
                 <span>دسته بندی تیکت ها</span>
             </a>
             <a href="{{ route('admin.ticket.priority.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-bolt"></i>
                 <span>اولویت تیکت ها</span>
             </a>
             <a href="{{ route('admin.ticket.admin.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-user-shield"></i>
                 <span>ادمین تیکت ها</span>
             </a>
             <a href="{{ route('admin.ticket.newTickets') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-plus-circle"></i>
                 <span>تیکت های جدید</span>
             </a>
             <a href="{{ route('admin.ticket.openTickets') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-folder-open "></i>
                 <span>تیکت های باز</span>
             </a>
             <a href="{{ route('admin.ticket.closeTickets') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-folder"></i>
                 <span>تیکت های بسته</span>
             </a>
 
@@ -177,11 +175,11 @@
 
             <section class="sidebar-part-title">اطلاع رسانی</section>
             <a href="{{ route('admin.notify.email.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-envelope"></i>
                 <span>اعلامیه ایمیلی</span>
             </a>
             <a href="{{ route('admin.notify.sms.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-sms"></i>
                 <span>اعلامیه پیامکی</span>
             </a>
 
@@ -205,8 +203,10 @@
 
                 </section>
             </section>
+
+            {{-- setting --}}
             <a href="{{ route('admin.setting.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-cog"></i>
                 <span>تنظیمات</span>
             </a>
 

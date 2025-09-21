@@ -25,8 +25,7 @@ class FooterFeatureRequest extends FormRequest
     {
         return [
             'title' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-            'url' => 'required|max:500|min:5',
-            'position' => 'required|numeric',
+            'url' => 'nullable|max:500|min:5',
             'image' => 'required|image|mimes:png,jpg,jpeg,gif',
         ];
     }

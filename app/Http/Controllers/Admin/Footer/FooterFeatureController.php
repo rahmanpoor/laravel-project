@@ -13,14 +13,13 @@ class FooterFeatureController extends Controller
     public function index()
     {
         $features = FooterFeature::orderBy('created_at', 'desc')->simplePaginate(15);
-        $positions = FooterFeature::$positions;
-        return view('admin.footer.feature.index', compact('features','positions'));
+        return view('admin.footer.feature.index', compact('features'));
     }
 
     public function create()
     {
-         $positions = FooterFeature::$positions;
-        return view('admin.footer.feature.create', compact('positions'));
+
+        return view('admin.footer.feature.create');
     }
 
      public function store(FooterFeatureRequest $request, ImageService $imageService)

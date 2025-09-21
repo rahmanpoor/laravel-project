@@ -20,8 +20,7 @@ class HomeController extends Controller
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
         $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
 
-        //footer features
-        $footerFeatures = FooterFeature::all();
+
 
 
 
@@ -31,6 +30,6 @@ class HomeController extends Controller
 
 
 
-        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts', 'footerFeatures'));
+        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
     }
 }
