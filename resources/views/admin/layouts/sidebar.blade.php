@@ -207,7 +207,7 @@
             {{-- setting --}}
             <a href="{{ route('admin.setting.index') }}" class="sidebar-link">
                 <i class="fas fa-cog"></i>
-                <span>تنظیمات</span>
+                <span>تنظیمات سایت</span>
             </a>
 
         </section>
