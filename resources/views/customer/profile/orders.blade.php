@@ -39,7 +39,7 @@
                         <section class="d-flex justify-content-center my-4">
 
                             {{-- current btn --}}
-                            <a type="button" class="btn btn-info btn-sm mx-2 position-relative"
+                            <a type="button" class="btn btn-outline-info btn-sm mx-2 position-relative"
                                 href="{{ route('customer.profile.orders', 'type=1') }}">
                                 جاری
                                 {{-- <span
@@ -50,7 +50,7 @@
                             </a>
 
                             {{-- delivered btn --}}
-                            <a type="button" class="btn btn-success btn-sm mx-2 position-relative"
+                            <a type="button" class="btn btn-outline-success btn-sm mx-2 position-relative"
                                 href="{{ route('customer.profile.orders', 'type=2') }}">
                                 تحویل شده
                                 {{-- <span
@@ -61,7 +61,7 @@
                             </a>
 
                             {{-- cancel btn --}}
-                            <a type="button" class="btn btn-danger btn-sm mx-2 position-relative"
+                            <a type="button" class="btn btn-outline-danger btn-sm mx-2 position-relative"
                                 href="{{ route('customer.profile.orders', 'type=3') }}">
                                 لغو شده
                                 {{-- <span
