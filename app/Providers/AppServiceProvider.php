@@ -4,9 +4,13 @@ namespace App\Providers;
 
 use App\Models\Notification;
 use App\Models\Content\Comment;
+use App\Models\Footer\FooterBadge;
 use App\Models\Market\CartItem;
 use App\Models\Setting\Setting;
+use App\Models\Footer\FooterLink;
 use App\Models\Footer\FooterFeature;
+use App\Models\Footer\FooterSetting;
+use App\Models\Footer\FooterSocial;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
@@ -51,11 +55,45 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        //footer
+        //footer features
         View::composer('*', function ($view) {
             $view->with([
                 'footerFeatures' => FooterFeature::all()
             ]);
         });
+
+        //footer links
+        View::composer('*', function ($view) {
+            $view->with([
+                'firstColumnLinks'  => FooterLink::where('position', 1)->get(),
+                'secondColumnLinks' => FooterLink::where('position', 2)->get(),
+                'thirdColumnLinks'  => FooterLink::where('position', 3)->get(),
+            ]);
+        });
+
+         //footer social
+        View::composer('*', function ($view) {
+            $view->with([
+                'footerSocials' => FooterSocial::all()
+            ]);
+        });
+
+
+           //footer badges
+        View::composer('*', function ($view) {
+            $view->with([
+                'footerBadges' => FooterBadge::all()
+            ]);
+        });
+
+
+        //footer settings
+        View::composer('*', function ($view) {
+            $view->with([
+                'footerSetting' => FooterSetting::first()
+            ]);
+        });
+
+
     }
 }

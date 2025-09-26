@@ -3,6 +3,7 @@
 use App\Models\Notification;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Notify\SMSController;
@@ -32,11 +33,15 @@ use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\User\PermissionController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Admin\Notify\EmailFileController;
+use App\Http\Controllers\Admin\Footer\FooterLinkController;
+use App\Http\Controllers\Admin\Footer\FooterBadgeController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Customer\Profile\ProfileController;
+use App\Http\Controllers\Admin\Footer\FooterSocialController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Customer\Profile\FavoriteController;
 use App\Http\Controllers\Admin\Footer\FooterFeatureController;
+use App\Http\Controllers\Admin\Footer\FooterSettingController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Customer\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
@@ -400,13 +405,42 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->
         Route::get('/change/{ticket}', [TicketController::class, 'change'])->name('admin.ticket.change');
     });
 
-           //footer
-        Route::prefix('footer')->group(function () {
+    //footer setting
+    Route::prefix('footer')->group(function () {
+        //feature
+        Route::prefix('feature')->group(function () {
             Route::get('/', [FooterFeatureController::class, 'index'])->name('admin.footer.feature.index');
             Route::get('/create', [FooterFeatureController::class, 'create'])->name('admin.footer.feature.create');
             Route::post('/store', [FooterFeatureController::class, 'store'])->name('admin.footer.feature.store');
             Route::delete('/destroy/{footer}', [FooterFeatureController::class, 'destroy'])->name('admin.footer.feature.destroy');
         });
+        //link
+        Route::prefix('link')->group(function () {
+            Route::get('/', [FooterLinkController::class, 'index'])->name('admin.footer.link.index');
+            Route::get('/create', [FooterLinkController::class, 'create'])->name('admin.footer.link.create');
+            Route::post('/store', [FooterLinkController::class, 'store'])->name('admin.footer.link.store');
+            Route::delete('/destroy/{footer}', [FooterLinkController::class, 'destroy'])->name('admin.footer.link.destroy');
+        });
+         //social
+        Route::prefix('social')->group(function () {
+            Route::get('/', [FooterSocialController::class, 'index'])->name('admin.footer.social.index');
+            Route::get('/create', [FooterSocialController::class, 'create'])->name('admin.footer.social.create');
+            Route::post('/store', [FooterSocialController::class, 'store'])->name('admin.footer.social.store');
+            Route::delete('/destroy/{footer}', [FooterSocialController::class, 'destroy'])->name('admin.footer.social.destroy');
+        });
+         //badge
+        Route::prefix('badge')->group(function () {
+            Route::get('/', [FooterBadgeController::class, 'index'])->name('admin.footer.badge.index');
+            Route::get('/create', [FooterBadgeController::class, 'create'])->name('admin.footer.badge.create');
+            Route::post('/store', [FooterBadgeController::class, 'store'])->name('admin.footer.badge.store');
+            Route::delete('/destroy/{footer}', [FooterBadgeController::class, 'destroy'])->name('admin.footer.badge.destroy');
+        });
+          //footer setting
+        Route::prefix('setting')->group(function () {
+            Route::get('/', [FooterSettingController::class, 'index'])->name('admin.footer.setting.index');
+            Route::put('/update', [FooterSettingController::class, 'update'])->name('admin.footer.setting.update');
+        });
+    });
     //setting
     Route::prefix('setting')->namespace('Setting')->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('admin.setting.index');

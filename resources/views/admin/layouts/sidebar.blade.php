@@ -198,8 +198,10 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.footer.feature.index') }}">مزایای فروشگاه</a>
-                    <a href="{{ route('admin.user.role.index') }}">شبکه های اجتماعی</a>
-                    <a href="{{ route('admin.user.permission.index') }}">لینک ها</a>
+                    <a href="{{ route('admin.footer.link.index') }}">لینک ها</a>
+                     <a href="{{ route('admin.footer.social.index') }}">همراه ما باشید</a>
+                     <a href="{{ route('admin.footer.badge.index') }}">نماد ها</a>
+                     <a href="{{ route('admin.footer.setting.index') }}">تنظیمات</a>
 
                 </section>
             </section>
