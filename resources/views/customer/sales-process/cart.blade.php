@@ -126,12 +126,13 @@
                                     <p class="text-muted">قیمت کالاها ({{ count($cartItems) }})</p>
                                     <p class="text-muted" id="total_product_price">{{ priceFormat($totalPrice) }} تومان</p>
                                 </section>
-
+                                @if ($totalDiscount != 0)
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">تخفیف کالاها</p>
                                     <p class="text-danger fw-bolder" id="total_discount">{{ priceFormat($totalDiscount) }}
                                         تومان</p>
                                 </section>
+                                @endif
                                 <section class="border-bottom mb-3"></section>
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">جمع سبد خرید</p>

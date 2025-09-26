@@ -223,11 +223,21 @@
                                     </section>
                                 @endif
 
+                                 <section class="border-bottom mb-3"></section>
+
+                                <section class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted">هزینه ارسال</p>
+                                        <p class="text-muted"><span
+                                                id="total_discount">{{ priceFormat($order->shipping_cost) }}</span>
+                                            </p>
+                                 </section>
+
 
 
                                 <section class="border-bottom mb-3"></section>
+
                                 <section class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted">جمع سبد خرید</p>
+                                    <p class="text-muted">مبلغ قابل پرداخت</p>
                                     <p class="fw-bolder"><span
                                             id="total_price">{{ priceFormat($order->order_final_amount) }}</span>
                                         تومان</p>
@@ -245,7 +255,7 @@
 
                                 <section class="">
                                     <button type="button" onclick="document.getElementById('payment_submit').submit();"
-                                        class="btn btn-danger d-block w-100">تکمیل فرآیند خرید</button>
+                                        class="btn btn-danger d-block w-100 ">پرداخت</button>
                                 </section>
 
                             </section>

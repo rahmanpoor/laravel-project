@@ -211,7 +211,8 @@
 
                                 <section class="border-bottom mb-3"></section>
 
-                                <section class="d-flex justify-content-end align-items-center">
+                                <section class="d-flex justify-content-between align-items-center">
+                                   <p class="text-muted">مجموع</p>
                                     <p class="fw-bolder"><span id="final_price"></span><span class="small"> تومان</span>
                                     </p>
                                 </section>

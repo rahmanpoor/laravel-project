@@ -108,12 +108,12 @@
                                                     </section>
                                                     <section class="product-colors"></section>
                                                     <section class="product-name">
-                                                        <h3>{{ Str::limit($mostVisitedProduct->name, 30) }}</h3>
+                                                        <h3>{{ Str::limit($mostVisitedProduct->name, 60) }}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">
-                                                            <span class="product-old-price">6,895,000 </span>
-                                                            <span class="product-discount-amount">10%</span>
+                                                            {{-- <span class="product-old-price">6,895,000 </span>
+                                                            <span class="product-discount-amount">10%</span> --}}
                                                         </section>
                                                         <section class="product-price">
                                                             {{ priceFormat($mostVisitedProduct->price) }} تومان</section>
