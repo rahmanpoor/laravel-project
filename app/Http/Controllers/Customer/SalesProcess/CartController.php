@@ -12,7 +12,7 @@ class CartController extends Controller
 {
     public function cart()
     {
-        if (Auth::check()) {
+
 
             $cartItems = CartItem::where('user_id', auth()->user()->id)->get();
             if ($cartItems->count() > 0) {
@@ -23,10 +23,7 @@ class CartController extends Controller
                 return redirect()->route('customer.home');
             }
 
-        }
-        else {
-            return redirect()->route('auth.customer.login-register-form');
-        }
+
     }
 
     public function updateCart(Request $request)
@@ -55,21 +52,21 @@ class CartController extends Controller
 
             $cartItems = CartItem::where('product_id', $product->id)->where('user_id', auth()->user()->id)->get();
 
-            if (!isset($request->color)) {
-                $request->color = null;
-            }
-            if (!isset($request->guarantee)) {
-                $request->guarantee = null;
-            }
+            // if (!isset($request->color)) {
+            //     $request->color = null;
+            // }
+            // if (!isset($request->guarantee)) {
+            //     $request->guarantee = null;
+            // }
 
             foreach ($cartItems as $cartItem) {
-                if ($cartItem->color_id == $request->color && $cartItem->guarantee_id == $request->guarantee) {
+                // if ($cartItem->color_id == $request->color && $cartItem->guarantee_id == $request->guarantee) {
                     if ($cartItem->number != $request->number) {
                         $cartItem->update(['number' => $request->number]);
                         return back()->with('alert-section-success', 'تعداد این محصول در سبد خرید تغییر کرد');
                     }
                     return back()->with('alert-section-info', 'این محصول قبلا به سبد خرید اضافه شده است');
-                }
+                // }
             }
 
             $inputs = [];

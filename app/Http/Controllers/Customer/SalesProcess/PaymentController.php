@@ -27,7 +27,8 @@ class PaymentController extends Controller
         $user = auth()->user();
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
-        // $order->order_final_amount = $order->order_final_amount + $order->delivery->amount;
+        $order->order_final_amount += $order->delievry_amount;
+        $order->save();
         return view('customer.sales-process.payment', compact('cartItems', 'order'));
     }
 
@@ -116,6 +117,7 @@ class PaymentController extends Controller
         }
 
         $paymented = $targetModel::create([
+
             'amount' => $order->order_final_amount,
             'user_id' => Auth::user()->id,
             'pay_date' => now(),

@@ -109,11 +109,15 @@ class AddressController extends Controller
 
     public function chooseAddressAndDelivery(ChooseAddressAndDeliveryRequest $request) {
 
+
+
+
         $user = Auth::user();
 
         $inputs = $request->all();
 
-
+        //get delivery method
+        $deliveryMethod = Delivery::where('id', $request->delivery_id)->first();
 
 
         //calc price
@@ -170,8 +174,12 @@ class AddressController extends Controller
         $inputs['order_discount_amount'] = $totalFinalDiscountPriceWithNumbers;
         $inputs['order_common_discount_amount'] = $commonPercentageDiscountAmount;
         $inputs['order_total_products_discount_amount'] = $inputs['order_discount_amount'] + $inputs['order_common_discount_amount'];
+        $inputs['delievry_amount'] = $deliveryMethod->amount;
+
 
         $order = Order::updateOrCreate(['user_id' => $user->id, 'order_status' => 0],
+
+            $inputs
 
 
 

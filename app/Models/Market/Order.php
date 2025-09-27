@@ -56,8 +56,8 @@ class Order extends Model
     {
         switch ($this->payment_status) {
             case 0:
-                $result = 'پرداخت ناموفق';
-                $badge_color = 'danger';
+                $result = 'در انتظار پرداخت';
+                $badge_color = 'secondary';
                 break;
             case 1:
                 $result = 'پرداخت موفق';
@@ -67,6 +67,7 @@ class Order extends Model
                 $result = 'لغو شده';
                 $badge_color = 'danger';
                 break;
+
             // default:
             //     $result = 'برگشت داده شده';
             //     $badge_color = 'primary';
@@ -117,6 +118,10 @@ class Order extends Model
     public function getOrderStatusValueAttribute()
     {
         switch ($this->order_status) {
+            case 0:
+                $result = 'در انتظار پرداخت';
+                $color = 'secondary';
+                break;
             case 1:
                 $result = 'جاری';
                 $color = 'primary';
@@ -137,9 +142,7 @@ class Order extends Model
             //     $result = 'مرجوع شده';
             //     $color = 'dark';
             //     break;
-            default:
-                $result = 'بررسی نشده';
-                $color = 'primary';
+
         }
         return [
             'result' =>  $result,
