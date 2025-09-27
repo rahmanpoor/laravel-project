@@ -54,6 +54,7 @@ use App\Http\Controllers\Customer\Profile\OrderController as CustomerOrderContro
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use App\Http\Controllers\Customer\Profile\AddressController as ProfileAddressController;
+use App\Http\Controllers\Customer\Profile\TicketController as ProfileTicketController;
 use App\Http\Controllers\Customer\SalesProcess\PaymentController as CustomerPaymentController;
 
 /*
@@ -514,4 +515,5 @@ Route::namespace('Profile')->middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('customer.profile.profile');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
     Route::get('/profile/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses');
+    Route::get('/profile/my-tickets', [ProfileTicketController::class, 'index'])->name('customer.profile.my-tickets');
 });

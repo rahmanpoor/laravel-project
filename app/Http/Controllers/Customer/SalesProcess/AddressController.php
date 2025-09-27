@@ -114,6 +114,8 @@ class AddressController extends Controller
         $inputs = $request->all();
 
 
+
+
         //calc price
         $cartItems = CartItem::where('user_id', $user->id)->get();
 
@@ -171,7 +173,7 @@ class AddressController extends Controller
 
         $order = Order::updateOrCreate(['user_id' => $user->id, 'order_status' => 0],
 
-        $inputs
+
 
         );
 

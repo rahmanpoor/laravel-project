@@ -2,6 +2,14 @@
     <section class="sidebar-container">
         <section class="sidebar-wrapper">
 
+            <a href="{{ route('customer.home') }}" class="sidebar-link" target="_blank">
+                <i class="fas fa-cart-plus"></i>
+                <span>فروشگاه</span>
+            </a>
+
+            <hr>
+
+
             <a href="{{ route('admin.home') }}" class="sidebar-link">
                 <i class="fas fa-home"></i>
                 <span>خانه</span>
@@ -142,7 +150,7 @@
 
 
 
-            <section class="sidebar-part-title">تیکت ها</section>
+            {{-- <section class="sidebar-part-title">تیکت ها</section>
             <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
                 <i class="fas fa-ticket-alt"></i>
                 <span>همه تیکت ها</span> </a>
@@ -169,7 +177,7 @@
             <a href="{{ route('admin.ticket.closeTickets') }}" class="sidebar-link">
                 <i class="fas fa-folder"></i>
                 <span>تیکت های بسته</span>
-            </a>
+            </a> --}}
 
 
 

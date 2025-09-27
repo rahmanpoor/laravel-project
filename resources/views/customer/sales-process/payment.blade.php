@@ -226,9 +226,10 @@
                                  <section class="border-bottom mb-3"></section>
 
                                 <section class="d-flex justify-content-between align-items-center">
+
                                         <p class="text-muted">هزینه ارسال</p>
                                         <p class="text-muted"><span
-                                                id="total_discount">{{ priceFormat($order->shipping_cost) }}</span>
+                                                {{-- id="delivery_amount">{{ priceFormat($order) }}</span> --}}
                                             </p>
                                  </section>
 
