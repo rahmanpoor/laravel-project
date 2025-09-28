@@ -95,7 +95,7 @@
                         <section class="content-header mb-3">
                             <section class="d-flex justify-content-between align-items-center">
                                 <h2 class="content-header-title content-header-title-small">
-                                    در انتظار پرداخت
+                                   وضعیت سفارش
                                 </h2>
                                 <section class="content-header-link">
                                     <!--<a href="#">مشاهده همه</a>-->
@@ -134,7 +134,7 @@
                                                 @endforeach
                                             </section>
                                         </section>
-                                        <section class="order-item-link"><a href="#">پرداخت سفارش</a></section>
+                                        {{-- <section class="order-item-link"><a href="#">پرداخت سفارش</a></section> --}}
                                     </section>
                                 </section>
                             @empty

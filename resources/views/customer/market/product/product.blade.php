@@ -164,11 +164,12 @@
                                                     @endif
                                                 @endauth
                                     </p>
+
                                     <section>
                                         <section class="cart-product-number d-inline-block ">
                                             <button class="cart-number cart-number-down" type="button">-</button>
                                             <input type="number" id="number" name="number" min="1"
-                                                max="5" step="1" value="1" readonly="readonly">
+                                                max="5" step="1" value="{{ $cartItem->number ?? 1 }}" readonly="readonly">
                                             <button class="cart-number cart-number-up" type="button">+</button>
                                         </section>
                                     </section>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer\Market;
 use Illuminate\Http\Request;
 use App\Models\Market\Product;
 use App\Models\Content\Comment;
+use App\Models\Market\CartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\PHP;
@@ -14,8 +15,9 @@ class ProductController extends Controller
     public function product(Product $product)
     {
 
+        $cartItem = CartItem::where('product_id', $product->id)->where('user_id', Auth::user()->id)->first();
         $relatedProducts = Product::all();
-        return view('customer.market.product.product', compact('product', 'relatedProducts'));
+        return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem' ));
     }
 
     public function addComment(Product $product, Request $request)
@@ -35,24 +37,17 @@ class ProductController extends Controller
 
     public function addToFavorite(Product $product)
     {
-        if(Auth::check())
-         {
+        if (Auth::check()) {
             $product->user()->toggle([Auth::user()->id]);
 
             if ($product->user->contains(Auth::user()->id)) {
 
                 return response()->json(['status' => 1]);
-
-            } else
-            {
+            } else {
 
                 return response()->json(['status' => 2]);
-
             }
-
-        } else
-
-        {
+        } else {
             return response()->json(['status' => 3]);
         }
     }

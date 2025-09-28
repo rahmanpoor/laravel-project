@@ -8,13 +8,14 @@ use App\Models\Market\Order;
 use Illuminate\Http\Request;
 use App\Models\Market\CartItem;
 use App\Models\Market\Delivery;
+use App\Models\Market\OrderItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Market\CommonDiscount;
 use Illuminate\Contracts\Cache\Store;
 use App\Http\Requests\Customer\SalesProcess\StoreAddressRequest;
 use App\Http\Requests\Customer\SalesProcess\UpdateAddressRequest;
 use App\Http\Requests\Customer\SalesProcess\ChooseAddressAndDeliveryRequest;
-use App\Models\Market\CommonDiscount;
 
 class AddressController extends Controller
 {
@@ -184,6 +185,16 @@ class AddressController extends Controller
 
 
         );
+
+        foreach ($cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id'    => $order->id,
+                'product_id'  => $cartItem->product_id,
+                'product'     => $cartItem->product->toArray(),
+                'number'      => $cartItem->number,
+                'final_total_price' => $cartItem->cartItemProductPrice() * $cartItem->number,
+            ]);
+        }
 
         return redirect()->route('customer.sales-process.payment');
 
