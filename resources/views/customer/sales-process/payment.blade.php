@@ -229,7 +229,7 @@
 
                                         <p class="text-muted">هزینه ارسال</p>
 
-                                        <p class="text-muted"><span id="delivery_amount">{{ priceFormat($order->delievry_amount) }} تومان</span>
+                                        <p class="text-muted"><span id="delivery_amount">{{ priceFormat($order->delivery_amount) }} تومان</span>
                                             </p>
                                  </section>
 

@@ -14,16 +14,13 @@ class CartController extends Controller
     {
 
 
-            $cartItems = CartItem::where('user_id', auth()->user()->id)->get();
-            if ($cartItems->count() > 0) {
-                $relatedProducts = Product::all();
-                return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
-            }
-            else {
-                return redirect()->route('customer.home');
-            }
-
-
+        $cartItems = CartItem::where('user_id', auth()->user()->id)->get();
+        if ($cartItems->count() > 0) {
+            $relatedProducts = Product::all();
+            return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
+        } else {
+            return redirect()->route('customer.home');
+        }
     }
 
     public function updateCart(Request $request)
@@ -41,48 +38,41 @@ class CartController extends Controller
 
     public function addToCart(Product $product, Request $request)
     {
+        $request->validate([
+            'color'     => 'nullable|exists:product_colors,id',
+            'guarantee' => 'nullable|exists:guarantees,id',
+            'number'    => 'numeric|min:1|max:5',
+        ]);
 
-        if (Auth::check()) {
+        $color     = $request->color ?? null;
+        $guarantee = $request->guarantee ?? null;
+        $userId    = auth()->id();
 
-            $request->validate([
-                'color' => 'nullable|exists:product_colors,id',
-                'guarantee' => 'nullable|exists:guarantees,id',
-                'number' => 'numeric|min:1|max:5'
-            ]);
+        $cartItem = CartItem::where('product_id', $product->id)
+            ->where('user_id', $userId)
+            ->where('color_id', $color)
+            ->where('guarantee_id', $guarantee)
+            ->first();
 
-            $cartItems = CartItem::where('product_id', $product->id)->where('user_id', auth()->user()->id)->get();
-
-            if (!isset($request->color)) {
-                $request->color = null;
+        if ($cartItem) {
+            if ($cartItem->number != $request->number) {
+                $cartItem->update(['number' => $request->number]);
+                return back()->with('alert-section-success', 'تعداد این محصول در سبد خرید تغییر کرد');
             }
-            if (!isset($request->guarantee)) {
-                $request->guarantee = null;
-            }
-
-            foreach ($cartItems as $cartItem) {
-                if ($cartItem->color_id == $request->color && $cartItem->guarantee_id == $request->guarantee) {
-                    if ($cartItem->number != $request->number) {
-                        $cartItem->update(['number' => $request->number]);
-                        return back()->with('alert-section-success', 'تعداد این محصول در سبد خرید تغییر کرد');
-                    }
-                    return back()->with('alert-section-info', 'این محصول قبلا به سبد خرید اضافه شده است');
-                }
-            }
-
-            $inputs = [];
-            $inputs['product_id'] = $product->id;
-            $inputs['user_id'] = auth()->user()->id;
-            $inputs['color_id'] = $request->color;
-            $inputs['guarantee_id'] = $request->guarantee;
-
-
-            CartItem::create($inputs);
-
-            return back()->with('alert-section-success', 'محصول به سبد خرید اضافه شد');
-        } else {
-            return redirect()->route('auth.customer.login-register-form');
+            return back()->with('alert-section-info', 'این محصول قبلا به سبد خرید اضافه شده است');
         }
+
+        CartItem::create([
+            'product_id'   => $product->id,
+            'user_id'      => $userId,
+            'color_id'     => $color,
+            'guarantee_id' => $guarantee,
+            'number'       => $request->number,
+        ]);
+
+        return back()->with('alert-section-success', 'محصول به سبد خرید اضافه شد');
     }
+
 
     public function removeFromCart(CartItem $cartItem)
     {

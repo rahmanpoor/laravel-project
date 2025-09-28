@@ -27,7 +27,12 @@ class PaymentController extends Controller
         $user = auth()->user();
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->first();
-        $order->order_final_amount += $order->delievry_amount;
+
+     
+
+        
+        $order->order_final_amount = $order->order_amount + $order->delivery_amount;
+
         $order->save();
         return view('customer.sales-process.payment', compact('cartItems', 'order'));
     }
@@ -277,7 +282,7 @@ class PaymentController extends Controller
             ]);
         }
         // 3=> cancel |  0 => unpaid
-         $order->update(['order_status' => 3, 'payment_status' => 0]); // پرداخت ناموفق
+        $order->update(['order_status' => 3, 'payment_status' => 2]); // پرداخت ناموفق
         return redirect()->route('customer.home')->with('swal-error', 'پرداخت انجام نشد. می‌توانید دوباره تلاش کنید.');
     }
 

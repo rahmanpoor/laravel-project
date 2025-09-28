@@ -16,6 +16,7 @@ class ProductController extends Controller
     {
 
         $cartItem = CartItem::where('product_id', $product->id)->where('user_id', Auth::user()->id)->first();
+
         $relatedProducts = Product::all();
         return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem' ));
     }

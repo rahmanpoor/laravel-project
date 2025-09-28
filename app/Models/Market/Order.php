@@ -64,13 +64,9 @@ class Order extends Model
                 $badge_color = 'success';
                 break;
             case 2:
-                $result = 'لغو شده';
+                $result = 'پرداخت ناموفق';
                 $badge_color = 'danger';
                 break;
-
-            // default:
-            //     $result = 'برگشت داده شده';
-            //     $badge_color = 'primary';
         }
         return [
             'result' =>  $result,
