@@ -38,11 +38,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>کد تراکنش</th>
-                                <th>بانک</th>
+
+
                                 <th>پرداخت کننده</th>
                                 <th>وضعیت پرداخت</th>
-                                <th>نوع پرداخت</th>
+                                <th>کد تراکنش</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
@@ -50,8 +50,8 @@
                             @foreach ($payments as $payment)
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $payment->paymentable->transaction_id ?? '-' }}</td>
-                                    <td>{{ $payment->paymentable->gateway ?? '-' }}</td>
+
+
                                     <td>{{ $payment->user->fullName }}</td>
                                     <td>
                                         @if ($payment->status == 0)
@@ -61,19 +61,12 @@
                                             <h5><span class="badge bg-success rounded-pill text-white">پرداخت</span></h5>
                                         @elseif($payment->status == 2)
                                             <h5><span class="badge bg-danger rounded-pill text-white">باطل شده</span></h5>
-                                        @else
-                                            <h5><span class="badge bg-warning rounded-pill">برگشت داده شده</span></h5>
+
                                         @endif
                                     </td>
-                                    <td>
-                                        @if ($payment->type == 0)
-                                            آنلاین
-                                        @elseif($payment->type == 1)
-                                            آفلاین
-                                        @else
-                                            در محل
-                                        @endif
-                                    </td>
+
+                                     <td>{{ $payment->paymentable->transaction_id ?? '-' }}</td>
+
                                     <td class="width-22-rem text-left">
                                         <a href="{{ route('admin.market.payment.show', $payment->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
                                         <a href="{{ route('admin.market.payment.canceled', $payment->id) }}"

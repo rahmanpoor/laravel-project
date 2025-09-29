@@ -38,14 +38,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>سفارش دهنده</th>
                                 <th>کد سفارش</th>
-                                <th>مجموع مبلغ سفارش (بدون تخفیف)</th>
-                                <th>مجموع تمامی مبلغ تخفیفات</th>
                                 <th>مبلغ نهایی</th>
                                 <th>وضعیت پرداخت</th>
-                                <th>شیوه پرداخت</th>
-                                <th>بانک</th>
-                                <th>وضعیت ارسال</th>
                                 <th>شیوه ارسال</th>
                                 <th>وضعیت سفارش</th>
                                 <th class="max-width-8-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -55,22 +51,15 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $order->user->full_name ?? '-' }}</td>
                                     <td>{{ $order->id }}</td>
-                                    <td>{{ $order->order_final_amount }} تومان</td>
-                                    <td>{{ $order->order_discount_amount }} تومان</td>
                                     <td>{{ $order->order_final_amount - $order->order_discount_amount }} تومان</td>
                                     <td>
                                         <h5><span
                                                 class="badge bg-{{ $order->payment_status_value['badge_color'] }} text-white rounded-pill">{{ $order->payment_status_value['result'] }}</span>
                                         </h5>
                                     </td>
-                                    <td>
-                                    {{ $order->payment_type_value }}
-                                    </td>
-                                    <td>{{ $order->payment->paymentable->gateway ?? '-' }}</td>
-                                    <td>
-                                       {{ $order->delivery_status_value }}
-                                    </td>
+
                                     <td>{{ $order->delivery->name }}</td>
                                     <td>
                                       <h6><span class="text-{{ $order->order_status_value['color'] }}">{{ $order->order_status_value['result'] }}</span></h6>

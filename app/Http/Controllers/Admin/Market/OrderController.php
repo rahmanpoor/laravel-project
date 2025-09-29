@@ -17,6 +17,12 @@ class OrderController extends Controller
         }
         return view('admin.market.order.index', compact('orders'));
     }
+
+    public function unpaind()
+    {
+        $orders = Order::where('order_status', 0)->get();
+        return view('admin.market.order.index', compact('orders'));
+    }
     public function sending()
     {
         $orders = Order::where('order_status', 1)->get();
