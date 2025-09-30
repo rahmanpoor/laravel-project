@@ -9,6 +9,7 @@ use App\Models\Market\Product;
 use App\Models\Setting\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\Footer\FooterFeature;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 
 class HomeController extends Controller
 {
@@ -31,5 +32,15 @@ class HomeController extends Controller
 
 
         return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
+    }
+
+
+    public function products(Request $request)
+    {
+        if ($request->search) {
+            $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
+            dd($products);
+        }
+        return view('customer.market.product.products');
     }
 }

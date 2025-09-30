@@ -20,8 +20,10 @@
                       <section class="search-box">
                           <section class="search-textbox">
                               <span><i class="fa fa-search"></i></span>
-                              <input id="search" type="text" class="" placeholder="جستجو ..."
+                              <form action="{{ route('customer.products') }}" method="get">
+                              <input id="search" type="text" class="" name="search" placeholder="جستجو ..."
                                   autocomplete="off">
+                                  </form>
                           </section>
                           <section class="search-result visually-hidden">
                               <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل

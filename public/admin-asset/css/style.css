@@ -1,17 +1,17 @@
 @font-face {
-    font-family: IRANSans;
-    src: url("../fonts/IRANSans/IRANSansWeb_Light.woff") format("woff");
+    font-family: IRANYekan;
+    src: url("../fonts/IRANYekan/iranyekan.woff") format("woff");
 }
 
 @font-face {
-    font-family: Yekan;
-    src: url("../fonts/Yekan/YekanWeb_regular.woff2") format("woff2");
+    font-family: IRANYekan;
+    src: url("../fonts/IRANYekan/iranyekan.woff2") format("woff2");
 }
 
 * {
     direction: rtl;
     text-align: right;
-    font-family: IRANSans;
+    font-family: IRANYekan;
 }
 
 .bg-gray {
@@ -228,7 +228,7 @@
 	.toast-wrapper {
 		position: fixed;
 		z-index: 9999;
-		top: 3rem;
+		bottom: 0;
 		left: 0;
 		width: 26rem;
 		max-width: 80%;
