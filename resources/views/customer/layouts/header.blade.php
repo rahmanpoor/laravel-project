@@ -21,7 +21,7 @@
                           <section class="search-textbox">
                               <span><i class="fa fa-search"></i></span>
                               <form action="{{ route('customer.products') }}" method="get">
-                              <input id="search" type="text" class="" name="search" placeholder="جستجو ..."
+                              <input id="search" type="text" class="" name="search" value="{{ request()->search }}" placeholder="جستجو ..."
                                   autocomplete="off">
                                   </form>
                           </section>

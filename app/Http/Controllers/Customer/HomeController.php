@@ -39,8 +39,8 @@ class HomeController extends Controller
     {
         if ($request->search) {
             $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
-            dd($products);
+
         }
-        return view('customer.market.product.products');
+        return view('customer.market.product.products', compact('products'));
     }
 }
