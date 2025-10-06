@@ -25,7 +25,7 @@
                                   autocomplete="off">
                                   </form>
                           </section>
-                          <section class="search-result visually-hidden">
+                          {{-- <section class="search-result visually-hidden">
                               <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل
                                       شیا"</span><span class="search-result-type">در دسته بندی ها</span></section>
                               <section class="search-result-item"><a class="text-decoration-none" href="#"><i
@@ -44,7 +44,7 @@
                                       شیا"</span><span class="search-result-type">در کالاها</span></section>
                               <section class="search-result-item"><span class="search-no-result">موردی یافت نشد</span>
                               </section>
-                          </section>
+                          </section> --}}
                       </section>
                   </section>
 

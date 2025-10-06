@@ -37,10 +37,54 @@ class HomeController extends Controller
 
     public function products(Request $request)
     {
-        if ($request->search) {
-            $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
 
+        switch ($request->sort) {
+            case '1':
+                $column = 'created_at';
+                $direction = 'DESC';
+                break;
+            case '2':
+                $column = 'price';
+                $direction = 'DESC';
+                break;
+            case '3':
+                $column = 'price';
+                $direction = 'ASC';
+                break;
+            case '4':
+                $column = 'view';
+                $direction = 'DESC';
+                break;
+            case '5':
+                $column = 'sold_number';
+                $direction = 'DESC';
+                break;
+            default:
+                $column = 'created_at';
+                $direction = 'ASC';
+                break;
         }
+        if ($request->search) {
+            $query = Product::where('name', 'like', '%' . $request->search . '%')->orderBy($column, $direction);
+        } else {
+            $query = Product::orderBy($column, $direction);
+        }
+
+        $products = $request->min_price && $request->max_price ? $query->whereBetween('price', [$request->min_price, $request->max_price]) :
+            $query->when($request->min_price, function ($query) use ($request) {
+                $query->where('price', '>=', $request->min_price);
+            })->when($request->max_price, function ($query) use ($request) {
+                $query->where('price', '<=', $request->max_price);
+            })->when(!($request->min_price && $request->max_price), function ($query) {
+                $query;
+            });
+
+
+        $products = $products->get();
+
+
+
+
         return view('customer.market.product.products', compact('products'));
     }
 }

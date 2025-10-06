@@ -41,7 +41,7 @@
                                 <th>دسته والد</th>
                                 <th>تصویر</th>
                                 <th>وضعیت</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,14 +66,14 @@
                                         <span class="apple-slider"></span>
                                     </label>
                                 </td>
-                                <td class="width-16-rem text-center">
-                                    <a href="{{ route('admin.market.category.edit', $productCategory->id) }}" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                <td class="width-16-rem text-left">
+                                    <a href="{{ route('admin.market.category.edit', $productCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                     <form class="d-inline"
                                     action="{{ route('admin.market.category.destroy', $productCategory->id) }}"
                                     method="post">
                                     @csrf
                                     {{ method_field('delete') }}
-                                    <button class="btn btn-outline-danger btn-sm delete" type="submit"><i
+                                    <button class="btn btn-danger btn-sm delete" type="submit"><i
                                             class="fa fa-trash-alt"></i></button>
                                 </form>
                                 </td>
