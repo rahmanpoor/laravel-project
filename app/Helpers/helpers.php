@@ -57,7 +57,13 @@ function convertEnglishToPersian($number){
 }
 
 function priceFormat($price){
-    $price = number_format($price, 0, '/', ',');
+     // اگر مقدار null یا رشته خالی باشه، برگردون خالی
+    if ($price === null || $price === '') {
+        return '';
+    }
+
+    $price = (float) $price;
+    $price = number_format($price, 0, '/', '٬');
     $price = convertEnglishToPersian($price);
     return $price;
 }

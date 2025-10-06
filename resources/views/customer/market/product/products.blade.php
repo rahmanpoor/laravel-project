@@ -17,7 +17,7 @@
 
 
                     <section class="content-wrapper bg-white p-3 rounded-2 mb-3">
-                        <form action="{{ route('customer.products') }}" method="GET" >
+                        <form id="filterForm" action="{{ route('customer.products') }}" method="GET">
                             <!-- start sidebar nav-->
                             <section class="sidebar-nav">
                                 <section class="sidebar-nav-item">
@@ -737,11 +737,11 @@
                         </section>
                         <section class="sidebar-price-range d-flex justify-content-between">
                             <section class="p-1"><input type="text" name="min_price"
-                                    value="{{ request()->min_price }}" placeholder="قیمت از ..."
-                                   ></section>
+                                    value="{{ priceFormat(request()->min_price) }}" placeholder="قیمت از...(تومان)"
+                                    oninput="formatNumber(this)"></section>
                             <section class="p-1"><input type="text" name="max_price"
-                                    value="{{ request()->max_price }}" placeholder="قیمت تا ..."
-                                   ></section>
+                                    value="{{ priceFormat(request()->max_price) }}" placeholder="قیمت تا...(تومان)"
+                                    oninput="formatNumber(this)"></section>
                         </section>
                     </section>
 
@@ -891,7 +891,8 @@
         })
     </script>
 
-    {{-- <script>
+
+    <script>
         function persianToEnglishNumbers(str) {
             const persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -907,25 +908,42 @@
             let value = input.value.replace(/[^\d\u06F0-\u06F9]/g, "");
             value = persianToEnglishNumbers(value);
 
+            input.dataset.rawValue = value;
+
             if (value) {
-                input.value = Number(value).toLocaleString('fa-IR');
-                input.selectionStart = input.selectionEnd = cursorPosition + (input.value.length - value.length);
+                let formatted = Number(value).toLocaleString('fa-IR');
+                input.value = formatted;
+                input.selectionStart = input.selectionEnd = cursorPosition + (formatted.length - value.length);
             } else {
                 input.value = "";
             }
         }
 
-        // قبل از submit، همه کاماها را از input حذف می‌کنیم
         function removeCommasBeforeSubmit(form) {
-            ['min_price', 'max_price'].forEach(id => {
-                const input = form.querySelector(`#${id}`);
-                if (input) {
-                    let value = persianToEnglishNumbers(input.value);
-                    value = value.replace(/,/g, ''); // حذف کاما
-                    input.value = value;
-                }
-            });
-            return true; // اجازه submit فرم
+            let min = form.min_price.value;
+            let max = form.max_price.value;
+
+            // تبدیل فارسی به انگلیسی
+            min = persianToEnglishNumbers(min);
+            max = persianToEnglishNumbers(max);
+
+            // حذف کاماها
+            min = min.replace(/٬/g, '');
+            max = max.replace(/٬/g, '');
+
+
+
+
+            // اگر بخوای فرم ارسال بشه با مقادیر پاک شده
+            form.min_price.value = min;
+            form.max_price.value = max;
         }
-    </script> --}}
+
+        document.getElementById("filterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            removeCommasBeforeSubmit(this);
+
+            this.submit();
+        });
+    </script>
 @endsection

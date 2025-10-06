@@ -70,6 +70,14 @@ class HomeController extends Controller
             $query = Product::orderBy($column, $direction);
         }
 
+        $request->min_price = str_replace('٬', '', request()->min_price);
+
+        $request->max_price = str_replace('٬', '', request()->max_price);
+
+
+
+
+
         $products = $request->min_price && $request->max_price ? $query->whereBetween('price', [$request->min_price, $request->max_price]) :
             $query->when($request->min_price, function ($query) use ($request) {
                 $query->where('price', '>=', $request->min_price);
