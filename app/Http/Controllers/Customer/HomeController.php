@@ -38,6 +38,10 @@ class HomeController extends Controller
     public function products(Request $request)
     {
 
+        //brands
+        $brands = Brand::all();
+
+        //set sort
         switch ($request->sort) {
             case '1':
                 $column = 'created_at';
@@ -87,12 +91,15 @@ class HomeController extends Controller
                 $query;
             });
 
+        $products = $products->when($request->brands, function () use ($request, $products) {
+            $products->whereIn('brand_id', $request->brands);
+        });
 
         $products = $products->get();
 
 
 
 
-        return view('customer.market.product.products', compact('products'));
+        return view('customer.market.product.products', compact('products', 'brands'));
     }
 }
