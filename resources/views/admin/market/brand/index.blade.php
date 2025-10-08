@@ -38,7 +38,7 @@
                                 <th>نام فارسی برند</th>
                                 <th>نام اصلی برند</th>
                                 <th>لوگو</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,13 +53,13 @@
                                     </td>
                                     <td class="width-16-rem text-left">
                                         <a href="{{ route('admin.market.brand.edit', $brand->id) }}"
-                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                         <form class="d-inline"
                                             action="{{ route('admin.market.brand.destroy', $brand->id) }}" method="post">
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                                    class="fa fa-trash-alt"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -67,6 +67,14 @@
 
                         </tbody>
                     </table>
+                </section>
+
+                  <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $brands->links('pagination::bootstrap-4') }}
+                        </nav>
+                    </section>
                 </section>
 
             </section>

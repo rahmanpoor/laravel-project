@@ -86,6 +86,13 @@
                         </tbody>
                     </table>
                 </section>
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $products->links('pagination::bootstrap-4') }}
+                        </nav>
+                    </section>
+                </section>
             </section>
         </section>
     </section>

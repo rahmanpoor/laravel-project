@@ -9,6 +9,7 @@ use App\Models\Market\Product;
 use App\Models\Setting\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\Footer\FooterFeature;
+use App\Models\Market\ProductCategory;
 use Intervention\Image\Colors\Rgb\Channels\Red;
 
 class HomeController extends Controller
@@ -35,11 +36,21 @@ class HomeController extends Controller
     }
 
 
-    public function products(Request $request)
+    public function products(Request $request, ProductCategory $category = null)
     {
+
 
         //brands
         $brands = Brand::all();
+
+        //category selection
+        if ($category)
+            $productModel = $category->products();
+        else
+            $productModel = new Product();
+
+        //get parent categories
+        $categories = ProductCategory::whereNull('parent_id')->get();
 
         //set sort
         switch ($request->sort) {
@@ -69,9 +80,9 @@ class HomeController extends Controller
                 break;
         }
         if ($request->search) {
-            $query = Product::where('name', 'like', '%' . $request->search . '%')->orderBy($column, $direction);
+            $query = $productModel->where('name', 'like', '%' . $request->search . '%')->orderBy($column, $direction);
         } else {
-            $query = Product::orderBy($column, $direction);
+            $query = $productModel->orderBy($column, $direction);
         }
 
         $request->min_price = str_replace('٬', '', request()->min_price);
@@ -95,11 +106,21 @@ class HomeController extends Controller
             $products->whereIn('brand_id', $request->brands);
         });
 
-        $products = $products->get();
+        $products = $products->paginate(5);
+        $products->appends($request->query());
+
+
+
+        //get brand names
+        $brandNames = [];
+        if (request()->filled('brands')) {
+            $brandIds = (array) request()->brands;
+            $brandNames = Brand::whereIn('id', $brandIds)->pluck('persian_name')->toArray();
+        }
 
 
 
 
-        return view('customer.market.product.products', compact('products', 'brands'));
+        return view('customer.market.product.products', compact('products', 'brands', 'brandNames', 'categories'));
     }
 }
