@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "morilog/jalali": "^3.4",
+        "nagy/laravel-rating": "^1.0",
         "zarinpal/zarinpal": "^1.0",
         "zarinpal/zarinpal-php-sdk": "^2.0"
     },

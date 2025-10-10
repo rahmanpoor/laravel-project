@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
 
-
-
 @section('head-tag')
     <title>دسته بندی</title>
 @endsection
@@ -90,8 +88,10 @@
 
 @endsection
 
+
+
 @section('script')
-    <script>
+ <script>
         function changeStatus(id) {
             var element = $("#" + id);
             var url = element.attr('data-url');
@@ -139,10 +139,7 @@
             }
         }
     </script>
-
-
-
-@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
-
-
+    @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
 @endsection
+
+

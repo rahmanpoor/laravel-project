@@ -27,6 +27,13 @@
 
                     <section class="row mt-4">
 
+                        <ul>
+                            @if ($errors->any())
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-danger">{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        </ul>
 
                         <section class="col-md-9">
                             <section class="content-wrapper bg-white p-3 rounded-2 mb-4">
@@ -267,13 +274,15 @@
                                                             <section class="col-12 mb-2">
                                                                 <label for="address"
                                                                     class="form-label mb-1">نشانی</label>
-                                                                <textarea name="address" autocomplete="off" class="form-control form-control-sm" id="address" placeholder="نشانی"></textarea>
+                                                                <textarea name="address" autocomplete="off" class="form-control form-control-sm" id="address"
+                                                                    placeholder="نشانی"></textarea>
                                                             </section>
 
                                                             <section class="col-6 mb-2">
                                                                 <label for="postal_code" class="form-label mb-1">کد
                                                                     پستی</label>
-                                                                <input type="text" autocomplete="off" name="postal_code"
+                                                                <input type="text" autocomplete="off"
+                                                                    name="postal_code"
                                                                     class="form-control form-control-sm" id="postal_code"
                                                                     placeholder="کد پستی">
                                                             </section>
@@ -308,7 +317,8 @@
                                                                 <label for="first_name"
                                                                     class="field  first_name form-label mb-1">نام
                                                                     گیرنده</label>
-                                                                <input type="text" autocomplete="off" name="recipient_first_name"
+                                                                <input type="text" autocomplete="off"
+                                                                    name="recipient_first_name"
                                                                     class="form-control form-control-sm" id="first_name"
                                                                     placeholder="نام گیرنده">
                                                             </section>
@@ -376,21 +386,21 @@
                                     </section>
 
                                     @foreach ($deliveryMethods as $deliveryMethod)
-
-
-                                    <input type="radio" form="myForm" name="delivery_id" value="{{ $deliveryMethod->id }}" id="d-{{ $deliveryMethod->id }}" />
-                                    <label for="d-{{ $deliveryMethod->id }}" class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
-                                        <section class="mb-2">
-                                            <i class="fa fa-shipping-fast mx-1"></i>
-                                            {{ $deliveryMethod->name }}
-                                        </section>
-                                        <section class="mb-2">
-                                            <i class="fa fa-calendar-alt mx-1"></i>
-                                            تامین کالا از {{ $deliveryMethod->delivery_time }} {{ $deliveryMethod->delivery_time_unit }} کاری آینده
-                                        </section>
-                                    </label>
-
-                                     @endforeach
+                                        <input type="radio" form="myForm" name="delivery_id"
+                                            value="{{ $deliveryMethod->id }}" id="d-{{ $deliveryMethod->id }}" />
+                                        <label for="d-{{ $deliveryMethod->id }}"
+                                            class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
+                                            <section class="mb-2">
+                                                <i class="fa fa-shipping-fast mx-1"></i>
+                                                {{ $deliveryMethod->name }}
+                                            </section>
+                                            <section class="mb-2">
+                                                <i class="fa fa-calendar-alt mx-1"></i>
+                                                تامین کالا از {{ $deliveryMethod->delivery_time }}
+                                                {{ $deliveryMethod->delivery_time_unit }} کاری آینده
+                                            </section>
+                                        </label>
+                                    @endforeach
 
                                 </section>
                             </section>
@@ -447,12 +457,13 @@
                                 </p>
 
 
-                                <form id="myForm" action="{{ route('customer.sales-process.choose-address-and-delivery') }}" method="POST">
-                                @csrf
+                                <form id="myForm"
+                                    action="{{ route('customer.sales-process.choose-address-and-delivery') }}"
+                                    method="POST">
+                                    @csrf
                                 </form>
                                 <section class="">
-                                    <button type="button"
-                                        onclick="document.getElementById('myForm').submit();"
+                                    <button type="button" onclick="document.getElementById('myForm').submit();"
                                         class="btn btn-danger d-block w-100">ثبت سفارش</button>
                                 </section>
 
