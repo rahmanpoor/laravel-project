@@ -503,10 +503,11 @@ Route::namespace('SalesProcess')->middleware('auth')->group(function () {
 
 
 //product
-Route::namespace('market')->middleware('auth')->group(function () {
+Route::namespace('market')->group(function () {
     Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
     Route::post('/add-comment/product/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.add-comment');
     Route::get('/add-to-favorite/prodcut/{product:slug}', [MarketProductController::class, 'addToFavorite'])->name('customer.market.add-to-favorite');
+    Route::post('/add-to-rate/prodcut/{product:slug}', [MarketProductController::class, 'addRate'])->name('customer.market.add-rate');
 });
 
 //profile]

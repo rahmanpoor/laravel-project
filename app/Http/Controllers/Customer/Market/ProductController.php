@@ -15,7 +15,11 @@ class ProductController extends Controller
     public function product(Product $product)
     {
 
-        $cartItem = CartItem::where('product_id', $product->id)->where('user_id', Auth::user()->id)->first();
+        $cartItem = null;
+        if (Auth::check()) {
+            $cartItem = CartItem::where('product_id', $product->id)->where('user_id', Auth::user()->id)->first();
+        }
+
 
         $relatedProducts = Product::all();
         return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem' ));
@@ -51,5 +55,14 @@ class ProductController extends Controller
         } else {
             return response()->json(['status' => 3]);
         }
+    }
+
+    public function addRate(Product $product, Request $request)
+    {
+       if(Auth::check()){
+          $user = Auth::user();
+          $user->rate($product, $request->rating);
+       }
+       return back()->with('swal-success', 'امتیاز شما با موفقیت ثبت شد');
     }
 }

@@ -5,11 +5,7 @@
     <title>{{ $product->name }}</title>
     <style>
         /* ساختار کلی ستاره‌ها */
-        .starrating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: right;
-        }
+
 
         /* پنهان کردن دکمه‌های رادیو */
         .starrating input[type="radio"] {
@@ -34,6 +30,29 @@
         .starrating label:hover i,
         .starrating label:hover~label i {
             color: #ffca08;
+        }
+
+
+        /* product rating */
+
+        .product-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            background: #fff;
+            border-radius: 8px;
+        }
+
+        .product-rating i {
+            color: #ffc107;
+            /* طلایی روشن */
+            font-size: 0.8rem;
+        }
+
+        .product-rating .rating-value {
+            font-weight: 600;
+            color: #333;
         }
     </style>
 @endsection
@@ -106,11 +125,22 @@
                                         <h2 class="content-header-title content-header-title-small">
                                             {{ $product->name }}
                                         </h2>
+
+                                        <!-- میانگین امتیاز -->
+
                                         <section class="content-header-link">
                                             <!--<a href="#">مشاهده همه</a>-->
                                         </section>
+
                                     </section>
                                 </section>
+                                @if ($product->ratingsAvg())
+                                    <section class="product-rating mb-3">
+                                        <i class="fa fa-star"></i>
+                                        <span
+                                            class="rating-value">{{ number_format($product->ratingsAvg(), 1, '/') }}</span>
+                                    </section>
+                                @endif
                                 <section class="product-info">
                                     <form id="add_to_cart"
                                         action="{{ route('customer.sales-process.add-to-cart', $product) }}" method="POST"
@@ -571,30 +601,50 @@
 
                             </section>
 
-                            <section id="rating" class="content-header mt-2 mb-4">
-                                <section class="d-flex justify-content-between align-items-center">
-                                    <h2 class="content-header-title content-header-title-small">
-                                        امتیاز دهید!
-                                    </h2>
-                                    <section class="container">
-                                    <section class="starrating risingstar align-items-center justify-content-center">
-                                        <input type="radio" id="star5" name="rating" value="5" /><label
-                                            for="star5" title="5 star"><i class="fa fa-star"></i></label>
-                                        <input type="radio" id="star4" name="rating" value="4" /><label
-                                            for="star4" title="4 star"><i class="fa fa-star"></i></label>
-                                        <input type="radio" id="star3" name="rating" value="3" /><label
-                                            for="star3" title="3 star"><i class="fa fa-star"></i></label>
-                                        <input type="radio" id="star2" name="rating" value="2" /><label
-                                            for="star2" title="2 star"><i class="fa fa-star"></i></label>
-                                        <input type="radio" id="star1" name="rating" value="1" /><label
-                                            for="star1" title="1 star"><i class="fa fa-star"></i></label>
+
+
+                            @auth
+                                <section id="rating" class="content-header mt-2 mb-4">
+                                    <section class="d-flex justify-content-between align-items-center">
+                                        <h2 class="content-header-title content-header-title-small">امتیاز دهید!</h2>
                                     </section>
-                                    </section>
-
-
-
                                 </section>
-                            </section>
+
+                                <form id="ratingForm" action="{{ route('customer.market.add-rate', $product) }}"
+                                    method="POST">
+                                    @csrf
+                                    <section
+                                        class="starrating d-flex flex-row-reverse justify-content-end align-items-center gap-2">
+
+                                        <!-- دکمه ثبت -->
+                                        <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                                            ثبت امتیاز
+                                        </button>
+
+                                        <!-- ستاره‌ها -->
+                                        <input type="radio" id="star5" name="rating" value="5" />
+                                        <label for="star5" title="۵ ستاره"><i class="fa fa-star"></i></label>
+
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label for="star4" title="۴ ستاره"><i class="fa fa-star"></i></label>
+
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label for="star3" title="۳ ستاره"><i class="fa fa-star"></i></label>
+
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label for="star2" title="۲ ستاره"><i class="fa fa-star"></i></label>
+
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label for="star1" title="۱ ستاره"><i class="fa fa-star"></i></label>
+
+                                    </section>
+                                </form>
+                            @endauth
+
+
+
+
+
 
                         </section>
                     </section>
