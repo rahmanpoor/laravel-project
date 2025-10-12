@@ -125,12 +125,11 @@
                                             </section>
                                             <section class="order-item-products">
                                                 @foreach ($order->orderItems as $orderItem)
-
-                                                    <a href="{{   route('customer.market.product', $orderItem->product['slug'])   }}">
+                                                    <a href="{{   route('customer.market.product', json_decode($orderItem->product)->slug)   }}">
                                                            <img
-                                                            src="{{ $orderItem->product['image']['indexArray']['medium'] }}"
+                                                            src="{{ asset(json_decode($orderItem->product)->image->indexArray->small) }}"
 
-                                                            alt="{{ $orderItem->product['name'] }}"></a>
+                                                            alt="{{ json_decode($orderItem->product)->name }}"></a>
                                                 @endforeach
                                             </section>
                                         </section>

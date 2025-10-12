@@ -19,8 +19,7 @@ class OrderItem extends Model
     protected $guarded = ['id'];
 
      protected $casts = [
-        'product' => 'array',
-        'amazing_sale_object' => 'array',
+        'amazing_sale_object' => 'array'
     ];
 
     public function order() {
