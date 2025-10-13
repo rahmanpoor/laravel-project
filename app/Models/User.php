@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\User\Role;
 use App\Models\Market\Order;
 use App\Models\Ticket\Ticket;
+use App\Models\Market\Compare;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\User\Permission;
@@ -86,7 +87,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Permission::class);
     }
 
-     public function payments()
+    public function payments()
     {
         return $this->hasMany(Payment::class);
     }
@@ -97,14 +98,38 @@ class User extends Authenticatable
     }
 
 
-     public function orders()
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-        public function products()
+    public function products()
     {
 
         return $this->belongsToMany(Product::class);
     }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, Order::class);
+    }
+
+    public function isUserPurchedProduct($product_id)
+    {
+        $productIds = collect();
+
+        foreach ($this->orderItems->where('product_id', $product_id)->get() as $item) {
+            $productIds->push($item->product_id);
+        }
+
+        $productIds = $productIds->unique();
+        return $productIds;
+    }
+
+    public function compare()
+    {
+        return $this->hasOne(Compare::class);
+    }
+
+
 }

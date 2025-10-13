@@ -604,6 +604,8 @@
 
 
                             @auth
+                            @if (auth()->user()->isUserPurchedProduct($product->id)->count() > 0)
+
                                 <section id="rating" class="content-header mt-2 mb-4">
                                     <section class="d-flex justify-content-between align-items-center">
                                         <h2 class="content-header-title content-header-title-small">امتیاز دهید!</h2>
@@ -639,6 +641,7 @@
 
                                     </section>
                                 </form>
+                                   @endif
                             @endauth
 
 

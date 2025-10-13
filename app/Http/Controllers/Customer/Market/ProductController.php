@@ -22,7 +22,7 @@ class ProductController extends Controller
 
 
         $relatedProducts = Product::all();
-        return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem' ));
+        return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem'));
     }
 
     public function addComment(Product $product, Request $request)
@@ -59,10 +59,14 @@ class ProductController extends Controller
 
     public function addRate(Product $product, Request $request)
     {
-       if(Auth::check()){
-          $user = Auth::user();
-          $user->rate($product, $request->rating);
-       }
-       return back()->with('swal-success', 'امتیاز شما با موفقیت ثبت شد');
+        $productIds = auth()->user()->isUserPurchedProduct($product->id);
+
+        if (Auth::check() && $productIds->count() > 0) {
+            $user = Auth::user();
+            $user->rate($product, $request->rating);
+            return back()->with('swal-success', 'امتیاز شما با موفقیت ثبت شد');
+        } else {
+            return back()->with('swal-error', 'شما این محصول را خرید نکرده اید');
+        }
     }
 }

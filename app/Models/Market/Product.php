@@ -4,15 +4,16 @@ namespace App\Models\Market;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Market\Compare;
 use App\Models\Content\Comment;
 use App\Models\Market\Guarantee;
 use App\Models\Market\AmazingSale;
 use App\Models\Market\CategoryValue;
 use Illuminate\Database\Eloquent\Model;
+use Nagy\LaravelRating\Traits\Rateable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Nagy\LaravelRating\Traits\Rateable;
 
 class Product extends Model
 {
@@ -100,5 +101,9 @@ class Product extends Model
 
     public function user() {
         return $this->belongsToMany(User::class);
+    }
+
+    public function compares() {
+        return $this->belongsToMany(Compare::class);
     }
 }
