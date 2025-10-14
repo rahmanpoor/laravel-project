@@ -233,7 +233,7 @@
                                             {{-- favorite end --}}
 
                                              {{-- compare start --}}
-                                            @guest
+                                            {{-- @guest
                                                 <section class="product-add-to-compare position-relative" style="top: 0">
                                                     <button type="button" class="btn btn-light btn-sm text-decoration-none"
                                                         data-url="{{ route('customer.market.add-to-compare', $product) }}"
@@ -244,7 +244,9 @@
                                                 </section>
                                             @endguest
                                             @auth
-                                                @if ($product->user->contains(auth()->user()->id))
+                                                @if ($product->compares->contains(function($compare, $key) {
+                                                    return $compare->id === auth()->user()->compare->id;
+                                                }))
                                                     <section class="product-add-to-compare position-relative" style="top: 0"">
                                                         <button type="button" class="btn btn-light btn-sm text-decoration-none"
                                                             data-url="{{ route('customer.market.add-to-compare', $product) }}"
@@ -263,7 +265,7 @@
                                                         </button>
                                                     </section>
                                                 @endif
-                                            @endauth
+                                            @endauth --}}
                                             {{-- compare end --}}
                                         </div>
 
@@ -824,6 +826,29 @@
             })
         })
     </script>
+{{--
+     <script>
+        $('.product-add-to-compare button').click(function() {
+            var url = $(this).attr('data-url');
+            var element = $(this);
+            $.ajax({
+                url: url,
+                success: function(result) {
+                    if (result.status == 1) {
+                        $(element).children().first().addClass('text-danger');
+                        $(element).attr('data-original-title', 'حذف از مقایسه ها');
+                        $(element).attr('data-bs-original-title', 'حذف از مقایسه ها');
+                    } else if (result.status == 2) {
+                        $(element).children().first().removeClass('text-danger')
+                        $(element).attr('data-original-title', 'افزودن به مقایسه ها');
+                        $(element).attr('data-bs-original-title', 'افزودن به مقایسه ها');
+                    } else if (result.status == 3) {
+                        $('.toast').toast('show');
+                    }
+                }
+            })
+        })
+    </script> --}}
 
     <script>
         //start product introduction, features and comment

@@ -5,11 +5,13 @@ namespace App\Models\Market;
 use App\Models\User;
 use App\Models\Market\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Compare extends Model
 {
-    use HasFactory;
+    protected $guarded = ['id'];
+    use HasFactory, SoftDeletes;
 
 
       public function user()

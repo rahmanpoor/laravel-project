@@ -55,44 +55,56 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        //footer features
+        // //footer features
+        // View::composer('*', function ($view) {
+        //     $view->with([
+        //         'footerFeatures' => FooterFeature::all()
+        //     ]);
+        // });
+
+        // //footer links
+        // View::composer('*', function ($view) {
+        //     $view->with([
+        //         'firstColumnLinks'  => FooterLink::where('position', 1)->get(),
+        //         'secondColumnLinks' => FooterLink::where('position', 2)->get(),
+        //         'thirdColumnLinks'  => FooterLink::where('position', 3)->get(),
+        //     ]);
+        // });
+
+        //  //footer social
+        // View::composer('*', function ($view) {
+        //     $view->with([
+        //         'footerSocials' => FooterSocial::all()
+        //     ]);
+        // });
+
+
+        //    //footer badges
+        // View::composer('*', function ($view) {
+        //     $view->with([
+        //         'footerBadges' => FooterBadge::all()
+        //     ]);
+        // });
+
+
+        // //footer settings
+        // View::composer('*', function ($view) {
+        //     $view->with([
+        //         'footerSetting' => FooterSetting::first()
+        //     ]);
+        // });
+
         View::composer('*', function ($view) {
-            $view->with([
-                'footerFeatures' => FooterFeature::all()
-            ]);
-        });
-
-        //footer links
-        View::composer('*', function ($view) {
-            $view->with([
-                'firstColumnLinks'  => FooterLink::where('position', 1)->get(),
-                'secondColumnLinks' => FooterLink::where('position', 2)->get(),
-                'thirdColumnLinks'  => FooterLink::where('position', 3)->get(),
-            ]);
-        });
-
-         //footer social
-        View::composer('*', function ($view) {
-            $view->with([
-                'footerSocials' => FooterSocial::all()
-            ]);
-        });
-
-
-           //footer badges
-        View::composer('*', function ($view) {
-            $view->with([
-                'footerBadges' => FooterBadge::all()
-            ]);
-        });
-
-
-        //footer settings
-        View::composer('*', function ($view) {
-            $view->with([
-                'footerSetting' => FooterSetting::first()
-            ]);
-        });
+        $view->with([
+            'footerFeatures' => Cache::rememberForever('footerFeatures', fn() => FooterFeature::all()),
+            'firstColumnLinks' => Cache::rememberForever('firstColumnLinks', fn() => FooterLink::where('position', 1)->get()),
+            'secondColumnLinks' => Cache::rememberForever('secondColumnLinks', fn() => FooterLink::where('position', 2)->get()),
+            'thirdColumnLinks' => Cache::rememberForever('thirdColumnLinks', fn() => FooterLink::where('position', 3)->get()),
+            'footerSocials' => Cache::rememberForever('footerSocials', fn() => FooterSocial::all()),
+            'footerBadges' => Cache::rememberForever('footerBadges', fn() => FooterBadge::all()),
+            'footerSetting' => Cache::rememberForever('footerSetting', fn() => FooterSetting::first()),
+        ]);
+    });
 
 
     }
