@@ -10,6 +10,7 @@ use App\Models\Market\Compare;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\User\Permission;
+use App\Models\Market\OrderItem;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ticket\TicketAdmin;
 use Nagy\LaravelRating\Traits\CanRate;
@@ -118,7 +119,7 @@ class User extends Authenticatable
     {
         $productIds = collect();
 
-        foreach ($this->orderItems->where('product_id', $product_id)->get() as $item) {
+        foreach ($this->orderItems->where('product_id', $product_id) as $item) {
             $productIds->push($item->product_id);
         }
 

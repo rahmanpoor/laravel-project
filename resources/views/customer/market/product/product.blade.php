@@ -197,29 +197,10 @@
                                                 <span class="text-danger">ناموجود</span>
                                             @endif
                                         </p>
-                                        <p>
+                                        <div class="d-flex align-items-center">
+                                            {{-- favorite start --}}
                                             @guest
-                                            <section class="product-add-to-favorite position-relative" style="top: 0">
-                                                <button type="button" class="btn btn-light btn-sm text-decoration-none"
-                                                    data-url="{{ route('customer.market.add-to-favorite', $product) }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="left"
-                                                    title="افزودن به علاقه مندی">
-                                                    <i class="fa fa-heart"></i>
-                                                </button>
-                                            </section>
-                                        @endguest
-                                        @auth
-                                            @if ($product->user->contains(auth()->user()->id))
-                                                <section class="product-add-to-favorite position-relative" style="top: 0"">
-                                                    <button type="button" class="btn btn-light btn-sm text-decoration-none"
-                                                        data-url="{{ route('customer.market.add-to-favorite', $product) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="حذف از علاقه مندی">
-                                                        <i class="fa fa-heart text-danger"></i>
-                                                    </button>
-                                                </section>
-                                            @else
-                                                <section class="product-add-to-favorite position-relative" style="top: 0"">
+                                                <section class="product-add-to-favorite position-relative" style="top: 0">
                                                     <button type="button" class="btn btn-light btn-sm text-decoration-none"
                                                         data-url="{{ route('customer.market.add-to-favorite', $product) }}"
                                                         data-bs-toggle="tooltip" data-bs-placement="left"
@@ -227,9 +208,64 @@
                                                         <i class="fa fa-heart"></i>
                                                     </button>
                                                 </section>
-                                            @endif
-                                        @endauth
-                                        </p>
+                                            @endguest
+                                            @auth
+                                                @if ($product->user->contains(auth()->user()->id))
+                                                    <section class="product-add-to-favorite position-relative" style="top: 0"">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="حذف از علاقه مندی">
+                                                            <i class="fa fa-heart text-danger"></i>
+                                                        </button>
+                                                    </section>
+                                                @else
+                                                    <section class="product-add-to-favorite position-relative" style="top: 0"">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-favorite', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به علاقه مندی">
+                                                            <i class="fa fa-heart"></i>
+                                                        </button>
+                                                    </section>
+                                                @endif
+                                            @endauth
+                                            {{-- favorite end --}}
+
+                                             {{-- compare start --}}
+                                            @guest
+                                                <section class="product-add-to-compare position-relative" style="top: 0">
+                                                    <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                        data-url="{{ route('customer.market.add-to-compare', $product) }}"
+                                                        data-bs-toggle="tooltip" data-bs-placement="left"
+                                                        title="افزودن به مقایسه">
+                                                        <i class="fa fa-industry"></i>
+                                                    </button>
+                                                </section>
+                                            @endguest
+                                            @auth
+                                                @if ($product->user->contains(auth()->user()->id))
+                                                    <section class="product-add-to-compare position-relative" style="top: 0"">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-compare', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="حذف از مقایسه">
+                                                            <i class="fa fa-industry text-danger"></i>
+                                                        </button>
+                                                    </section>
+                                                @else
+                                                    <section class="product-add-to-compare position-relative" style="top: 0"">
+                                                        <button type="button" class="btn btn-light btn-sm text-decoration-none"
+                                                            data-url="{{ route('customer.market.add-to-compare', $product) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="left"
+                                                            title="افزودن به مقایسه">
+                                                            <i class="fa fa-industry"></i>
+                                                        </button>
+                                                    </section>
+                                                @endif
+                                            @endauth
+                                            {{-- compare end --}}
+                                        </div>
 
                                         <section>
                                             <section class="cart-product-number d-inline-block ">
@@ -604,44 +640,43 @@
 
 
                             @auth
-                            @if (auth()->user()->isUserPurchedProduct($product->id)->count() > 0)
-
-                                <section id="rating" class="content-header mt-2 mb-4">
-                                    <section class="d-flex justify-content-between align-items-center">
-                                        <h2 class="content-header-title content-header-title-small">امتیاز دهید!</h2>
+                                @if (auth()->user()->isUserPurchedProduct($product->id)->count() > 0)
+                                    <section id="rating" class="content-header mt-2 mb-4">
+                                        <section class="d-flex justify-content-between align-items-center">
+                                            <h2 class="content-header-title content-header-title-small">امتیاز دهید!</h2>
+                                        </section>
                                     </section>
-                                </section>
 
-                                <form id="ratingForm" action="{{ route('customer.market.add-rate', $product) }}"
-                                    method="POST">
-                                    @csrf
-                                    <section
-                                        class="starrating d-flex flex-row-reverse justify-content-end align-items-center gap-2">
+                                    <form id="ratingForm" action="{{ route('customer.market.add-rate', $product) }}"
+                                        method="POST">
+                                        @csrf
+                                        <section
+                                            class="starrating d-flex flex-row-reverse justify-content-end align-items-center gap-2">
 
-                                        <!-- دکمه ثبت -->
-                                        <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
-                                            ثبت امتیاز
-                                        </button>
+                                            <!-- دکمه ثبت -->
+                                            <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                                                ثبت امتیاز
+                                            </button>
 
-                                        <!-- ستاره‌ها -->
-                                        <input type="radio" id="star5" name="rating" value="5" />
-                                        <label for="star5" title="۵ ستاره"><i class="fa fa-star"></i></label>
+                                            <!-- ستاره‌ها -->
+                                            <input type="radio" id="star5" name="rating" value="5" />
+                                            <label for="star5" title="۵ ستاره"><i class="fa fa-star"></i></label>
 
-                                        <input type="radio" id="star4" name="rating" value="4" />
-                                        <label for="star4" title="۴ ستاره"><i class="fa fa-star"></i></label>
+                                            <input type="radio" id="star4" name="rating" value="4" />
+                                            <label for="star4" title="۴ ستاره"><i class="fa fa-star"></i></label>
 
-                                        <input type="radio" id="star3" name="rating" value="3" />
-                                        <label for="star3" title="۳ ستاره"><i class="fa fa-star"></i></label>
+                                            <input type="radio" id="star3" name="rating" value="3" />
+                                            <label for="star3" title="۳ ستاره"><i class="fa fa-star"></i></label>
 
-                                        <input type="radio" id="star2" name="rating" value="2" />
-                                        <label for="star2" title="۲ ستاره"><i class="fa fa-star"></i></label>
+                                            <input type="radio" id="star2" name="rating" value="2" />
+                                            <label for="star2" title="۲ ستاره"><i class="fa fa-star"></i></label>
 
-                                        <input type="radio" id="star1" name="rating" value="1" />
-                                        <label for="star1" title="۱ ستاره"><i class="fa fa-star"></i></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label for="star1" title="۱ ستاره"><i class="fa fa-star"></i></label>
 
-                                    </section>
-                                </form>
-                                   @endif
+                                        </section>
+                                    </form>
+                                @endif
                             @endauth
 
 
