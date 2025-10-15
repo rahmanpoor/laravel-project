@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Content\Page;
 use App\Models\Notification;
 use App\Models\Content\Comment;
-use App\Models\Footer\FooterBadge;
 use App\Models\Market\CartItem;
 use App\Models\Setting\Setting;
 use App\Models\Footer\FooterLink;
+use App\Models\Footer\FooterBadge;
+use App\Models\Footer\FooterSocial;
 use App\Models\Footer\FooterFeature;
 use App\Models\Footer\FooterSetting;
-use App\Models\Footer\FooterSocial;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
@@ -52,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
                 $view->with('cartItems', $cartItems);
+                $view->with('pages', Page::all());
             }
         });
 
@@ -95,17 +97,15 @@ class AppServiceProvider extends ServiceProvider
         // });
 
         View::composer('*', function ($view) {
-        $view->with([
-            'footerFeatures' => Cache::rememberForever('footerFeatures', fn() => FooterFeature::all()),
-            'firstColumnLinks' => Cache::rememberForever('firstColumnLinks', fn() => FooterLink::where('position', 1)->get()),
-            'secondColumnLinks' => Cache::rememberForever('secondColumnLinks', fn() => FooterLink::where('position', 2)->get()),
-            'thirdColumnLinks' => Cache::rememberForever('thirdColumnLinks', fn() => FooterLink::where('position', 3)->get()),
-            'footerSocials' => Cache::rememberForever('footerSocials', fn() => FooterSocial::all()),
-            'footerBadges' => Cache::rememberForever('footerBadges', fn() => FooterBadge::all()),
-            'footerSetting' => Cache::rememberForever('footerSetting', fn() => FooterSetting::first()),
-        ]);
-    });
-
-
+            $view->with([
+                'footerFeatures' => Cache::rememberForever('footerFeatures', fn() => FooterFeature::all()),
+                'firstColumnLinks' => Cache::rememberForever('firstColumnLinks', fn() => FooterLink::where('position', 1)->get()),
+                'secondColumnLinks' => Cache::rememberForever('secondColumnLinks', fn() => FooterLink::where('position', 2)->get()),
+                'thirdColumnLinks' => Cache::rememberForever('thirdColumnLinks', fn() => FooterLink::where('position', 3)->get()),
+                'footerSocials' => Cache::rememberForever('footerSocials', fn() => FooterSocial::all()),
+                'footerBadges' => Cache::rememberForever('footerBadges', fn() => FooterBadge::all()),
+                'footerSetting' => Cache::rememberForever('footerSetting', fn() => FooterSetting::first()),
+            ]);
+        });
     }
 }

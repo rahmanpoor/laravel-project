@@ -22,7 +22,9 @@ class ProductController extends Controller
         }
 
 
-        $relatedProducts = Product::all();
+        $relatedProducts = Product::with('category')->whereHas('category', function ($query) use ($product) {
+            $query->where('id', $product->category->id);
+        })->get()->except($product->id);
         return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem'));
     }
 
@@ -62,7 +64,7 @@ class ProductController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if($user->compare()->count() > 0){
+            if($user->compare->count() > 0){
                 $userCompareList = $user->compare;
             } else {
                 $userCompareList = Compare::create(['user_id' => $user->id]);

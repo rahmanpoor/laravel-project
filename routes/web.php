@@ -337,6 +337,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->
             Route::put('/update/{email}', [EmailController::class, 'update'])->name('admin.notify.email.update');
             Route::delete('/destroy/{email}', [EmailController::class, 'destroy'])->name('admin.notify.email.destroy');
             Route::get('/status/{email}', [EmailController::class, 'status'])->name('admin.notify.email.status');
+            Route::get('/send-mail/{email}', [EmailController::class, 'sendMail'])->name('admin.notify.email.send-mail');
         });
         //email file
         Route::prefix('email-file')->group(function () {
@@ -465,6 +466,8 @@ Route::namespace('Auth')->group(function () {
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
 
 Route::get('/products/{category?}', [HomeController::class, 'products'])->name('customer.products');
+
+Route::get('/page/{page:slug}', [HomeController::class, 'page'])->name('customer.page');
 
 
 

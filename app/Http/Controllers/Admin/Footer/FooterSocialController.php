@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin\Footer;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Footer\FooterSocialRequest;
 use App\Models\Footer\FooterSocial;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Requests\Admin\Footer\FooterSocialRequest;
 
 class FooterSocialController extends Controller
 {
@@ -18,7 +19,7 @@ class FooterSocialController extends Controller
     {
 
         $socials = FooterSocial::orderBy('created_at', 'desc')->simplePaginate(15);
-         $social_icons = FooterSocial::$social_icons;
+        $social_icons = FooterSocial::$social_icons;
         return view('admin.footer.social.index', compact('socials', 'social_icons'));
     }
 
@@ -46,6 +47,8 @@ class FooterSocialController extends Controller
         $inputs = $request->all();
 
         $social = FooterSocial::create($inputs);
+
+        Cache::forget('footerSocials'); // کش مربوطه پاک بشه
 
         return redirect()->route('admin.footer.social.index')->with('swal-success', ' شبکه اجتماعی با موفقیت ایجاد شد');
     }
@@ -92,8 +95,8 @@ class FooterSocialController extends Controller
      */
     public function destroy(FooterSocial $footer)
     {
-         $result = $footer->delete();
+        $result = $footer->delete();
+        Cache::forget('footerSocials'); // کش مربوطه پاک بشه
         return redirect()->route('admin.footer.social.index')->with('swal-success', ' شبکه اجتماعی با موفقیت حذف شد');
-
     }
 }

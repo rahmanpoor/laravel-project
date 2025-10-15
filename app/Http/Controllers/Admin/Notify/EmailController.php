@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin\Notify;
 use App\Models\Notify\Email;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\Message\MessageService;
 use App\Http\Requests\Admin\Notify\EmailRequest;
+use App\Http\Services\Message\Email\EmailService;
+use App\Jobs\SendEmailToUsers;
+use App\Models\User;
 
 class EmailController extends Controller
 {
@@ -38,7 +42,7 @@ class EmailController extends Controller
      */
     public function store(EmailRequest $request)
     {
-         $inputs = $request->all();
+        $inputs = $request->all();
 
         //date fixes
         $realTimestampStart = substr($request->published_at, 0, 10);
@@ -68,7 +72,7 @@ class EmailController extends Controller
      */
     public function edit(Email $email)
     {
-         return view('admin.notify.email.edit', compact('email'));
+        return view('admin.notify.email.edit', compact('email'));
     }
 
     /**
@@ -78,15 +82,15 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EmailRequest $request,Email $email)
+    public function update(EmailRequest $request, Email $email)
     {
         $inputs = $request->all();
 
-         //date fixes
+        //date fixes
         $realTimestampStart = substr($request->published_at, 0, 10);
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)$realTimestampStart);
 
-         $email->update($inputs);
+        $email->update($inputs);
 
         return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل با موفقیت ویرایش شد');
     }
@@ -99,7 +103,7 @@ class EmailController extends Controller
      */
     public function destroy(Email $email)
     {
-         $result = $email->delete();
+        $result = $email->delete();
         return redirect()->route('admin.notify.email.index')->with('swal-success', 'ایمیل با موفقیت حذف شد');
     }
 
@@ -121,5 +125,12 @@ class EmailController extends Controller
 
             return response()->json(['status' => false]);
         }
+    }
+
+    public function sendMail(Email $email)
+    {
+
+        SendEmailToUsers::dispatch($email);
+        return back()->with('swal-success', 'ایمیل با موفقیت ارسال شد');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Models\Content\Page;
 use App\Models\Market\Brand;
 use Illuminate\Http\Request;
 use App\Models\Content\Banner;
@@ -122,5 +123,9 @@ class HomeController extends Controller
 
 
         return view('customer.market.product.products', compact('products', 'brands', 'brandNames', 'categories'));
+    }
+
+    public function page(Page $page) {
+        return view('customer.page', compact('page'));
     }
 }

@@ -20,10 +20,12 @@
                       <section class="search-box">
                           <section class="search-textbox">
                               <span><i class="fa fa-search"></i></span>
-                              <form action="{{ route('customer.products', request()->category ? request()->category->id : null) }}" method="get">
-                              <input id="search" type="text" class="" name="search" value="{{ request()->search }}" placeholder="جستجو ..."
-                                  autocomplete="off">
-                                  </form>
+                              <form
+                                  action="{{ route('customer.products', request()->category ? request()->category->id : null) }}"
+                                  method="get">
+                                  <input id="search" type="text" class="" name="search"
+                                      value="{{ request()->search }}" placeholder="جستجو ..." autocomplete="off">
+                              </form>
                           </section>
                           {{-- <section class="search-result visually-hidden">
                               <section class="search-result-title">نتایج جستجو برای <span class="search-words">"موبایل
@@ -119,12 +121,10 @@
                                               <img class="flex-shrink-1"
                                                   src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
                                                   alt="{{ asset($cartItem->product->image['indexArray']['medium']) . '-' . ($key + 1) }}">
-                                              <section class="w-100 text-truncate"><a
-                                                      class="text-decoration-none text-dark"
+                                              <section class="w-100 text-truncate"><a class="text-decoration-none text-dark"
                                                       href="{{ route('customer.market.product', $cartItem->product) }}">{{ $cartItem->product->name }}</a>
                                               </section>
-                                              <section class="flex-shrink-1"><a
-                                                      class="text-muted text-decoration-none p-1"
+                                              <section class="flex-shrink-1"><a class="text-muted text-decoration-none p-1"
                                                       href="{{ route('customer.sales-process.remove-from-cart', $cartItem) }}"><i
                                                           class="fa fa-trash-alt"></i></a></section>
                                           </section>
@@ -930,33 +930,19 @@
                           </section>
                       </section>
                       <section class="border-start my-2 mx-1"></section>
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-shopping-basket"></i> سوپرمارکت</a>
-                      </section>
 
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-percent"></i> تخفیف ها و پیشنهادها</a>
-                      </section>
 
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-user"></i> سعید مارکت من</a>
-                      </section>
+                      @foreach ($pages as $page)
+                          {{-- navbar item start --}}
+                          <section class="navbar-item">
+                              <a href="{{ route('customer.page', $page->slug) }}">
+                                  {{-- <i class="fas fa-shopping-basket"></i> --}}
+                                  {{ $page->title }}</a>
+                          </section>
+                          {{-- navbar item end --}}
+                      @endforeach
 
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-star"></i> سعید مارکت پلاس</a>
-                      </section>
 
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-info-circle"></i> درباره ما</a>
-                      </section>
-
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-store"></i> فروشنده شوید</a>
-                      </section>
-
-                      <section class="navbar-item">
-                          <a href="#"><i class="fas fa-briefcase"></i> فرصت های شغلی</a>
-                      </section>
 
 
                   </section>
