@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendEmailToUsers;
+use App\Models\Notify\Email;
 use Illuminate\Console\Command;
 
 class AutoEmail extends Command
@@ -27,6 +29,9 @@ class AutoEmail extends Command
      */
     public function handle()
     {
-       dd('hello');
+      $emailsToSend = Email::where('published_at', '=', now())->get();
+      foreach ($emailsToSend as $emailToSend) {
+          SendEmailToUsers::dispatch($emailToSend);
+      }
     }
 }

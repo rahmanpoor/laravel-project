@@ -11,7 +11,7 @@
     <!-- start body -->
     <section class="">
         <section id="main-body-two-col" class="container-xxl body-container">
-            @include('admin.alerts.alert-section.success');
+            @include('admin.alerts.alert-section.success')
             <section class="row">
 
 

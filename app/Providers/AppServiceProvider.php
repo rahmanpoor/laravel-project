@@ -53,8 +53,8 @@ class AppServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
                 $view->with('cartItems', $cartItems);
-                $view->with('pages', Page::all());
             }
+              $view->with('pages', Page::all());
         });
 
         // //footer features

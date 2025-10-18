@@ -42,6 +42,8 @@ class SendEmailToUsers implements ShouldQueue
 
 
 
+
+
         foreach ($users as $user) {
             //send Email
 
