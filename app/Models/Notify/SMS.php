@@ -19,5 +19,5 @@ class SMS extends Model
 
 
 
-    protected $fillable = ['title', 'body', 'status', 'published_at'];
+    protected $fillable = ['title', 'body', 'to'];
 }

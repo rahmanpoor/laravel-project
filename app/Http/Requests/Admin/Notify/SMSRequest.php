@@ -25,9 +25,10 @@ class SMSRequest extends FormRequest
     {
         return [
             'title' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-            'status' => 'required|numeric|in:0,1',
-            'body' => 'required|max:600|min:5|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-            'published_at' => 'required|numeric'
+            'status' => 'numeric|in:0,1',
+            'to' => 'required|regex:/^09[0-9]{9}$/u',
+            'body' => 'required|max:600|min:5',
+            'published_at' => 'numeric'
         ];
     }
 }

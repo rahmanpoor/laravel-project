@@ -37,7 +37,7 @@
                     <form action="{{ route('admin.notify.sms.store') }}" method="post">
                         @csrf
                         <section class="row">
-                            <section class="col-12 col-md-6">
+                            <section class="col-12">
                                 <div class="form-group">
                                     <label for="title">عنوان پیامک</label>
                                     <input type="text" name="title" id="title" class="form-control form-control-sm"
@@ -51,7 +51,9 @@
                                     </span>
                                 @enderror
                             </section>
-                            <section class="col-12 col-md-6">
+
+
+                            {{-- <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="published_at">تاریخ انتشار</label>
                                     <input type="text" class="form-control form-control-sm d-none" name="published_at"
@@ -65,7 +67,8 @@
                                         </strong>
                                     </span>
                                 @enderror
-                            </section>
+                            </section> --}}
+{{--
                             <section class="col-12">
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
@@ -83,6 +86,22 @@
                                         </span>
                                     @enderror
                                 </div>
+                            </section> --}}
+
+
+                            <section class="col-12">
+                                <div class="form-group">
+                                    <label for="to">ارسال به</label>
+                                    <input type="text" name="to" id="to" class="form-control form-control-sm"
+                                        value="{{ old('to') }}" placeholder="مثال 09173332233">
+                                </div>
+                                @error('to')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <div class="form-group">

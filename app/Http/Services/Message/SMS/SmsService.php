@@ -22,16 +22,21 @@ class SmsService implements MessageInterface
 
     public function fire()
     {
-
         $meliPayamak = new MeliPayamkService;
-        return $meliPayamak->SendSmsApi($this->from, $this->to, $this->text, $this->isFlash);
     }
 
 
-     public function sendGroupSms()
+
+    public function sendSms(): array
     {
-        $meliPayamak = new MeliPayamkService();
-        return $meliPayamak->SendSmsGroup();
+        $meliPayamak = new MeliPayamkService;
+        return $meliPayamak->sendSms($this->from, $this->to,  $this->text);
+    }
+
+    public function sendOtp(): array
+    {
+        $meliPayamak = new MeliPayamkService;
+        return $meliPayamak->sendOtp($this->to);
     }
 
 

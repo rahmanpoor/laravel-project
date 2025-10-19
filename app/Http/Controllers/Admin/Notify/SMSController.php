@@ -21,7 +21,7 @@ class SMSController extends Controller
     public function index()
     {
 
-        $sms = SMS::orderBy('created_at', 'desc')->simplePaginate(15);
+        $sms = SMS::orderBy('created_at', 'desc')->paginate(7);
         return view('admin.notify.sms.index', compact('sms'));
     }
 
@@ -43,11 +43,12 @@ class SMSController extends Controller
      */
     public function store(SMSRequest $request)
     {
+
         $inputs = $request->all();
 
-        //date fixes
-        $realTimestampStart = substr($request->published_at, 0, 10);
-        $inputs['published_at'] = date('Y-m-d H:i:s', (int)$realTimestampStart);
+        // //date fixes
+        // $realTimestampStart = substr($request->published_at, 0, 10);
+        // $inputs['published_at'] = date('Y-m-d H:i:s', (int)$realTimestampStart);
 
         $sms = SMS::create($inputs);
 
@@ -129,16 +130,17 @@ class SMSController extends Controller
 
     public function sendSMS(SMS $sms)
     {
-        $mobiles = User::whereNotNull('mobile')
-            ->pluck('mobile')
-            ->implode(',');
+
+        // $mobiles = User::whereNotNull('mobile')
+        //     ->pluck('mobile')
+        //     ->implode(',');
 
 
             $smsService = new SmsService();
-            $smsService->setFrom('50000');
-            $smsService->setTo($mobiles);
-            $smsService->setText('متن پیامک');
-            $smsService->sendGroupSms();
+            $smsService->setFrom('50002710066430');
+            $smsService->setTo($sms->to);
+            $smsService->setText($sms->body);
+            $smsService->sendSms();
 
 
 

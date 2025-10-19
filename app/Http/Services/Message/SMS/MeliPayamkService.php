@@ -49,9 +49,10 @@ class MeliPayamkService
         ];
     }
 
-    public function sendSmsGroup()
+    public function sendSms(string $from, string $to, string $text)
     {
-        $url = "https://console.melipayamak.com/api/send/advanced/d5e92f89fc8641c0bbc3ba13bc2d6f4e";
+
+        $url = "https://console.melipayamak.com/api/send/simple/{$this->apiKey}";
 
         // تنظیم verify بر اساس محیط
         $httpOptions = [];
@@ -63,9 +64,9 @@ class MeliPayamkService
             ->withHeaders([
                 'Content-Type' => 'application/json',
             ])->post($url, [
-                'from' => 50002710066430,
-                'to' => '09170766430',
-                'text' => 'متن پیامک'
+                'from' => '50002710066430',
+                'to' => $to,
+                'text' => $text
 
             ]);
 

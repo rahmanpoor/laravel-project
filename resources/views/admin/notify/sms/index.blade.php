@@ -27,7 +27,7 @@
                     </h5>
                 </section>
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.notify.sms.create') }}" class="btn btn-info btn-sm">ایجاد اطلاعیه پیامکی</a>
+                    <a href="{{ route('admin.notify.sms.create') }}" class="btn btn-info btn-sm">ایجاد پیامک</a>
                     <section class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </section>
@@ -37,11 +37,12 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>عنوان اطلاعیه</th>
-                                <th>متن اطلاعیه</th>
-                                <th>تاریخ ارسال</th>
-                                <th>وضعیت</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th>عنوان پیامک</th>
+                                <th>متن پیامک</th>
+                                <th>ارسال به</th>
+                                {{-- <th>تاریخ ارسال</th>
+                                <th>وضعیت</th> --}}
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +51,8 @@
                                     <th>{{ $key + 1 }}</th>
                                     <td>{{ $single_sms->title }}</td>
                                     <td>{{ $single_sms->body }}</td>
-                                    <td>{{ jalalidate($single_sms->published_at, 'H:i:s Y/m/d') }}</td>
+                                    <td>{{ $single_sms->to }}</td>
+                                    {{-- <td>{{ jalalidate($single_sms->published_at, 'H:i:s Y/m/d') }}</td>
                                     <td>
                                         <label class="apple-switch">
                                             <input id="{{ $single_sms->id }}" onchange="changeStatus({{ $single_sms->id }})"
@@ -58,24 +60,32 @@
                                                 type="checkbox" @if ($single_sms->status === 1) checked @endif>
                                             <span class="apple-slider"></span>
                                         </label>
-                                    </td>
+                                    </td> --}}
                                     <td class="width-16-rem text-left">
                                         <a href="{{ route('admin.notify.sms.edit', $single_sms->id) }}"
-                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                         <form class="d-inline"
                                             action="{{ route('admin.notify.sms.destroy', $single_sms->id) }}"
                                             method="post">
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                                    class="fa fa-trash-alt"></i></button>
                                         </form>
-                                          <a href="{{ route('admin.notify.sms.send-sms', $single_sms) }}" class="btn btn-sm btn-info">ارسال</a>
+                                        <a href="{{ route('admin.notify.sms.send-sms', $single_sms) }}"
+                                            class="btn btn-sm btn-success"><i class="fa fa-sms"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                </section>
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $sms->links('pagination::bootstrap-4') }}
+                        </nav>
+                    </section>
                 </section>
             </section>
         </section>

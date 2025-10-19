@@ -25,7 +25,7 @@
             <section class="main-body-container">
                 <section class="main-body-container-header">
                     <h5>
-                        ویرایش اطلاعیه پیامکی
+                      ویرایش پیامک
                     </h5>
                 </section>
 
@@ -39,7 +39,7 @@
                         @csrf
                         {{ method_field('put') }}
                         <section class="row">
-                            <section class="col-12 col-md-6">
+                            <section class="col-12">
                                 <div class="form-group">
                                     <label for="title">عنوان پیامک</label>
                                     <input type="text" name="title" id="title" class="form-control form-control-sm"
@@ -53,7 +53,7 @@
                                     </span>
                                 @enderror
                             </section>
-                            <section class="col-12 col-md-6">
+                            {{-- <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">تاریخ انتشار</label>
                                     <input type="text" name="published_at" id="published_at"
@@ -68,8 +68,8 @@
                                         </strong>
                                     </span>
                                 @enderror
-                            </section>
-                            <section class="col-12">
+                            </section> --}}
+                            {{-- <section class="col-12">
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="status" class="form-control form-control-sm">
@@ -86,6 +86,20 @@
                                         </span>
                                     @enderror
                                 </div>
+                            </section> --}}
+                              <section class="col-12">
+                                <div class="form-group">
+                                    <label for="to">ارسال به</label>
+                                    <input type="text" name="to" id="to" class="form-control form-control-sm"
+                                        value="{{ old('to', $sms->to) }}" placeholder="مثال 09173332233">
+                                </div>
+                                @error('to')
+                                    <span class="alert_required text-danger p-1">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
                             </section>
                             <section class="col-12">
                                 <div class="form-group">
