@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Notify;
 
+use App\Models\User;
 use App\Models\Notify\SMS;
+use App\Jobs\SendSmsToUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\Message\MessageService;
+use App\Http\Services\Message\SMS\SmsService;
 use App\Http\Requests\Admin\Notify\SMSRequest;
 
 class SMSController extends Controller
@@ -83,14 +87,13 @@ class SMSController extends Controller
     {
         $inputs = $request->all();
 
-         //date fixes
+        //date fixes
         $realTimestampStart = substr($request->published_at, 0, 10);
         $inputs['published_at'] = date('Y-m-d H:i:s', (int)$realTimestampStart);
 
-         $sms->update($inputs);
+        $sms->update($inputs);
 
         return redirect()->route('admin.notify.sms.index')->with('swal-success', 'پیامک با موفقیت ویرایش شد');
-
     }
 
     /**
@@ -122,5 +125,24 @@ class SMSController extends Controller
 
             return response()->json(['status' => false]);
         }
+    }
+
+    public function sendSMS(SMS $sms)
+    {
+        $mobiles = User::whereNotNull('mobile')
+            ->pluck('mobile')
+            ->implode(',');
+
+
+            $smsService = new SmsService();
+            $smsService->setFrom('50000');
+            $smsService->setTo($mobiles);
+            $smsService->setText('متن پیامک');
+            $smsService->sendGroupSms();
+
+
+
+
+        return back()->with('swal-success', 'پیامک با موفقیت ارسال شد');
     }
 }

@@ -358,6 +358,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->
             Route::put('/update/{sms}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
             Route::delete('/destroy/{sms}', [SMSController::class, 'destroy'])->name('admin.notify.sms.destroy');
             Route::get('/status/{sms}', [SMSController::class, 'status'])->name('admin.notify.sms.status');
+            Route::get('/send-sms/{sms}', [SMSController::class, 'sendSMS'])->name('admin.notify.sms.send-sms');
         });
     });
     //ticket
@@ -423,21 +424,21 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->
             Route::post('/store', [FooterLinkController::class, 'store'])->name('admin.footer.link.store');
             Route::delete('/destroy/{footer}', [FooterLinkController::class, 'destroy'])->name('admin.footer.link.destroy');
         });
-         //social
+        //social
         Route::prefix('social')->group(function () {
             Route::get('/', [FooterSocialController::class, 'index'])->name('admin.footer.social.index');
             Route::get('/create', [FooterSocialController::class, 'create'])->name('admin.footer.social.create');
             Route::post('/store', [FooterSocialController::class, 'store'])->name('admin.footer.social.store');
             Route::delete('/destroy/{footer}', [FooterSocialController::class, 'destroy'])->name('admin.footer.social.destroy');
         });
-         //badge
+        //badge
         Route::prefix('badge')->group(function () {
             Route::get('/', [FooterBadgeController::class, 'index'])->name('admin.footer.badge.index');
             Route::get('/create', [FooterBadgeController::class, 'create'])->name('admin.footer.badge.create');
             Route::post('/store', [FooterBadgeController::class, 'store'])->name('admin.footer.badge.store');
             Route::delete('/destroy/{footer}', [FooterBadgeController::class, 'destroy'])->name('admin.footer.badge.destroy');
         });
-          //footer setting
+        //footer setting
         Route::prefix('setting')->group(function () {
             Route::get('/', [FooterSettingController::class, 'index'])->name('admin.footer.setting.index');
             Route::put('/update', [FooterSettingController::class, 'update'])->name('admin.footer.setting.update');

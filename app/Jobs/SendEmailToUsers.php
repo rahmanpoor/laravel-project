@@ -44,18 +44,28 @@ class SendEmailToUsers implements ShouldQueue
 
 
 
+
         foreach ($users as $user) {
             //send Email
+
+              sleep(15); // تأخیر کوچک برای دور زدن محدودیت Mailtrap
 
             $emailService = new EmailService();
             $details = [
                 'title' => $this->email->subject,
                 'body' =>  $this->email->body
             ];
+            $files= $this->email->files;
+            $filePaths = [];
+            foreach ($files as $file) {
+                array_push($filePaths, $file->file_path);
+            }
+            $emailService->setEmailFiles($filePaths);
             $emailService->setDetails($details);
             $emailService->setSubject($this->email->subject);
             $emailService->setFrom('noreply@example.com', 'example');
             $emailService->setTo($user->email);
+            $emailService->setEmailFiles($filePaths);
             $messagesService = new MessageService($emailService);
             $messagesService->send();
         }

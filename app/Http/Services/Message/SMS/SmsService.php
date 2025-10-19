@@ -4,11 +4,7 @@
 namespace App\Http\Services\Message\SMS;
 
 use App\Http\Interfaces\MessageInterface;
-use App\Http\Services\Message\SMS\MeliPayamkService;
-
-
-
-;
+use App\Http\Services\Message\SMS\MeliPayamkService;;
 
 class SmsService implements MessageInterface
 
@@ -24,11 +20,18 @@ class SmsService implements MessageInterface
 
 
 
-    public function fire( )
+    public function fire()
     {
-        $meliPayamak = new MeliPayamkService;
-        return $meliPayamak->SendSmsSoapClient($this->from, $this->to, $this->text, $this->isFlash);
 
+        $meliPayamak = new MeliPayamkService;
+        return $meliPayamak->SendSmsApi($this->from, $this->to, $this->text, $this->isFlash);
+    }
+
+
+     public function sendGroupSms()
+    {
+        $meliPayamak = new MeliPayamkService();
+        return $meliPayamak->SendSmsGroup();
     }
 
 
@@ -48,7 +51,6 @@ class SmsService implements MessageInterface
     public function setFrom($from)
     {
         $this->from = $from;
-
     }
 
 

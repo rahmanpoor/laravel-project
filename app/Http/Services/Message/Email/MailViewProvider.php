@@ -8,27 +8,35 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
 
-class MailViewProvider extends Mailable {
+class MailViewProvider extends Mailable
+{
 
     use Queueable, SerializesModels;
 
     public $details;
 
-    public function __construct($details, $subject, $from, $attachments = null) {
-       $this->details = $details;
-       $this->subject = $subject;
-       $this->from = $from;
+    public function __construct($details, $subject, $from, $file = null)
+    {
+        $this->details = $details;
+        $this->subject = $subject;
+        $this->from = $from;
+        $this->file = $file;
     }
 
 
-    public function build() {
+    public function build()
+    {
         return $this->subject($this->subject)->view('emails.send-otp');
     }
 
-    public function attachments() {
-        return [
-            Attachment::fromPath(public_path('attachments/1.png'))->as('attach1.png')->withMime('image/png')
-        ];
+    public function attachments()
+    {
+        $publicFiles = [];
+        if ($this->file) {
+            foreach ($this->file as $file) {
+                array_push($publicFiles, public_path($file));
+            }
+        }
+        return $publicFiles;
     }
-
 }

@@ -70,6 +70,7 @@
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
                                                     class="fa fa-trash-alt"></i> حذف</button>
                                         </form>
+                                          <a href="{{ route('admin.notify.sms.send-sms', $single_sms) }}" class="btn btn-sm btn-info">ارسال</a>
                                     </td>
                                 </tr>
                             @endforeach
