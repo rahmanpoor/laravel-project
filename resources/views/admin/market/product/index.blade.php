@@ -45,9 +45,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($products as $key =>  $product)
                                 <tr>
-                                    <th>{{ $loop->iteration }}</th>
+                                    <th>{{ $products->firstItem() + $key  }}</th>
                                     <td>{{ $product->name }}</td>
                                     <td> <img
                                             src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
