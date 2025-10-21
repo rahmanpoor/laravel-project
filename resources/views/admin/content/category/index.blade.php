@@ -51,13 +51,13 @@
                         <tbody>
                             @foreach ($postCategories as $key => $postCategory)
                                 <tr>
-                                    <th>{{ $key+=1 }}</th>
+                                    <th>{{ $postCategories->firstItem() + $key }}</th>
                                     <td>{{ $postCategory->name }}</td>
                                     <td>{{ $postCategory->description }}</td>
                                     <td>{{ $postCategory->slug }}</td>
                                     <td>
-                                        <img src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}" alt="تصویر" width="50"
-                                            height="50">
+                                        <img src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}"
+                                            alt="تصویر" width="50" height="50">
                                     </td>
                                     <td>{{ $postCategory->tags }}</td>
                                     <td>
@@ -115,7 +115,7 @@
                         errorToast('هنگام ویرایش مشکلی بوجود امده است')
                     }
                 },
-                error : function(){
+                error: function() {
                     element.prop('checked', elementValue);
                     errorToast('ارتباط برقرار نشد')
                 }
@@ -125,17 +125,17 @@
 
                 var successToastTag = '<section class="toast" data-delay="5000">\n' +
                     '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
-                        '<strong class="ml-auto">' + message + '</strong>\n' +
-                        '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                            '<span aria-hidden="true">&times;</span>\n' +
-                            '</button>\n' +
-                            '</section>\n' +
-                            '</section>';
+                    '<strong class="ml-auto">' + message + '</strong>\n' +
+                    '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
+                    '<span aria-hidden="true">&times;</span>\n' +
+                    '</button>\n' +
+                    '</section>\n' +
+                    '</section>';
 
-                            $('.toast-wrapper').append(successToastTag);
-                            $('.toast').toast('show').delay(5500).queue(function() {
-                                $(this).remove();
-                            })
+                $('.toast-wrapper').append(successToastTag);
+                $('.toast').toast('show').delay(5500).queue(function() {
+                    $(this).remove();
+                })
 
             }
         }
@@ -143,7 +143,5 @@
 
 
 
-@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
-
-
+    @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
 @endsection

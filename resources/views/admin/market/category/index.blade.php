@@ -44,102 +44,116 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($productCategories as $productCategory)
-
-
-                            <tr>
-                                <th>{{ $loop->iteration }}</th>
-                                <td>{{ $productCategory->name }}</td>
-                                <td>{{ $productCategory->parent_id ? $productCategory->parent->name : 'دسته اصلی' }}</td>
-                                <td>
-                                    <img src="{{ asset($productCategory->image['indexArray'][$productCategory->image['currentImage']]) }}" alt="تصویر" width="50"
-                                        height="35">
-                                </td>
-                                <td>
-                                    <label class="apple-switch">
-                                        <input id="{{ $productCategory->id }}"
-                                            onchange="changeStatus({{ $productCategory->id }})"
-                                            data-url="{{ route('admin.market.category.status', $productCategory->id) }}"
-                                            type="checkbox" @if ($productCategory->status === 1) checked @endif>
-                                        <span class="apple-slider"></span>
-                                    </label>
-                                </td>
-                                <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.category.edit', $productCategory->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                    <form class="d-inline"
-                                    action="{{ route('admin.market.category.destroy', $productCategory->id) }}"
-                                    method="post">
-                                    @csrf
-                                    {{ method_field('delete') }}
-                                    <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                            class="fa fa-trash-alt"></i></button>
-                                </form>
-                                </td>
-                            </tr>
-
+                            @foreach ($productCategories as $key => $productCategory)
+                                <tr>
+                                    <th>{{ $productCategories->firstItem() + $key }}</th>
+                                    <td>{{ $productCategory->name }}</td>
+                                    <td>{{ $productCategory->parent_id ? $productCategory->parent->name : 'دسته اصلی' }}
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset($productCategory->image['indexArray'][$productCategory->image['currentImage']]) }}"
+                                            alt="تصویر" width="45" height="35">
+                                    </td>
+                                    <td>
+                                        <label class="apple-switch">
+                                            <input id="{{ $productCategory->id }}"
+                                                onchange="changeStatus({{ $productCategory->id }})"
+                                                data-url="{{ route('admin.market.category.status', $productCategory->id) }}"
+                                                type="checkbox" @if ($productCategory->status === 1) checked @endif>
+                                            <span class="apple-slider"></span>
+                                        </label>
+                                    </td>
+                                    <td class="width-16-rem text-left">
+                                        <a href="{{ route('admin.market.category.edit', $productCategory->id) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.market.category.destroy', $productCategory->id) }}"
+                                            method="post">
+                                            @csrf
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                    class="fa fa-trash-alt"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </section>
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $productCategories->links('pagination::bootstrap-4') }}
+                        </nav>
+                    </section>
+                </section>
             </section>
         </section>
     </section>
-
-
 @endsection
 
 
 
 @section('script')
- <script>
+    <script>
+        // ✅ تابع اصلی تغییر وضعیت
         function changeStatus(id) {
-            var element = $("#" + id);
-            var url = element.attr('data-url');
-            var elementValue = !element.prop('checked');
+            const element = $("#" + id);
+            const url = element.data('url');
+            const previousState = element.prop('checked');
 
             $.ajax({
                 url: url,
                 type: "GET",
                 success: function(response) {
                     if (response.status) {
-                        if (response.checked) {
-                            element.prop('checked', true)
-                            successToast('دسته بندی با موفقیت فعال شد')
-                        } else {
-                            element.prop('checked', false)
-                            successToast('دسته بندی با موفقیت غیر فعال شد')
-                        }
+                        element.prop('checked', response.checked);
+
+                        showToast(
+                            response.checked ?
+                            'دسته‌بندی با موفقیت فعال شد ✅' :
+                            'دسته‌بندی با موفقیت غیرفعال شد ⚙️',
+                            'success'
+                        );
                     } else {
-                        element.prop('checked', elementValue);
-                        errorToast('هنگام ویرایش مشکلی بوجود امده است')
+                        element.prop('checked', !previousState);
+                        showToast('خطا هنگام بروزرسانی وضعیت دسته‌بندی ⚠️', 'error');
                     }
                 },
-                error : function(){
-                    element.prop('checked', elementValue);
-                    errorToast('ارتباط برقرار نشد')
+                error: function() {
+                    element.prop('checked', !previousState);
+                    showToast('ارتباط با سرور برقرار نشد ❌', 'error');
                 }
-            })
+            });
+        }
 
-            function successToast(message) {
+        // ✅ تابع نمایش toast عمومی
+        function showToast(message, type = 'success') {
+            const bgClass = type === 'success' ? 'bg-success' : 'bg-danger';
+            const toastTag = `
+            <section class="toast" data-delay="4000">
+                <section class="toast-body py-3 d-flex ${bgClass} text-white rounded shadow-sm">
+                    <strong class="ml-auto">${message}</strong>
+                    <button type="button" class="mr-2 close text-white" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </section>
+            </section>
+        `;
 
-                var successToastTag = '<section class="toast" data-delay="5000">\n' +
-                    '<section class="toast-body py-3 d-flex bg-success text-white">\n' +
-                        '<strong class="ml-auto">' + message + '</strong>\n' +
-                        '<button type="button" class="mr-2 close" data-dismiss="toast" aria-label="Close">\n' +
-                            '<span aria-hidden="true">&times;</span>\n' +
-                            '</button>\n' +
-                            '</section>\n' +
-                            '</section>';
-
-                            $('.toast-wrapper').append(successToastTag);
-                            $('.toast').toast('show').delay(5500).queue(function() {
-                                $(this).remove();
-                            })
-
+            const $toastWrapper = $('.toast-wrapper');
+            if (!$toastWrapper.length) {
+                $('body').append(
+                    '<section class="toast-wrapper position-fixed p-3" style="top: 1rem; right: 1rem; z-index: 9999;"></section>'
+                    );
             }
+
+            $('.toast-wrapper').append(toastTag);
+            $('.toast').toast('show').delay(4500).queue(function() {
+                $(this).remove();
+            });
         }
     </script>
+
     @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
 @endsection
-
-
