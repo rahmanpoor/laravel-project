@@ -17,7 +17,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $category_attributes = CategoryAttribute::all();
+        $category_attributes = CategoryAttribute::orderBy('created_at', 'desc')->paginate(7);
         return view('admin.market.property.index', compact('category_attributes'));
     }
 
@@ -28,9 +28,13 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $productCategories = ProductCategory::all();
+        $productCategories = ProductCategory::select('id', 'name')
+            ->latest()
+            ->get();
+
         return view('admin.market.property.create', compact('productCategories'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -40,10 +44,15 @@ class PropertyController extends Controller
      */
     public function store(CategoryAttributeRequest $request)
     {
-        $inputs = $request->all();
-        $attribute = CategoryAttribute::create($inputs);
-        return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم جدید شما با موفقیت ثبت شد');
+        $validatedData = $request->validated();
+
+        CategoryAttribute::create($validatedData);
+
+        return redirect()
+            ->route('admin.market.property.index')
+            ->with('swal-success', 'ویژگی جدید با موفقیت ثبت شد.');
     }
+
 
     /**
      * Display the specified resource.
@@ -64,9 +73,13 @@ class PropertyController extends Controller
      */
     public function edit(CategoryAttribute $categoryAttribute)
     {
-        $productCategories = ProductCategory::all();
+        $productCategories = ProductCategory::select('id', 'name')
+            ->latest()
+            ->get();
+
         return view('admin.market.property.edit', compact('categoryAttribute', 'productCategories'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -77,10 +90,15 @@ class PropertyController extends Controller
      */
     public function update(CategoryAttributeRequest $request, CategoryAttribute $categoryAttribute)
     {
-        $inputs = $request->all();
-        $categoryAttribute->update($inputs);
-        return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم شما با موفقیت ویرایش شد');
+        $validatedData = $request->validated();
+
+        $categoryAttribute->update($validatedData);
+
+        return redirect()
+            ->route('admin.market.property.index')
+            ->with('swal-success', 'ویژگی با موفقیت ویرایش شد.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -90,7 +108,10 @@ class PropertyController extends Controller
      */
     public function destroy(CategoryAttribute $categoryAttribute)
     {
-        $result = $categoryAttribute->delete();
-        return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم شما با موفقیت حذف شد');
+        $categoryAttribute->delete();
+
+        return redirect()
+            ->route('admin.market.property.index')
+            ->with('swal-success', 'ویژگی با موفقیت حذف شد.');
     }
 }

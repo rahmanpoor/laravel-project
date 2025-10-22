@@ -3,7 +3,7 @@
         <section class="sidebar-wrapper">
 
             <a href="{{ route('customer.home') }}" class="sidebar-link" target="_blank">
-                <i class="fas fa-cart-plus"></i>
+                <i class="fas fa-solid fa-store"></i>
                 <span>فروشگاه</span>
             </a>
 

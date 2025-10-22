@@ -17,8 +17,16 @@ class PropertyValueController extends Controller
      */
     public function index(CategoryAttribute $categoryAttribute)
     {
-        return view('admin.market.property.value.index', compact('categoryAttribute'));
+        $values = CategoryValue::where('category_attribute_id', $categoryAttribute->id)
+            ->latest()
+            ->paginate(7); // تعداد آیتم در هر صفحه، مثلا 10
+
+        return view('admin.market.property.value.index', [
+            'categoryAttribute' => $categoryAttribute,
+            'values' => $values
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,12 +46,22 @@ class PropertyValueController extends Controller
      */
     public function store(CategoryValueRequest $request, CategoryAttribute $categoryAttribute)
     {
-         $inputs = $request->all();
-        $inputs['value'] = json_encode(['value' => $request->value, 'price_increase' => $request->price_increase]);
-        $inputs['category_attribute_id'] = $categoryAttribute->id;
-        $value = CategoryValue::create($inputs);
-        return redirect()->route('admin.market.value.index', $categoryAttribute->id)->with('swal-success', 'مقدار فرم کالای جدید شما با موفقیت ثبت شد');
+        $validatedData = $request->validated();
+
+        CategoryValue::create([
+            'category_attribute_id' => $categoryAttribute->id,
+            'product_id' => $request->product_id ?? null, // اگر اختیاریه، یا مقدار واقعی محصول
+            'value' => json_encode([
+                'value' => $validatedData['value'],
+                'price_increase' => $validatedData['price_increase'],
+            ])
+        ]);
+
+        return redirect()
+            ->route('admin.market.value.index', $categoryAttribute->id)
+            ->with('swal-success', 'مقدار فرم کالای جدید با موفقیت ثبت شد.');
     }
+
 
     /**
      * Display the specified resource.
@@ -74,14 +92,24 @@ class PropertyValueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryValueRequest $request ,CategoryAttribute $categoryAttribute, CategoryValue $value)
+    public function update(CategoryValueRequest $request, CategoryAttribute $categoryAttribute, CategoryValue $value)
     {
-         $inputs = $request->all();
-        $inputs['value'] = json_encode(['value' => $request->value, 'price_increase' => $request->price_increase]);
-        $inputs['category_attribute_id'] = $categoryAttribute->id;
-        $value->update($inputs);
-        return redirect()->route('admin.market.value.index', $categoryAttribute->id)->with('swal-success', 'مقدار فرم کالای  شما با موفقیت ویرایش شد');
+        $validatedData = $request->validated();
+
+        $value->update([
+            'category_attribute_id' => $categoryAttribute->id,
+            'product_id' => $request->product_id ?? $value->product_id, // مقدار محصول قبلی اگر موجود است
+            'value' => json_encode([
+                'value' => $validatedData['value'],
+                'price_increase' => $validatedData['price_increase'],
+            ]),
+        ]);
+
+        return redirect()
+            ->route('admin.market.value.index', $categoryAttribute->id)
+            ->with('swal-success', 'مقدار فرم کالا با موفقیت ویرایش شد.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -91,7 +119,10 @@ class PropertyValueController extends Controller
      */
     public function destroy(CategoryAttribute $categoryAttribute, CategoryValue $value)
     {
-        $result = $value->delete();
-        return redirect()->route('admin.market.value.index', $categoryAttribute->id)->with('swal-success', 'مقدار فرم کالای  شما با موفقیت حذف شد');
+        $value->delete();
+
+        return redirect()
+            ->route('admin.market.value.index', $categoryAttribute->id)
+            ->with('swal-success', 'مقدار فرم کالا با موفقیت حذف شد.');
     }
 }
