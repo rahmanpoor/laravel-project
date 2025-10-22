@@ -110,7 +110,7 @@
                                 @enderror
                             </section>
 
-                            <section class="col-12 col-md-6">
+                            {{-- <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">وزن</label>
                                     <input type="text" name="weight" value="{{ old('weight') }}"
@@ -168,20 +168,18 @@
                                         </strong>
                                     </span>
                                 @enderror
-                            </section>
+                            </section> --}}
 
 
                             <section class="col-12">
                                 <div class="form-group">
-                                    <label for="">قیمت کالا</label>
-                                    <input type="text" name="price" value="{{ old('price') }}"
-                                        class="form-control form-control-sm">
+                                    <label for="price">قیمت کالا (تومان)</label>
+                                    <input type="text" name="price" id="price" value="{{ old('price') }}"
+                                        class="form-control form-control-sm" oninput="formatPrice(this)">
                                 </div>
                                 @error('price')
                                     <span class="alert_required text-danger p-1">
-                                        <strong>
-                                            {{ $message }}
-                                        </strong>
+                                        <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </section>
@@ -200,7 +198,7 @@
                                 @enderror
                             </section>
 
-                            <section class="col-12 col-md-6 my-2">
+                            <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="status">وضعیت</label>
                                     <select name="status" id="" class="form-control form-control-sm"
@@ -220,7 +218,7 @@
                                 @enderror
                             </section>
 
-                            <section class="col-12 col-md-6 my-2">
+                            {{-- <section class="col-12 col-md-6 my-2">
                                 <div class="form-group">
                                     <label for="marketable">قابل فروش بودن</label>
                                     <select name="marketable" id="" class="form-control form-control-sm"
@@ -238,13 +236,13 @@
                                         </strong>
                                     </span>
                                 @enderror
-                            </section>
+                            </section> --}}
 
                             <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
-                                    <input type="hidden" class="form-control form-control-sm" name="tags"
-                                        id="tags" value="{{ old('tags') }}">
+                                    <input type="hidden" class="form-control form-control-sm" name="tags" id="tags"
+                                        value="{{ old('tags') }}">
                                     <select class="select2 form-control form-control-sm" id="select_tags" multiple>
 
                                     </select>
@@ -258,7 +256,7 @@
                                 @enderror
                             </section>
 
-                            <section class="col-12 col-md-6">
+                            {{-- <section class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">تاریخ انتشار</label>
                                     <input type="text" name="published_at" id="published_at"
@@ -272,7 +270,7 @@
                                         </strong>
                                     </span>
                                 @enderror
-                            </section>
+                            </section> --}}
 
 
                             <section class="col-12 border-top border-bottom py-3 mb-3">
@@ -336,7 +334,7 @@
     <script>
         CKEDITOR.replace('introduction');
     </script>
-
+{{--
     <script>
         $(document).ready(function() {
             $('#published_at_view').persianDatepicker({
@@ -344,43 +342,93 @@
                 altField: '#published_at'
             })
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {
-            var tags_input = $('#tags');
-            var select_tags = $('#select_tags');
-            var default_tags = tags_input.val();
-            var default_data = null;
+            const $tagsInput = $('#tags');
+            const $selectTags = $('#select_tags');
 
-            if (tags_input.val() !== null && tags_input.val().length > 0) {
-                default_data = default_tags.split(',');
+            // مقدار اولیه تگ‌ها
+            let defaultData = [];
+            if ($tagsInput.val()) {
+                defaultData = $tagsInput.val().split(',');
             }
 
-            select_tags.select2({
+            // راه‌اندازی select2
+            $selectTags.select2({
                 placeholder: 'لطفا تگ های خود را وارد نمایید',
                 tags: true,
-                data: default_data
+                data: defaultData
             });
-            select_tags.children('option').attr('selected', true).trigger('change');
 
+            // انتخاب گزینه‌ها در select2
+            $selectTags.val(defaultData).trigger('change');
 
-            $('#form').submit(function(event) {
-                if (select_tags.val() !== null && select_tags.val().length > 0) {
-                    var selectedSource = select_tags.val().join(',');
-                    tags_input.val(selectedSource)
+            // قبل از ارسال فرم، مقدار select2 را به input اصلی منتقل کن
+            $('#form').on('submit', function() {
+                const selectedTags = $selectTags.val();
+                if (selectedTags && selectedTags.length > 0) {
+                    $tagsInput.val(selectedTags.join(','));
                 }
-            })
-        })
+            });
+        });
     </script>
 
 
     <script>
         $(function() {
             $('#btn-copy').on('click', function() {
-                var ele = $(this).parent().prev().clone(true);
-                $(this).before(ele);
-            })
-        })
+                const $rowToClone = $(this).parent().prev(); // المنت قبلی
+                const $clone = $rowToClone.clone(true); // clone با event‌ها
+
+                // پاک کردن مقادیر داخل input، textarea و select
+                $clone.find('input, textarea, select').val('');
+
+                $(this).before($clone); // قرار دادن قبل از دکمه
+            });
+        });
+    </script>
+
+
+
+    <script>
+        // تبدیل اعداد فارسی به انگلیسی
+        function persianToEnglishNumbers(str) {
+            if (!str) return '';
+            const persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return str.replace(/[۰-۹]/g, d => persian.indexOf(d));
+        }
+
+        // تابع اصلی برای فرمت عدد
+        function formatPrice(input) {
+            const cursorPos = input.selectionStart;
+            const raw = persianToEnglishNumbers(input.value.replace(/[^\d۰-۹]/g, ''));
+            input.dataset.rawValue = raw;
+
+            if (raw) {
+                const formatted = Number(raw).toLocaleString('fa-IR');
+                const diff = formatted.length - input.value.length;
+                input.value = formatted;
+
+                // تنظیم مجدد مکان‌نما تا پرش نکند
+                const newPos = Math.max(cursorPos + diff, 0);
+                input.setSelectionRange(newPos, newPos);
+            } else {
+                input.value = '';
+            }
+        }
+
+        // حذف کاماها و تبدیل اعداد فارسی قبل از ارسال فرم
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            const priceInput = document.getElementById('price');
+
+            form.addEventListener('submit', () => {
+                let value = persianToEnglishNumbers(priceInput.value);
+                value = value.replace(/٬|,/g, '');
+                priceInput.value = value;
+            });
+        });
     </script>
 @endsection

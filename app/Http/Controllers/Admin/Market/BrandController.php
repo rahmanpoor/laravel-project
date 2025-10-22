@@ -41,18 +41,31 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request, ImageService $imageService)
     {
-        $inputs = $request->all();
+        $inputs = $request->validated();
+
+        // اگر لوگو ارسال شده باشد، عملیات آپلود را انجام بده
         if ($request->hasFile('logo')) {
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'brand');
+
             $result = $imageService->createIndexAndSave($request->file('logo'));
+
+            // اگر آپلود تصویر با خطا مواجه شد
+            if ($result === false) {
+                return redirect()
+                    ->route('admin.market.brand.index')
+                    ->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+            }
+
+            $inputs['logo'] = $result;
         }
-        if ($result === false) {
-            return redirect()->route('admin.market.brand.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
-        }
-        $inputs['logo'] = $result;
-        $brand = Brand::create($inputs);
-        return redirect()->route('admin.market.brand.index')->with('swal-success', 'برند جدید شما با موفقیت ثبت شد');
+
+        Brand::create($inputs);
+
+        return redirect()
+            ->route('admin.market.brand.index')
+            ->with('swal-success', 'برند جدید با موفقیت ثبت شد');
     }
+
 
     /**
      * Display the specified resource.
@@ -85,28 +98,40 @@ class BrandController extends Controller
      */
     public function update(BrandRequest $request, Brand $brand, ImageService $imageService)
     {
-        $inputs = $request->all();
+        $inputs = $request->validated();
 
+        // اگر فایل لوگو جدید ارسال شده باشد
         if ($request->hasFile('logo')) {
-            if (!empty($brand->logo)) {
+            // حذف تصویر قبلی (در صورت وجود)
+            if (!empty($brand->logo['directory'])) {
                 $imageService->deleteDirectoryAndFiles($brand->logo['directory']);
             }
+
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'brand');
             $result = $imageService->createIndexAndSave($request->file('logo'));
+
             if ($result === false) {
-                return redirect()->route('admin.market.brand.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+                return redirect()
+                    ->route('admin.market.brand.index')
+                    ->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
+
             $inputs['logo'] = $result;
-        } else {
-            if (isset($inputs['currentImage']) && !empty($brand->logo)) {
-                $image = $brand->logo;
-                $image['currentImage'] = $inputs['currentImage'];
-                $inputs['logo'] = $image;
-            }
         }
+
+        // اگر لوگو جدیدی ارسال نشده ولی currentImage وجود دارد
+        elseif (isset($inputs['currentImage']) && !empty($brand->logo)) {
+            $brand->logo['currentImage'] = $inputs['currentImage'];
+            $inputs['logo'] = $brand->logo;
+        }
+
         $brand->update($inputs);
-        return redirect()->route('admin.market.brand.index')->with('swal-success', 'برند شما با موفقیت ویرایش شد');
+
+        return redirect()
+            ->route('admin.market.brand.index')
+            ->with('swal-success', 'برند شما با موفقیت ویرایش شد');
     }
+
 
     /**
      * Remove the specified resource from storage.

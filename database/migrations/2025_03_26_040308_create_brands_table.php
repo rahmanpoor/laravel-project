@@ -18,7 +18,7 @@ class CreateBrandsTable extends Migration
             $table->string('persian_name');
             $table->string('original_name');
             $table->string('slug')->unique()->nullable();
-            $table->text('logo');
+            $table->text('logo')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->string('tags');
             $table->timestamps();

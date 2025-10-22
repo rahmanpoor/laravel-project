@@ -108,7 +108,7 @@
                                                     </section>
                                                     <section class="product-colors"></section>
                                                     <section class="product-name">
-                                                        <h3>{{ Str::limit($mostVisitedProduct->name, 60) }}</h3>
+                                                        <h3>{{ Str::limit($mostVisitedProduct->name, 63) }}</h3>
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">

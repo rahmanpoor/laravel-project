@@ -15,9 +15,9 @@ class ProductCategory extends Model
 
     public function sluggable(): array
     {
-        return[
+        return [
 
-            'slug' =>[
+            'slug' => [
                 'source' => 'name'
             ]
 
@@ -26,18 +26,18 @@ class ProductCategory extends Model
 
     protected $casts = ['image' => 'array'];
 
-    protected $fillable = ['name' , 'description' , 'slug' , 'image' , 'status' , 'tags', 'parent_id', 'show_in_menu'];
+    protected $fillable = ['name', 'description', 'slug', 'image', 'status', 'tags', 'parent_id', 'show_in_menu'];
 
 
     public function parent()
     {
-        return $this->belongsTo($this , 'parent_id')->with('parent');
+        return $this->belongsTo($this, 'parent_id')->with('parent');
     }
 
 
     public function children()
     {
-        return $this->hasMany($this , 'parent_id')->with('children');
+        return $this->hasMany($this, 'parent_id')->with('children');
     }
 
     public function products()
@@ -49,5 +49,10 @@ class ProductCategory extends Model
     public function attributes()
     {
         return $this->hasMany(CategoryAttribute::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 }

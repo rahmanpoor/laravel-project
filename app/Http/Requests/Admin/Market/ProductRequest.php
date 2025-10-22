@@ -6,61 +6,38 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
+        $commonRules = [
+            'name' => 'required|min:2|max:220',
+            'introduction' => 'required|min:5|max:3000',
+            'weight' => 'nullable|numeric|max:1000',
+            'length' => 'nullable|numeric|max:1000',
+            'width' => 'nullable|numeric|max:1000',
+            'height' => 'nullable|numeric|max:1000',
+            'price' => 'required|numeric',
+            'status' => 'required|numeric|in:0,1',
+            'marketable' => 'nullable|numeric|in:0,1',
+            'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
+            'category_id' => 'required|integer|exists:product_categories,id',
+            'brand_id' => 'required|integer|exists:brands,id',
+            'published_at' => 'nullable|numeric',
+            'meta_key.*' => 'required',
+            'meta_value.*' => 'required',
+        ];
+
+        // قانون تصویر
         if ($this->isMethod('post')) {
-            return [
-                'name' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-                'introduction' => 'required|max:3000|min:5',
-                'weight' => 'required|max:1000|min:1|numeric',
-                'length' => 'required|max:1000|min:1|numeric',
-                'width' => 'required|max:1000|min:1|numeric',
-                'height' => 'required|max:1000|min:1|numeric',
-                'price' => 'required|numeric',
-                'image' => 'required|image|mimes:png,jpg,jpeg,gif',
-                'status' => 'required|numeric|in:0,1',
-                'marketable' => 'required|numeric|in:0,1',
-                'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-                'category_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:product_categories,id',
-                'brand_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:brands,id',
-                'published_at' => 'required|numeric',
-                'meta_key.*' => 'required',
-                'meta_value.*' => 'required'
-            ];
+            $commonRules['image'] = 'required|image|mimes:jpeg,jpg,png,gif,webp';
         } else {
-            return [
-                'name' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-                'introduction' => 'required|max:3000|min:5',
-                'weight' => 'required|max:1000|min:1|numeric',
-                'length' => 'required|max:1000|min:1|numeric',
-                'width' => 'required|max:1000|min:1|numeric',
-                'height' => 'required|max:1000|min:1|numeric',
-                'price' => 'required|numeric',
-                'image' => 'image|mimes:png,jpg,jpeg,gif',
-                'status' => 'required|numeric|in:0,1',
-                'marketable' => 'required|numeric|in:0,1',
-                'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
-                'category_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:product_categories,id',
-                'brand_id' => 'required|min:1|max:100000000|regex:/^[0-9]+$/u|exists:brands,id',
-                'published_at' => 'required|numeric',
-                'meta_key.*' => 'required',
-                'meta_value.*' => 'required'
-            ];
+            $commonRules['image'] = 'nullable|image|mimes:jpeg,jpg,png,gif,webp';
         }
+
+        return $commonRules;
     }
 }

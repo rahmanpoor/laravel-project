@@ -9,7 +9,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
             <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
-            <li class="breadcrumb-item font-size-12 active" aria-current="page">برند ها</li>
+            <li class="breadcrumb-item font-size-12 active" aria-current="page"> برند ها</li>
         </ol>
     </nav>
 
@@ -48,8 +48,21 @@
                                     <td>{{ $brand->persian_name }}</td>
                                     <td>{{ $brand->original_name }}</td>
                                     <td>
-                                        <img src="{{ asset($brand->logo['indexArray'][$brand->logo['currentImage']]) }}"
-                                            alt="" width="50" height="35">
+                                        @php
+                                            $logoPath = null;
+
+                                            if (
+                                                !empty($brand->logo) &&
+                                                isset($brand->logo['indexArray'], $brand->logo['currentImage'])
+                                            ) {
+                                                $logoPath =
+                                                    $brand->logo['indexArray'][$brand->logo['currentImage']] ?? null;
+                                            }
+
+                                            $logoUrl = $logoPath ? asset($logoPath) : asset('images/no-photo.png'); // مسیر تصویر پیش‌فرض
+                                        @endphp
+                                        <img src="{{ $logoUrl }}" alt="{{ $brand->name ?? 'بدون نام' }}" width="45"
+                                            height="35">
                                     </td>
                                     <td class="width-16-rem text-left">
                                         <a href="{{ route('admin.market.brand.edit', $brand->id) }}"
@@ -69,7 +82,7 @@
                     </table>
                 </section>
 
-                  <section class="col-12">
+                <section class="col-12">
                     <section class="my-4 d-flex justify-content-center">
                         <nav>
                             {{ $brands->links('pagination::bootstrap-4') }}

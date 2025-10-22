@@ -99,11 +99,18 @@ class Product extends Model
         return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsToMany(User::class);
     }
 
-    public function compares() {
+    public function compares()
+    {
         return $this->belongsToMany(Compare::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 }

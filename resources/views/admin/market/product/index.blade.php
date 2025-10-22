@@ -48,12 +48,12 @@
                             @foreach ($products as $key =>  $product)
                                 <tr>
                                     <th>{{ $products->firstItem() + $key  }}</th>
-                                    <td>{{ $product->name }}</td>
+                                    <td>{{ Str::limit($product->name, 64) }}</td>
                                     <td> <img
                                             src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
                                             alt="" width="100" height="75"></td>
-                                    <td>{{ $product->price }} تومان</td>
-                                    <td>کالای الکترونیکی</td>
+                                    <td>{{ priceFormat($product->price) }} تومان</td>
+                                    <td>{{ $product->category->name }}</td>
                                     <td class="width-16-rem text-left">
                                         <div class="dropdown">
                                             <a href="#" class="btn btn-success btn-sm btn-block dropdown-toggle"

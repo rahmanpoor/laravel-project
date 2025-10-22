@@ -27,7 +27,7 @@ class HomeController extends Controller
 
 
 
-        $brands = Brand::all();
+        $brands = Brand::whereNotNull('logo')->get();
         $mostVisitedProducts = Product::latest()->take(10)->get();
         $offerProducts = Product::latest()->take(10)->get();
 

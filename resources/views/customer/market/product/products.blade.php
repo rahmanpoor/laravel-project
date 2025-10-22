@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-<link href="{{ asset('admin-asset\sweetalert\sweetalert2.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admin-asset\sweetalert\sweetalert2.css') }}" rel="stylesheet" />
     <meta name="description" content="{{ $setting->description }}">
     <meta name="keywords" content="{{ $setting->keywords }}">
     <title>{{ $setting->title }}</title>
@@ -13,9 +13,9 @@
     <section class="">
         <section id="main-body-two-col" class="container-xxl body-container">
             <section class="row">
-             <!-- sidebar -->
-              @include('customer.layouts.partials.sidebar')
-            <!-- end sidebar -->
+                <!-- sidebar -->
+                @include('customer.layouts.partials.sidebar')
+                <!-- end sidebar -->
                 <main id="main-body" class="main-body col-md-9">
                     <section class="content-wrapper bg-white p-3 rounded-2 mb-2">
                         <section class="filters mb-3">
@@ -54,17 +54,18 @@
                         <section class="sort ">
                             <span>مرتب سازی بر اساس : </span>
                             <a class="btn {{ request()->sort == 1 ? 'btn-info' : 'btn-light' }} btn-sm px-1 py-0"
-                                href="{{ route('customer.products', ['category' => request()->category ?  request()->category->id : null, 'search' => request()->search, 'sort' => 1, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">جدیدترین</a>
+                                href="{{ route('customer.products', ['category' => request()->category ? request()->category->id : null, 'search' => request()->search, 'sort' => 1, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">جدیدترین</a>
                             <a class="btn {{ request()->sort == 2 ? 'btn-info' : 'btn-light' }} btn-sm px-1 py-0"
-                                href="{{ route('customer.products', ['category' => request()->category ?  request()->category->id : null, 'search' => request()->search, 'sort' => 2, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">گران
+                                href="{{ route('customer.products', ['category' => request()->category ? request()->category->id : null, 'search' => request()->search, 'sort' => 2, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">گران
                                 ترین</a>
                             <a class="btn {{ request()->sort == 3 ? 'btn-info' : 'btn-light' }} btn-sm px-1 py-0"
-                                href="{{ route('customer.products', ['category' => request()->category ?  request()->category->id : null, 'search' => request()->search, 'sort' => 3, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">ارزان
+                                href="{{ route('customer.products', ['category' => request()->category ? request()->category->id : null, 'search' => request()->search, 'sort' => 3, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">ارزان
                                 ترین</a>
                             <a class="btn {{ request()->sort == 4 ? 'btn-info' : 'btn-light' }} btn-sm px-1 py-0"
-                                href="{{ route('customer.products', ['category' => request()->category ?  request()->category->id : null, 'search' => request()->search, 'sort' => 4, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">پربازدیدترین</a>
-                            <a class="btn {{ request()->sort == 5 ? 'btn-info' : 'btn-light' }} btn-sm px-1 py-
-                                href="{{ route('customer.products', ['category' => request()->category ?  request()->category->id : null, 'search' => request()->search, 'sort' => 5, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">پرفروش
+                                href="{{ route('customer.products', ['category' => request()->category ? request()->category->id : null, 'search' => request()->search, 'sort' => 4, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">پربازدیدترین</a>
+                            <a
+                                class="btn {{ request()->sort == 5 ? 'btn-info' : 'btn-light' }} btn-sm px-1 py-
+                                href="{{ route('customer.products', ['category' => request()->category ? request()->category->id : null, 'search' => request()->search, 'sort' => 5, 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands]) }}">پرفروش
                                 ترین</a>
                         </section>
 
@@ -77,9 +78,9 @@
                                         <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip"
                                                 data-bs-placement="left" title="افزودن به سبد خرید"><i
                                                     class="fa fa-cart-plus"></i></a></section>
-                                        <section class="product-add-to-favorite"><a href="#"
-                                                data-bs-toggle="tooltip" data-bs-placement="left"
-                                                title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
+                                        <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip"
+                                                data-bs-placement="left" title="افزودن به علاقه مندی"><i
+                                                    class="fa fa-heart"></i></a></section>
                                         <a class="product-link" href="#">
                                             <section class="product-image">
                                                 <img class=""
