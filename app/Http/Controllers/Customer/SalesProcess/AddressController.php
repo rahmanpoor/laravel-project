@@ -19,72 +19,65 @@ use App\Http\Requests\Customer\SalesProcess\ChooseAddressAndDeliveryRequest;
 
 class AddressController extends Controller
 {
-    public function addressAndDelivery() {
+    public function addressAndDelivery()
+    {
+        $userId = auth()->id();
 
-        //get login user
-        $user = Auth::user();
+        // دریافت آیتم‌های سبد خرید با تعداد، فقط یک کوئری
+        $cartItems = CartItem::with('product')
+            ->where('user_id', $userId)
+            ->get();
 
-        $provinces = Province::orderBy('name', 'asc')->get();
-
-        $cartItems = CartItem::where('user_id', $user->id)->get();
-
-        $deliveryMethods = Delivery::where('status', 1)->get();
-
-        //check cart
-        $cartItemsCount  = CartItem::where('user_id', $user->id)->count();
-        if (empty($cartItemsCount)) {
+        if ($cartItems->isEmpty()) {
             return redirect()->route('customer.sales-process.cart');
         }
 
+        // سایر داده‌ها
+        $user = auth()->user();
+        $provinces = Province::orderBy('name')->get();
+        $deliveryMethods = Delivery::where('status', 1)->get();
 
-        //show address page
-        return view('customer.sales-process.address-and-delivery', compact('cartItems', 'provinces', 'user', 'deliveryMethods'));
+        return view(
+            'customer.sales-process.address-and-delivery',
+            compact('cartItems', 'provinces', 'user', 'deliveryMethods')
+        );
     }
 
 
-    public function getCities(Province $province) {
+    public function getCities(Province $province)
+    {
         $cities = $province->cities;
 
-        if ($cities != null) {
-            return response()->json([
-                'status' => true,
-                'cities' => $cities]);
-        }
-        else{
-            return response()->json([
-                'status' => false,
-                'cities' => null
-            ]);
-        }
-
+        return response()->json([
+            'status' => $cities->isNotEmpty(),
+            'cities' => $cities
+        ]);
     }
 
 
-    public function addAddress(StoreAddressRequest $request) {
+    public function addAddress(StoreAddressRequest $request)
+    {
+        $user = auth()->user();
 
-        $inputs = $request->all();
-        $inputs['user_id'] = auth()->user()->id;
+        // merge user_id و اصلاح کد پستی
+        $inputs = $request->validated();
+        $inputs['user_id'] = $user->id;
+        $inputs['postal_code'] = convertPersianToEnglish(convertArabicToEnglish($request->postal_code));
 
-        $inputs['postal_code'] = convertArabicToEnglish($request->postal_code);
-        $inputs['postal_code'] = convertPersianToEnglish($inputs['postal_code']);
+        // پر کردن اطلاعات گیرنده اگر خالی بود
+        $inputs['recipient_first_name'] = $inputs['recipient_first_name'] ?? $user->first_name;
+        $inputs['recipient_last_name']  = $inputs['recipient_last_name']  ?? $user->last_name;
+        $inputs['mobile']               = $inputs['mobile'] ?? '0' . $user->mobile;
 
-        //fill reciver info if null
-        if( $request->input('recipient_first_name') == null) {
-            $inputs['recipient_first_name'] = auth()->user()->first_name;
-        }
-        if($request->input('recipient_first_name')== null) {
-            $inputs['recipient_last_name'] = auth()->user()->last_name;
-        }
-        if($request->input('mobile') == null) {
-            $inputs['mobile'] = '0'. auth()->user()->mobile;
-        }
+        Address::create($inputs);
 
-        $address = Address::create($inputs);
         return redirect()->back();
     }
 
 
-    public function updateAddress(Address $address, UpdateAddressRequest $request) {
+
+    public function updateAddress(Address $address, UpdateAddressRequest $request)
+    {
 
         $inputs = $request->all();
 
@@ -96,109 +89,113 @@ class AddressController extends Controller
         if ($request->input('recipient_first_name') == null || $request->input('recipient_last_name') == null) {
             $inputs['recipient_first_name'] = auth()->user()->first_name;
             $inputs['recipient_last_name'] = auth()->user()->last_name;
-            $inputs['mobile'] = '0'. auth()->user()->mobile;
-
+            $inputs['mobile'] = '0' . auth()->user()->mobile;
         }
 
 
         $address->update($inputs);
 
         return redirect()->back();
-
     }
 
 
-    public function chooseAddressAndDelivery(ChooseAddressAndDeliveryRequest $request) {
-
-
-
-
+    public function chooseAddressAndDelivery(ChooseAddressAndDeliveryRequest $request)
+    {
         $user = Auth::user();
 
-        $inputs = $request->all();
-
-        //get delivery method
-        $deliveryMethod = Delivery::where('id', $request->delivery_id)->first();
-
-
-        //calc price
+        $deliveryMethod = Delivery::findOrFail($request->delivery_id);
         $cartItems = CartItem::where('user_id', $user->id)->get();
 
-        $totalProductPrice = 0;
-
-        $totalDiscount = 0;
-
-        $totalFinalPrice = 0;
-
-        $totalFinalDiscountPriceWithNumbers = 0;
-
-        foreach ($cartItems as $key => $cartItem) {
-            $totalProductPrice += $cartItem->cartItemProductPrice();
-            $totalDiscount += $cartItem->cartItemProductDiscount();
-            $totalFinalPrice += $cartItem->cartItemFinalPrice();
-            $totalFinalDiscountPriceWithNumbers += $cartItem->cartItemFinalDiscount();
-
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'سبد خرید شما خالی است.');
         }
 
+        // --- محاسبه قیمت‌ها ---
+        $totals = $this->calculateCartTotals($cartItems);
 
-        //commonDiscount
-        $commonDiscount = CommonDiscount::where([['status', 1], ['end_date', '>', now()], ['start_date', '<', now()]])->first();
+        // --- تخفیف عمومی ---
+        $commonDiscount = $this->getActiveCommonDiscount();
+        $commonDiscountAmount = $this->calculateCommonDiscount($commonDiscount, $totals['final_price']);
 
+        $finalPrice = $totals['final_price'] - $commonDiscountAmount;
 
-        if ($commonDiscount) {
-             $inputs['common_discount_id'] = $commonDiscount->id;
-            $commonPercentageDiscountAmount = $totalFinalPrice * ($commonDiscount->percentage / 100);
-
-            if ($commonPercentageDiscountAmount > $commonDiscount->discount_ceiling ) {
-                $commonPercentageDiscountAmount = $commonDiscount->discount_ceiling;
-            }
-
-
-            if ($commonDiscount != null and $totalFinalPrice >= $commonDiscount->minimal_order_amount) {
-
-                $finalPrice = $totalFinalPrice - $commonPercentageDiscountAmount;
-
-            } else {
-                $finalPrice = $totalFinalPrice;
-            }
-
-        }
-        else {
-            $commonPercentageDiscountAmount = 0;
-            $finalPrice = $totalFinalPrice;
-        }
+        // --- ساخت اطلاعات سفارش ---
+        $orderData = [
+            'user_id'                               => $user->id,
+            'delivery_id'                           => $deliveryMethod->id,
+            'address_id'                            => $request->address_id,
+            'order_amount'                          => $finalPrice,
+            'payment_status'                        => 0,
+            'order_discount_amount'                 => $totals['discount_price'],
+            'order_common_discount_amount'          => $commonDiscountAmount,
+            'order_total_products_discount_amount'  => $totals['discount_price'] + $commonDiscountAmount,
+            'delivery_amount'                       => $deliveryMethod->amount,
+            'common_discount_id'                    => $commonDiscount?->id,
+            'order_status'                          => 0
+        ];
 
 
-
-        $inputs['user_id'] = $user->id;
-        $inputs['order_amount'] = $finalPrice;
-        $inputs['order_discount_amount'] = $totalFinalDiscountPriceWithNumbers;
-        $inputs['order_common_discount_amount'] = $commonPercentageDiscountAmount;
-        $inputs['order_total_products_discount_amount'] = $inputs['order_discount_amount'] + $inputs['order_common_discount_amount'];
-        $inputs['delivery_amount'] = $deliveryMethod->amount;
-
-
-        $order = Order::updateOrCreate(['user_id' => $user->id, 'order_status' => 0],
-
-            $inputs
-
-
-
+        // --- ایجاد یا بروزرسانی سفارش ---
+        $order = Order::updateOrCreate(
+            ['user_id' => $user->id, 'order_status' => 0], // 0 = در انتظار پرداخت
+            $orderData
         );
 
-        foreach ($cartItems as $cartItem) {
-            OrderItem::create([
-                'order_id'    => $order->id,
-                'product_id'  => $cartItem->product_id,
-                'product'     => $cartItem->product->toArray(),
-                'number'      => $cartItem->number,
-                'final_total_price' => $cartItem->cartItemProductPrice() * $cartItem->number,
-            ]);
-        }
+        // --- ایجاد آیتم‌های سفارش ---
+        $this->syncOrderItems($order, $cartItems);
 
         return redirect()->route('customer.sales-process.payment');
-
     }
 
+    private function calculateCartTotals($cartItems)
+    {
+        $totalProductPrice = $totalDiscount = $totalFinalPrice = 0;
 
+        foreach ($cartItems as $item) {
+            $totalProductPrice += $item->cartItemProductPrice();
+            $totalDiscount     += $item->cartItemProductDiscount();
+            $totalFinalPrice   += $item->cartItemFinalPrice();
+        }
+
+        return [
+            'product_price'  => $totalProductPrice,
+            'discount_price' => $totalDiscount,
+            'final_price'    => $totalFinalPrice,
+        ];
+    }
+
+    private function getActiveCommonDiscount()
+    {
+        return CommonDiscount::where('status', 1)
+            ->where('start_date', '<', now())
+            ->where('end_date', '>', now())
+            ->first();
+    }
+
+    private function calculateCommonDiscount($commonDiscount, $orderTotal)
+    {
+        if (!$commonDiscount || $orderTotal < $commonDiscount->minimal_order_amount) {
+            return 0;
+        }
+
+        $amount = $orderTotal * ($commonDiscount->percentage / 100);
+        return min($amount, $commonDiscount->discount_ceiling);
+    }
+
+    private function syncOrderItems(Order $order, $cartItems)
+    {
+        foreach ($cartItems as $cartItem) {
+            OrderItem::updateOrCreate(
+                [
+                    'order_id'   => $order->id,
+                    'product_id' => $cartItem->product_id,
+                ],
+                [
+                    'product'            => $cartItem->product->toJson(JSON_UNESCAPED_UNICODE),
+                    'number'             => $cartItem->number,
+                    'final_total_price'  => $cartItem->cartItemProductPrice() * $cartItem->number,
+                ]
+            );
+        }
+    }
 }

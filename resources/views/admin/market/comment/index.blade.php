@@ -35,47 +35,43 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>نویسنده نظر</th>
                                 <th>نظر</th>
                                 <th>پاسخ به</th>
-                                <th>کد کاربر</th>
-                                <th>نویسنده نظر</th>
-                                <th>کد پست</th>
                                 <th>محصول</th>
                                 <th>وضعیت تایید</th>
-                                <th>وضعیت کامنت</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                {{-- <th>وضعیت کامنت</th> --}}
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($comments as $key => $comment)
                                 <tr>
                                     <th>{{ $key + 1 }}</th>
-                                    <td>{{ Str::limit($comment->body, 10) }}</td>
-                                    <td>{{ $comment->parent_id ? Str::limit($comment->parent->body, 10) : '' }}</td>
-                                    <td>{{ $comment->author_id }}</td>
                                     <td>{{ $comment->user->fullName }}</td>
-                                    <td>{{ $comment->commentable_id }}</td>
+                                    <td>{{ Str::limit($comment->body, 10) }}</td>
+                                    <td>{{ $comment->parent_id ? Str::limit($comment->parent->body, 10) : '_' }}</td>
                                     <td>{{ $comment->commentable->name }}</td>
                                     <td>{{ $comment->approved == 1 ? 'تایید شده ' : 'تایید نشده' }} </td>
-                                    <td>
+                                    {{-- <td>
                                         <label class="apple-switch">
                                             <input id="{{ $comment->id }}" onchange="changeStatus({{ $comment->id }})"
                                                 data-url="{{ route('admin.market.comment.status', $comment->id) }}"
                                                 type="checkbox" @if ($comment->status === 1) checked @endif>
                                             <span class="apple-slider"></span>
                                         </label>
-                                    </td>
+                                    </td> --}}
                                     <td class="width-16-rem text-left">
                                         <a href="{{ route('admin.market.comment.show', $comment->id) }}"
-                                            class="btn btn-info btn-sm"><i class="fa fa-eye"></i> نمایش</a>
+                                            class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
 
                                         @if ($comment->approved == 1)
-                                            <a href="{{ route('admin.market.comment.approved', $comment->id) }} "class="btn btn-warning btn-sm"
-                                                type="submit"><i class="fa fa-clock"></i> عدم تایید</a>
+                                            <a href="{{ route('admin.market.comment.approved', $comment->id) }} "class="btn btn-danger btn-sm"
+                                                type="submit"><i class="fa fa-ban"></i></a>
                                         @else
                                             <a href="{{ route('admin.market.comment.approved', $comment->id) }}"
                                                 class="btn btn-success btn-sm text-white" type="submit"><i
-                                                    class="fa fa-check"></i>تایید</a>
+                                                    class="fa fa-check"></i></a>
                                         @endif
                                     </td>
 

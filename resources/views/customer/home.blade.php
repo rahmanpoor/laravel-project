@@ -119,7 +119,7 @@
                                                             {{ priceFormat($mostVisitedProduct->price) }} تومان</section>
                                                     </section>
                                                     <section class="product-colors">
-                                                        @foreach ($mostVisitedProduct->colors()->get() as $color)
+                                                        @foreach ($mostVisitedProduct->colors as $color)
                                                             <section class="product-colors-item"
                                                                 style="background-color: {{ $color->color }};">
                                                             </section>
@@ -239,7 +239,7 @@
                                                             {{ priceFormat($offerProduct->price) }} تومان</section>
                                                     </section>
                                                     <section class="product-colors">
-                                                        @foreach ($offerProduct->colors()->get() as $color)
+                                                        @foreach ($offerProduct->colors as $color)
                                                             <section class="product-colors-item"
                                                                 style="background-color: {{ $color->color }};">
                                                             </section>

@@ -40,15 +40,7 @@
 
 
                                   {{-- waiting pay btn --}}
-                            <a type="button" class="btn btn-outline-secondary btn-sm mx-2 position-relative"
-                                href="{{ route('customer.profile.orders', 'type=0') }}">
-                                در انتظار پرداخت
-                                {{-- <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    4
-                                    <span class="visually-hidden">current order</span>
-                                </span> --}}
-                            </a>
+
 
                             {{-- current btn --}}
                             <a type="button" class="btn btn-outline-info btn-sm mx-2 position-relative"

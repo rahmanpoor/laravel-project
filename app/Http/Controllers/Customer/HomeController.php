@@ -10,6 +10,7 @@ use App\Models\Market\Product;
 use App\Models\Setting\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\Footer\FooterFeature;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Market\ProductCategory;
 use Intervention\Image\Colors\Rgb\Channels\Red;
 
@@ -17,23 +18,52 @@ class HomeController extends Controller
 {
     public function home()
     {
-        //banner
-        $slideShowImages = Banner::where('position', 0)->where('status', 1)->get();
-        $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
-        $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
-        $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
+
+        // ✅ دریافت بنرها بر اساس موقعیت‌ها
+        $banners = Cache::remember('home_banners', 60 * 60, function () {
+            return Banner::where('status', 1)->get()->groupBy('position');
+        });
+
+        // ✅ ساختاردهی بنرها برای ارسال به view
+        $slideShowImages = $banners[0] ?? collect();
+        $topBanners      = ($banners[1] ?? collect())->take(2);
+        $middleBanners   = ($banners[2] ?? collect())->take(2);
+        $bottomBanner    = ($banners[3] ?? collect())->first();
 
 
+        // ساختاردهی بنرها
+        $slideShowImages = $banners[0] ?? collect();
+        $topBanners      = ($banners[1] ?? collect())->take(2);
+        $middleBanners   = ($banners[2] ?? collect())->take(2);
+        $bottomBanner    = ($banners[3] ?? collect())->first();
 
 
-
+        // ✅ برندها و محصولات
         $brands = Brand::whereNotNull('logo')->get();
-        $mostVisitedProducts = Product::latest()->take(10)->get();
-        $offerProducts = Product::latest()->take(10)->get();
+
+        // در حالت واقعی بهتره فیلدهای مرتب‌سازی مشخص باشن (مثلاً views یا discount)
+        $mostVisitedProducts = Product::with(['user', 'colors'])
+            ->latest()
+            ->take(10)
+            ->get();
+
+        $offerProducts = Product::with(['user', 'colors'])
+            ->latest()
+            ->take(10)
+            ->get();
 
 
 
-        return view('customer.home', compact('slideShowImages', 'topBanners', 'middleBanners', 'bottomBanner', 'brands', 'mostVisitedProducts', 'offerProducts'));
+        // ✅ ارسال داده‌ها به view
+        return view('customer.home', compact(
+            'slideShowImages',
+            'topBanners',
+            'middleBanners',
+            'bottomBanner',
+            'brands',
+            'mostVisitedProducts',
+            'offerProducts'
+        ));
     }
 
 
@@ -125,7 +155,8 @@ class HomeController extends Controller
         return view('customer.market.product.products', compact('products', 'brands', 'brandNames', 'categories'));
     }
 
-    public function page(Page $page) {
+    public function page(Page $page)
+    {
         return view('customer.page', compact('page'));
     }
 }

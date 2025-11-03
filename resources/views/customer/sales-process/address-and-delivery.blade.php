@@ -62,9 +62,9 @@
                                 <section class="address-select">
 
 
-                                    @foreach (auth()->user()->addresses as $address)
+                                    @foreach (auth()->user()->addresses as $key => $address)
                                         <input type="radio" form="myForm" name="address_id" value="{{ $address->id }}"
-                                            id="a-{{ $address->id }}" />
+                                            id="a-{{ $address->id }}"  {{ $key === 0 ? 'checked' : '' }} />
                                         <!--checked="checked"-->
                                         <label for="a-{{ $address->id }}" class="address-wrapper mb-2 p-2">
                                             <section class="mb-2">
@@ -387,7 +387,7 @@
 
                                     @foreach ($deliveryMethods as $deliveryMethod)
                                         <input type="radio" form="myForm" name="delivery_id"
-                                            value="{{ $deliveryMethod->id }}" id="d-{{ $deliveryMethod->id }}" />
+                                            value="{{ $deliveryMethod->id }}" id="d-{{ $deliveryMethod->id }}" checked />
                                         <label for="d-{{ $deliveryMethod->id }}"
                                             class="col-12 col-md-4 delivery-wrapper mb-2 pt-2">
                                             <section class="mb-2">

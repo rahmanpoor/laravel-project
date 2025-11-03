@@ -43,7 +43,7 @@
                     {{-- <a href="{{ route('admin.market.order.newOrders') }}"> جدید</a> --}}
 
 
-                    <a href="{{ route('admin.market.order.sending') }}">در حال ارسال</a>
+                    <a href="{{ route('admin.market.order.sending') }}">در حال ارسال </a>
 
                     <a href="{{ route('admin.market.order.delivered') }}">تحویل شده</a>
                     {{-- <a href="{{ route('admin.market.order.unpaid') }}">پرداخت نشده</a> --}}

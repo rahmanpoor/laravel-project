@@ -39,7 +39,7 @@
 
                         <section class="col-12">
                             <div class="form-group">
-                                <label for="">تعداد قابل فروش</label>
+                                <label for="">موجودی</label>
                                 <input type="text" name="marketable_number" value="{{ old('marketable_number', $product->marketable_number) }}" class="form-control form-control-sm">
                             </div>
                             @error('marketable_number')

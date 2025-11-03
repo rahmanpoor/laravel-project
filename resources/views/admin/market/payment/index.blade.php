@@ -42,6 +42,7 @@
 
                                 <th>پرداخت کننده</th>
                                 <th>وضعیت پرداخت</th>
+                                <th>مبلغ پرداختی</th>
                                 <th>کد تراکنش</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
@@ -55,26 +56,24 @@
                                     <td>{{ $payment->user->fullName }}</td>
                                     <td>
                                         @if ($payment->status == 0)
-                                            <h5><span class="badge bg-primary text-white rounded-pill">پرداخت نشده</span>
+                                            <h5><span class="badge bg-primary text-white rounded-pill">در انتظار پرداخت </span>
                                             </h5>
                                         @elseif($payment->status == 1)
-                                            <h5><span class="badge bg-success rounded-pill text-white">پرداخت</span></h5>
+                                            <h5><span class="badge bg-success rounded-pill text-white">پرداخت موفق</span></h5>
                                         @elseif($payment->status == 2)
-                                            <h5><span class="badge bg-danger rounded-pill text-white">باطل شده</span></h5>
+                                            <h5><span class="badge bg-danger rounded-pill text-white">پرداخت ناموفق</span></h5>
 
                                         @endif
                                     </td>
 
+                                    <td>{{ priceFormat($payment->amount) }} تومان</td>
+
                                      <td>{{ $payment->paymentable->transaction_id ?? '-' }}</td>
 
                                     <td class="width-22-rem text-left">
-                                        <a href="{{ route('admin.market.payment.show', $payment->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> مشاهده</a>
+                                        <a href="{{ route('admin.market.payment.show', $payment->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                         <a href="{{ route('admin.market.payment.canceled', $payment->id) }}"
-                                            class="btn btn-danger btn-sm"><i class="fa fa-times"></i> باطل
-                                            کردن</a>
-                                        <a href="{{ route('admin.market.payment.returned', $payment->id) }}"
-                                            class="btn btn-warning btn-sm"><i class="fa fa-reply"></i>
-                                            برگرداندن</a>
+                                            class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

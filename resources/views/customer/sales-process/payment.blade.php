@@ -100,7 +100,7 @@
                                     <form action="{{ route('customer.sales-process.payment-submit') }}" method="POST"
                                         id="payment_submit">
                                         @csrf
-                                        <input type="radio" name="payment_type" value="1" id="d1" />
+                                        <input type="radio" name="payment_type" value="1" id="d1" checked />
                                         <label for="d1" class="col-12 col-md-4 payment-wrapper mb-2 pt-2 d-flex flex-row  justify-content-between p-1">
                                            <div class="payment-text">
                                             <section class="mb-2 ">

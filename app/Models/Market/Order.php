@@ -119,7 +119,7 @@ class Order extends Model
                 $color = 'secondary';
                 break;
             case 1:
-                $result = 'جاری';
+                $result = 'در حال ارسال';
                 $color = 'primary';
                 break;
             case 2:

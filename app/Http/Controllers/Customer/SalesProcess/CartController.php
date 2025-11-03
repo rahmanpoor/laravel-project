@@ -10,17 +10,25 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+
     public function cart()
     {
+        $userId = auth()->id();
 
+        // بررسی وجود آیتم در سبد خرید
+        $hasItems = CartItem::where('user_id', $userId)->exists();
 
-        $cartItems = CartItem::where('user_id', auth()->user()->id)->get();
-        if ($cartItems->count() > 0) {
-            $relatedProducts = Product::all();
-            return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
-        } else {
+        if (!$hasItems) {
             return redirect()->route('customer.home');
         }
+
+        // دریافت آیتم‌های سبد خرید با اطلاعات محصول
+        $cartItems = CartItem::with('product')->where('user_id', $userId)->get();
+
+        // پیشنهاد محصول مرتبط (مثال: 10 محصول آخر)
+        $relatedProducts = Product::latest()->take(10)->get();
+
+        return view('customer.sales-process.cart', compact('cartItems', 'relatedProducts'));
     }
 
     public function updateCart(Request $request)
@@ -41,34 +49,31 @@ class CartController extends Controller
         $request->validate([
             'color'     => 'nullable|exists:product_colors,id',
             'guarantee' => 'nullable|exists:guarantees,id',
-            'number'    => 'numeric|min:1|max:5',
+            'number' => 'numeric|min:1|max: 5',
         ]);
 
-        $color     = $request->color ?? null;
-        $guarantee = $request->guarantee ?? null;
-        $userId    = auth()->id();
+        $color = $request->input('color');
+        $guarantee = $request->input('guarantee');
+        $userId = auth()->id();
 
-        $cartItem = CartItem::where('product_id', $product->id)
-            ->where('user_id', $userId)
-            ->where('color_id', $color)
-            ->where('guarantee_id', $guarantee)
-            ->first();
+        $cartItem = CartItem::firstOrNew([
+            'product_id'   => $product->id,
+            'user_id'      => $userId,
+            'color_id'     => $color,
+            'guarantee_id' => $guarantee,
+        ]);
 
-        if ($cartItem) {
+        if ($cartItem->exists) {
             if ($cartItem->number != $request->number) {
-                $cartItem->update(['number' => $request->number]);
+                $cartItem->number = $request->number;
+                $cartItem->save();
                 return back()->with('alert-section-success', 'تعداد این محصول در سبد خرید تغییر کرد');
             }
             return back()->with('alert-section-info', 'این محصول قبلا به سبد خرید اضافه شده است');
         }
 
-        CartItem::create([
-            'product_id'   => $product->id,
-            'user_id'      => $userId,
-            'color_id'     => $color,
-            'guarantee_id' => $guarantee,
-            'number'       => $request->number,
-        ]);
+        $cartItem->number = $request->number;
+        $cartItem->save();
 
         return back()->with('alert-section-success', 'محصول به سبد خرید اضافه شد');
     }

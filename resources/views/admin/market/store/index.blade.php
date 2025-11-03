@@ -39,10 +39,8 @@
                                 <th>#</th>
                                 <th>نام کالا</th>
                                 <th>تصویر کالا</th>
-                                <th>تعداد قابل فروش</th>
-                                <th>تعداد رزرو شده</th>
-                                <th>تعداد فروخته شده</th>
-                                <th class="max-width-8-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th>موجودی</th>
+                                <th class="max-width-8-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,18 +52,21 @@
                                             src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
                                             alt="تصویر"></td>
                                     <td>{{ $product->marketable_number }}</td>
-                                    <td>{{ $product->frozen_number }}</td>
-                                    <td>{{ $product->sold_number }}</td>
                                     <td class="width-22-rem text-left">
                                         <a href="{{ route('admin.market.store.add-to-store', $product->id) }}"
-                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> افزایش موجودی</a>
-                                        <a href="{{ route('admin.market.store.edit', $product->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> اصلاح
-                                            موجودی</a>
+                                            class="btn btn-success btn-sm"><i class="fa fa-plus"></i></a>
+                                        <a href="{{ route('admin.market.store.edit', $product->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                </section>
+                 <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $products->links('pagination::bootstrap-4') }}
+                    </section>
                 </section>
             </section>
         </section>
