@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Market\CartItem;
 use App\Models\Market\Delivery;
 use App\Models\Market\OrderItem;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Market\CommonDiscount;
@@ -103,48 +104,63 @@ class AddressController extends Controller
     {
         $user = Auth::user();
 
-        $deliveryMethod = Delivery::findOrFail($request->delivery_id);
-        $cartItems = CartItem::where('user_id', $user->id)->get();
+        // شروع تراکنش
+        DB::beginTransaction();
 
-        if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'سبد خرید شما خالی است.');
+        try {
+            $deliveryMethod = Delivery::findOrFail($request->delivery_id);
+            $cartItems = CartItem::where('user_id', $user->id)->get();
+
+            if ($cartItems->isEmpty()) {
+                return redirect()->back()->with('error', 'سبد خرید شما خالی است.');
+            }
+
+            // --- محاسبه قیمت‌ها ---
+            $totals = $this->calculateCartTotals($cartItems);
+
+            // --- تخفیف عمومی ---
+            $commonDiscount = $this->getActiveCommonDiscount();
+            $commonDiscountAmount = $this->calculateCommonDiscount($commonDiscount, $totals['final_price']);
+
+            $finalPrice = $totals['final_price'] - $commonDiscountAmount;
+
+            // --- ساخت اطلاعات سفارش ---
+            $orderData = [
+                'user_id'                               => $user->id,
+                'delivery_id'                           => $deliveryMethod->id,
+                'address_id'                            => $request->address_id,
+                'order_amount'                          => $finalPrice,
+                'payment_status'                        => 0,
+                'order_discount_amount'                 => $totals['discount_price'],
+                'order_common_discount_amount'          => $commonDiscountAmount,
+                'order_total_products_discount_amount'  => $totals['discount_price'] + $commonDiscountAmount,
+                'delivery_amount'                       => $deliveryMethod->amount,
+                'common_discount_id'                    => $commonDiscount?->id,
+                'order_status'                          => 0, // در انتظار پرداخت
+            ];
+
+            // --- ایجاد یا بروزرسانی سفارش ---
+            $order = Order::updateOrCreate(
+                ['user_id' => $user->id, 'order_status' => 0],
+                $orderData
+            );
+
+            // --- بروزرسانی آیتم‌های سفارش ---
+            $this->syncOrderItems($order, $cartItems);
+
+            // تایید تراکنش
+            DB::commit();
+
+            return redirect()->route('customer.sales-process.payment');
+        } catch (\Throwable $e) {
+            // در صورت بروز خطا، تراکنش برگردانده می‌شود
+            DB::rollBack();
+
+            // برای دیباگ می‌تونی خط زیر رو موقتاً فعال کنی:
+            // dd($e->getMessage());
+
+            return redirect()->back()->with('error', 'خطایی در ثبت سفارش رخ داد. لطفاً دوباره تلاش کنید.');
         }
-
-        // --- محاسبه قیمت‌ها ---
-        $totals = $this->calculateCartTotals($cartItems);
-
-        // --- تخفیف عمومی ---
-        $commonDiscount = $this->getActiveCommonDiscount();
-        $commonDiscountAmount = $this->calculateCommonDiscount($commonDiscount, $totals['final_price']);
-
-        $finalPrice = $totals['final_price'] - $commonDiscountAmount;
-
-        // --- ساخت اطلاعات سفارش ---
-        $orderData = [
-            'user_id'                               => $user->id,
-            'delivery_id'                           => $deliveryMethod->id,
-            'address_id'                            => $request->address_id,
-            'order_amount'                          => $finalPrice,
-            'payment_status'                        => 0,
-            'order_discount_amount'                 => $totals['discount_price'],
-            'order_common_discount_amount'          => $commonDiscountAmount,
-            'order_total_products_discount_amount'  => $totals['discount_price'] + $commonDiscountAmount,
-            'delivery_amount'                       => $deliveryMethod->amount,
-            'common_discount_id'                    => $commonDiscount?->id,
-            'order_status'                          => 0
-        ];
-
-
-        // --- ایجاد یا بروزرسانی سفارش ---
-        $order = Order::updateOrCreate(
-            ['user_id' => $user->id, 'order_status' => 0], // 0 = در انتظار پرداخت
-            $orderData
-        );
-
-        // --- ایجاد آیتم‌های سفارش ---
-        $this->syncOrderItems($order, $cartItems);
-
-        return redirect()->route('customer.sales-process.payment');
     }
 
     private function calculateCartTotals($cartItems)
@@ -184,6 +200,14 @@ class AddressController extends Controller
 
     private function syncOrderItems(Order $order, $cartItems)
     {
+        $cartProductIds = $cartItems->pluck('product_id')->toArray();
+
+        // 1️⃣ حذف آیتم‌هایی که دیگر در سبد خرید نیستند
+        OrderItem::where('order_id', $order->id)
+            ->whereNotIn('product_id', $cartProductIds)
+            ->delete();
+
+        // 2️⃣ بروزرسانی یا ایجاد آیتم‌های فعلی
         foreach ($cartItems as $cartItem) {
             OrderItem::updateOrCreate(
                 [

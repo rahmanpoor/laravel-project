@@ -298,28 +298,7 @@ class PaymentController extends Controller
         // 💰 در صورت پرداخت آفلاین یا نقدی
         $order->update(['order_status' => 1, 'payment_status' => 1]); // پرداخت شده
 
-        foreach ($cartItems as $cartItem) {
-            $product = $cartItem->product;
-            $amazingSale = $product->activeAmazingSales();
 
-            $discountAmount    = $amazingSale ? $cartItem->cartItemProductPrice() * ($amazingSale->percentage / 100) : 0;
-            $finalProductPrice = $product->price - $discountAmount;
-            $finalTotalPrice   = $finalProductPrice * $cartItem->number;
-
-            OrderItem::create([
-                'order_id'                     => $order->id,
-                'product_id'                   => $product->id,
-                'product'                      => json_encode($product->toArray(), JSON_UNESCAPED_UNICODE),
-                'amazing_sale_id'              => $amazingSale->id ?? null,
-                'amazing_sale_object'          => json_encode($amazingSale, JSON_UNESCAPED_UNICODE),
-                'amazing_sale_discount_amount' => $discountAmount,
-                'number'                       => $cartItem->number,
-                'final_product_price'          => $finalProductPrice,
-                'final_total_price'            => $finalTotalPrice,
-                'color_id'                     => $cartItem->color_id,
-                'guarantee_id'                 => $cartItem->guarantee_id,
-            ]);
-        }
 
         // 🧹 پاک کردن سبد خرید
         CartItem::where('user_id', $user->id)->delete();
@@ -355,30 +334,9 @@ class PaymentController extends Controller
                 if (isset($result['data']['code']) && $result['data']['code'] == 100) {
                     $refId = $result['data']['ref_id']; // کد رهگیری
                     $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
-                    foreach ($cartItems as $cartItem) {
-                        $product     = $cartItem->product;
-                        $amazingSale = $product->activeAmazingSales();
 
-                        $discountAmount    = $amazingSale ? $cartItem->cartItemProductPrice() * ($amazingSale->percentage / 100) : 0;
-                        $finalProductPrice = $product->price - $discountAmount;
-                        $finalTotalPrice   = $finalProductPrice * $cartItem->number;
-
-                        OrderItem::create([
-                            'order_id'                     => $order->id,
-                            'product_id'                   => $product->id,
-                            'product'                      => $product,
-                            'amazing_sale_id'              => $amazingSale->id ?? null,
-                            'amazing_sale_object'          => $amazingSale,
-                            'amazing_sale_discount_amount' => $discountAmount,
-                            'number'                       => $cartItem->number,
-                            'final_product_price'          => $finalProductPrice,
-                            'final_total_price'            => $finalTotalPrice,
-                            'color_id'                     => $cartItem->color_id,
-                            'guarantee_id'                 => $cartItem->guarantee_id,
-                        ]);
-
-                        $cartItem->delete();
-                    }
+                    // پاک کردن سبد خرید بعد از موفقیت پرداخت
+                    CartItem::where('user_id', Auth::id())->delete();
 
                     //payments table - paymet_status =>  paid
                     $onlinePayment->payments()->update([
@@ -398,17 +356,7 @@ class PaymentController extends Controller
             return redirect()->route('customer.home')->with('swal-error', 'خطا در وریفای تراکنش.');
         }
 
-        // ایجاد OrderItemها حتی در صورت پرداخت ناموفق
-        $cartItems = CartItem::where('user_id', Auth::id())->get();
-        foreach ($cartItems as $cartItem) {
-            OrderItem::create([
-                'order_id'    => $order->id,
-                'product_id'  => $cartItem->product_id,
-                'product'     => json_encode($cartItem->product, JSON_UNESCAPED_UNICODE),
-                'number'      => $cartItem->number,
-                'final_total_price' => $cartItem->cartItemProductPrice() * $cartItem->number,
-            ]);
-        }
+
         //payments table - paymet_status => canceled
         $onlinePayment->payments()->update([
             'status' => 2

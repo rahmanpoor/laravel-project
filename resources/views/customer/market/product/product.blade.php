@@ -505,8 +505,8 @@
                                 <table class="table table-bordered border-white">
                                     @foreach ($product->values()->get() as $value)
                                         <tr>
-                                            <td>{{ $value->attribute->name }}</td>
-                                            <td>{{ json_decode($value->value)->value }} {{ $value->attribute->unit }}</td>
+                                            <td>{{ $value->attribute->name ?? '-' }}</td>
+                                            <td>{{ json_decode($value->value)->value ?? '-' }} {{ $value->attribute->unit ?? '-' }}</td>
                                         </tr>
                                     @endforeach
 

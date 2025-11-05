@@ -43,7 +43,7 @@
                                 <th>مبلغ کل</th>
                                 <th>وضعیت پرداخت</th>
                                 <th>وضعیت ارسال</th>
-                                <th>روش ارسال</th>
+                                <th>کد رهگیری پستی</th>
                                 <th class="max-width-8-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
@@ -66,7 +66,8 @@
                                         </h6>
                                     </td>
 
-                                    <td>{{ $order->delivery->name }}</td>
+                                    <td>{{ $order->tracking_code ?? 'هنوز ارسال نشده' }}</td>
+
 
                                     <td class="width-8-rem text-left">
                                         <div class="dropdown">
@@ -77,11 +78,8 @@
                                                 <a href="{{ route('admin.market.order.show', $order->id) }}"
                                                     class="dropdown-item text-right"><i class="fa fa-images"></i> مشاهده
                                                     فاکتور</a>
-                                                <a href="{{ route('admin.market.order.changeSendStatus', $order->id) }}"
-                                                    class="dropdown-item text-right"><i class="fa fa-list-ul"></i> تغییر
-                                                    وضعیت ارسال</a>
-                                                <a href="{{ route('admin.market.order.changeOrderStatus', $order->id) }}"
-                                                    class="dropdown-item text-right"><i class="fa fa-edit"></i> تغییر وضعیت
+                                                <a href="{{ route('admin.market.order.tracking-code', $order->id) }}"
+                                                    class="dropdown-item text-right"><i class="fa fa-edit"></i> تحویل
                                                     سفارش</a>
                                                 <a href="{{ route('admin.market.order.cancelOrder', $order->id) }}"
                                                     class="dropdown-item text-right"><i class="fa fa-window-close"></i> باطل

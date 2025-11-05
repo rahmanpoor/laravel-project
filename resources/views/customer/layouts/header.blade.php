@@ -66,7 +66,7 @@
                                       <section><a class="dropdown-item" href="{{ route('admin.home') }}" target="_blank"
                                               rel="noopener noreferrer"><i class="fas fa-cogs"></i>پنل مدیریت</a></section>
                                   @endrole
-                                  <section><a class="dropdown-item" href="{{ route('customer.profile.orders') }}"><i
+                                  <section><a class="dropdown-item" href="{{ route('customer.profile.orders','type=1') }}"><i
                                               class="fa fa-newspaper"></i>سفارشات</a></section>
                                   <section><a class="dropdown-item" href="{{ route('customer.profile.my-favorites') }}"><i
                                               class="fa fa-heart"></i>لیست علاقه مندی</a></section>

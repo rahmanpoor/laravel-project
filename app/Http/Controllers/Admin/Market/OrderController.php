@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Market;
 use App\Models\Market\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\Message\SMS\SmsService;
 
 class OrderController extends Controller
 {
@@ -29,7 +30,7 @@ class OrderController extends Controller
         return view('admin.market.order.index', compact('orders'));
     }
 
-     public function delivered()
+    public function delivered()
     {
         $orders = Order::where('order_status', 2)->get();
         return view('admin.market.order.index', compact('orders'));
@@ -61,7 +62,8 @@ class OrderController extends Controller
     }
 
 
-    public function detail(Order $order) {
+    public function detail(Order $order)
+    {
         return view('admin.market.order.detail', compact('order'));
     }
 
@@ -108,8 +110,45 @@ class OrderController extends Controller
     }
     public function cancelOrder(Order $order)
     {
-        $order->order_status = 4;
+        $order->order_status = 3;
         $result = $order->save();
-        return back();
+        return back()->with('swal-success', 'سفارش با موفقیت لغو شد');
+    }
+
+    public function showTrackingCodeForm(Order $order)
+    {
+        return view('admin.market.order.tracking-code', compact('order'));
+    }
+
+    public function deliveredOreder(Order $order, Request $request)
+    {
+        // اعتبارسنجی ورودی‌ها
+        $validated = $request->validate([
+            'tracking_code' => [
+                'required',
+                'string',
+                'regex:/^[0-9]{24}$/', // فقط عددی و دقیقاً ۲۴ رقم
+            ],
+        ], [
+            'tracking_code.required' => 'وارد کردن کد رهگیری الزامی است.',
+            'tracking_code.regex' => 'کد رهگیری باید فقط شامل اعداد و دقیقاً ۲۴ رقم باشد.',
+        ]);
+
+        // ذخیره در دیتابیس
+        $order->update([
+            'tracking_code' => $validated['tracking_code'],
+            'order_status' => 2 //تحویل شده
+        ]);
+
+        //ارسال پیامک به مشتری
+        $text= 'مرسوله با کد رهگیری ' . $validated['tracking_code'] . ' ارسال شد ';
+
+        $smsService = new SmsService();
+        $smsService->setFrom('50002710066430');
+        $smsService->setTo($order->user->mobile);
+        $smsService->setText($text);
+        $smsService->sendSms();
+
+        return redirect()->route('admin.market.order.all')->with('swal-success', 'کد رهگیری با موفقیت ثبت شد');
     }
 }

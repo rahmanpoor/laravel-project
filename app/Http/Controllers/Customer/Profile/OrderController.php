@@ -9,11 +9,12 @@ class OrderController extends Controller
 {
     public function index()
     {
-        if (isset(request()->type)) {
-            $orders = auth()->user()->orders()->where('order_status', request()->type)->orderBy('id', 'desc')->get();
-        }else {
-             $orders = auth()->user()->orders()->orderBy('id', 'desc')->get();
-        }
+        $orders = auth()->user()
+            ->orders()
+            ->when(request('type'), fn($q, $type) => $q->where('order_status', $type))
+            ->orderByDesc('id')
+            ->paginate(10)
+            ->appends(request()->query());
 
         return view('customer.profile.orders', compact('orders'));
     }

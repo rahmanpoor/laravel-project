@@ -127,7 +127,7 @@ class Order extends Model
                 $color = 'success';
                 break;
             case 3:
-                $result = 'لغو شده';
+                $result = 'لغو سیستمی';
                 $color = 'danger';
                 break;
             // case 4:

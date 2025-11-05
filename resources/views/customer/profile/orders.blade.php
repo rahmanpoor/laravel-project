@@ -39,11 +39,15 @@
                         <section class="d-flex justify-content-center my-4">
 
 
-                                  {{-- waiting pay btn --}}
+                            {{-- waiting pay btn --}}
 
+                            @php
+                                $type = request('type'); // مقدار type از query string
+                            @endphp
 
                             {{-- current btn --}}
-                            <a type="button" class="btn btn-outline-info btn-sm mx-2 position-relative"
+                            <a type="button"
+                                class="btn {{ $type == 1 ? 'btn-info' : 'btn-outline-info' }} btn-sm mx-2 position-relative"
                                 href="{{ route('customer.profile.orders', 'type=1') }}">
                                 جاری
                                 {{-- <span
@@ -54,7 +58,8 @@
                             </a>
 
                             {{-- delivered btn --}}
-                            <a type="button" class="btn btn-outline-success btn-sm mx-2 position-relative"
+                            <a type="button"
+                                class="btn {{ $type == 2 ? 'btn-success' : 'btn-outline-success' }} btn-sm mx-2 position-relative"
                                 href="{{ route('customer.profile.orders', 'type=2') }}">
                                 تحویل شده
                                 {{-- <span
@@ -65,7 +70,8 @@
                             </a>
 
                             {{-- cancel btn --}}
-                            <a type="button" class="btn btn-outline-danger btn-sm mx-2 position-relative"
+                            <a type="button"
+                                class="btn {{ $type == 3 ? 'btn-danger' : 'btn-outline-danger' }} btn-sm mx-2 position-relative"
                                 href="{{ route('customer.profile.orders', 'type=3') }}">
                                 لغو شده
                                 {{-- <span
@@ -86,9 +92,9 @@
                         <!-- start content header -->
                         <section class="content-header mb-3">
                             <section class="d-flex justify-content-between align-items-center">
-                                <h2 class="content-header-title content-header-title-small">
-                                   وضعیت سفارش
-                                </h2>
+                                {{-- <h2 class="content-header-title content-header-title-small">
+                                    جزئیات سفارش
+                                </h2> --}}
                                 <section class="content-header-link">
                                     <!--<a href="#">مشاهده همه</a>-->
                                 </section>
@@ -109,25 +115,42 @@
                                             </section>
                                             <section class="order-item-id"><i class="fa fa-id-card-alt"></i>کد سفارش :
                                                 {{ $order->id }}</section>
-                                            <section
-                                                class="order-item-status text-{{ $order->paymentStatusValue['badge_color'] }}">
-                                                <i
-                                                    class="fa fa-clock text-{{ $order->paymentStatusValue['badge_color'] }} "></i>
-                                                {{ $order->paymentStatusValue['result'] }}
-                                            </section>
-                                            <section class="order-item-products">
-                                                @foreach ($order->orderItems as $orderItem)
-                                                    <a href="{{   route('customer.market.product', json_decode($orderItem->product)->slug)   }}">
-                                                           <img
-                                                            src="{{ asset(json_decode($orderItem->product)->image->indexArray->small) }}"
-
-                                                            alt="{{ json_decode($orderItem->product)->name }}"></a>
-                                                @endforeach
+                                            <section class="order-item-id"><i class="fa fa-money-bill"></i>مبلغ :
+                                                {{ priceFormat($order->order_final_amount) }} تومان</section>
+                                            <section class="order-item-status text-{{ $order->orderStatusValue['color'] }}">
+                                                <i class="fa fa-clock text-{{ $order->orderStatusValue['color'] }}"></i>
+                                                {{ $order->orderStatusValue['result'] }}
                                             </section>
                                         </section>
-                                        {{-- <section class="order-item-link"><a href="#">پرداخت سفارش</a></section> --}}
+                                    </section>
+
+                                    @if (filled($order->tracking_code))
+                                    <div class="alert alert-info small py-3 mb-3  mx-0" role="alert">
+                                        <p class="mb-2">با استفاده از سامانه رهگیری پست می‌توانید از وضعیت مرسوله باخبر
+                                            شوید.</p>
+                                        <hr class="my-2">
+                                        <span>کد رهگیری پست:</span>
+                                        <span
+                                            class="fw-bold text-monospace ms-5 d-inline-block">{{ convertEnglishToPersian($order->tracking_code) }}</span>
+                                    </div>
+                                    @endif
+
+                                    <section class="order-item-products">
+                                        @foreach ($order->orderItems as $orderItem)
+                                            <a class="position-relative"
+                                                href="{{ route('customer.market.product', json_decode($orderItem->product)->slug) }}">
+                                                <img class="img-thumbnail rounded"
+                                                    src="{{ asset(json_decode($orderItem->product)->image->indexArray->small) }}"
+                                                    alt="{{ json_decode($orderItem->product)->name }}">
+                                                @if ($orderItem->number > 1)
+                                                    <span
+                                                        class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-primary">{{ convertEnglishToPersian($orderItem->number) }}</span>
+                                                @endif
+                                            </a>
+                                        @endforeach
                                     </section>
                                 </section>
+
                             @empty
 
                                 <section class="order-item">
@@ -137,6 +160,14 @@
                                 </section>
                             @endforelse
 
+                        </section>
+
+                        <section class="col-12">
+                            <section class="my-4 d-flex justify-content-center">
+                                <nav>
+                                    {{ $orders->links('pagination::bootstrap-4') }}
+                                </nav>
+                            </section>
                         </section>
 
 

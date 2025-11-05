@@ -142,6 +142,8 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->
             Route::get('/change-send-status/{order}', [OrderController::class, 'changeSendStatus'])->name('admin.market.order.changeSendStatus');
             Route::get('/change-order-status/{order}', [OrderController::class, 'changeOrderStatus'])->name('admin.market.order.changeOrderStatus');
             Route::get('/cancel-order/{order}', [OrderController::class, 'cancelOrder'])->name('admin.market.order.cancelOrder');
+            Route::post('/delivered-order/{order}', [OrderController::class, 'deliveredOreder'])->name('admin.market.order.deliveredOrder');
+            Route::get('/tracking-code/{order}', [OrderController::class, 'showTrackingCodeForm'])->name('admin.market.order.tracking-code');
         });
         //Payment
         Route::prefix('payment')->group(function () {
