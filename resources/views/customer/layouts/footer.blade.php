@@ -50,6 +50,7 @@
                     {{-- شروع نماد  --}}
                     <section class="d-flex align-items-center gap-3 flex-wrap">
                         @foreach ($footerBadges as $badge)
+
                             <section class="badge">
                                 {!! $badge->script !!}
                             </section>

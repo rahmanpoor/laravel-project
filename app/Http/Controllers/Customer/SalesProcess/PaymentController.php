@@ -327,27 +327,32 @@ class PaymentController extends Controller
                 $result = $zarinpalService->verifyPayment($order->order_final_amount * 10, $authority);
 
 
-                $onlinePayment->update(['bank_second_response' => json_encode($result, JSON_UNESCAPED_UNICODE)]);
+                $onlinePayment->update([
+                    'bank_second_response' => json_encode($result, JSON_UNESCAPED_UNICODE),
+                    'transaction_id' => $result['data']['ref_id'],
+                    'status' => 1
+
+                ]);
 
 
 
                 if (isset($result['data']['code']) && $result['data']['code'] == 100) {
-                    $refId = $result['data']['ref_id']; // کد رهگیری
+
                     $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
 
                     // پاک کردن سبد خرید بعد از موفقیت پرداخت
                     CartItem::where('user_id', Auth::id())->delete();
 
-                    //payments table - paymet_status =>  paid
+                    //payments table => paymet_status =>  paid
                     $onlinePayment->payments()->update([
-                        'status' => 1
+                        'status' => 1 // paid
                     ]);
 
                     // order_status => sending, payment_status => paid
                     $order->update(
                         ['order_status' => 1, 'payment_status' => 1]
                     );
-                    return redirect()->route('customer.home')->with('swal-success', "پرداخت موفق ✅ - کد رهگیری: $refId");
+                    return redirect()->route('customer.home')->with('swal-success', "پرداخت موفق ✅ - کد رهگیری: $onlinePayment->transaction_id");
                     // return "پرداخت موفق: " . $result['data']['ref_id'];
                 }
             });

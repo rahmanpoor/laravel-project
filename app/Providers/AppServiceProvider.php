@@ -15,6 +15,7 @@ use App\Models\Footer\FooterSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Market\ProductCategory;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -54,47 +55,18 @@ class AppServiceProvider extends ServiceProvider
                 $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
                 $view->with('cartItems', $cartItems);
             }
-              $view->with('pages', Page::all());
+            $view->with('pages', Page::all());
         });
 
-        // //footer features
-        // View::composer('*', function ($view) {
-        //     $view->with([
-        //         'footerFeatures' => FooterFeature::all()
-        //     ]);
-        // });
 
-        // //footer links
-        // View::composer('*', function ($view) {
-        //     $view->with([
-        //         'firstColumnLinks'  => FooterLink::where('position', 1)->get(),
-        //         'secondColumnLinks' => FooterLink::where('position', 2)->get(),
-        //         'thirdColumnLinks'  => FooterLink::where('position', 3)->get(),
-        //     ]);
-        // });
+        //heade menu
+        // View Composer برای هدر سایت
+        view()->composer('customer.layouts.header', function ($view) {
+            // دسته‌بندی‌ها مستقیم از DB گرفته می‌شوند
+            $menus = ProductCategory::with('children')->where('parent_id', null)->get(); // اگر زیر دسته داری
 
-        //  //footer social
-        // View::composer('*', function ($view) {
-        //     $view->with([
-        //         'footerSocials' => FooterSocial::all()
-        //     ]);
-        // });
-
-
-        //    //footer badges
-        // View::composer('*', function ($view) {
-        //     $view->with([
-        //         'footerBadges' => FooterBadge::all()
-        //     ]);
-        // });
-
-
-        // //footer settings
-        // View::composer('*', function ($view) {
-        //     $view->with([
-        //         'footerSetting' => FooterSetting::first()
-        //     ]);
-        // });
+            $view->with('menus', $menus);
+        });
 
         View::composer('*', function ($view) {
             $view->with([

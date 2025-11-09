@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Footer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Footer\FooterFeature;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Services\Image\ImageService;
 use App\Http\Requests\Admin\Footer\FooterFeatureRequest;
 
@@ -22,7 +23,7 @@ class FooterFeatureController extends Controller
         return view('admin.footer.feature.create');
     }
 
-     public function store(FooterFeatureRequest $request, ImageService $imageService)
+    public function store(FooterFeatureRequest $request, ImageService $imageService)
     {
 
         $inputs = $request->all();
@@ -37,15 +38,18 @@ class FooterFeatureController extends Controller
             $inputs['image'] = $result;
         }
         $footerFeature = FooterFeature::create($inputs);
+        // بروز کردن کش
+        Cache::put('footerFeatures', FooterFeature::all());
         return redirect()->route('admin.footer.feature.index')->with('swal-success', 'ویژگی فوتر با موفقیت ثبت شد');
     }
 
 
-        public function destroy(FooterFeature $footer)
+    public function destroy(FooterFeature $footer)
     {
 
         $result = $footer->delete();
+        // بروز کردن کش
+        Cache::put('footerFeatures', FooterFeature::all());
         return redirect()->route('admin.footer.feature.index')->with('swal-success', 'ویژگی فوتر با موفقیت حذف شد');
-
     }
 }

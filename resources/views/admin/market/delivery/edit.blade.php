@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="">هزینه ارسال</label>
                                     <input type="text" name="amount" class="form-control form-control-sm"
-                                        value="{{ old('amount', $delivery->amount) }}">
+                                        value="{{ old('amount',  (int)$delivery->amount) }}">
                                 </div>
                                 @error('amount')
                                     <span class="alert_required text-danger p-1">

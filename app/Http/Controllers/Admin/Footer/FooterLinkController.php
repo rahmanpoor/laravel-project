@@ -12,7 +12,7 @@ class FooterLinkController extends Controller
 {
     public function index()
     {
-        $links = FooterLink::orderBy('created_at', 'desc')->simplePaginate(15);
+        $links = FooterLink::orderBy('created_at', 'desc')->paginate(10);
         $positions = FooterLink::$positions;
         return view('admin.footer.link.index', compact('links', 'positions'));
     }
@@ -32,6 +32,12 @@ class FooterLinkController extends Controller
 
         $link = FooterLink::create($inputs);
 
+        // بروز کردن کش
+        Cache::put('firstColumnLinks', FooterLink::where('position', 1)->get());
+        Cache::put('secondColumnLinks', FooterLink::where('position', 2)->get());
+        Cache::put('thirdColumnLinks', FooterLink::where('position', 3)->get());
+
+
 
 
         return redirect()->route('admin.footer.link.index')->with('swal-success', ' لینک با موفقیت ایجاد شد');
@@ -41,6 +47,15 @@ class FooterLinkController extends Controller
     {
 
         $result = $footer->delete();
+
+        // بروز کردن کش
+        Cache::put('firstColumnLinks', FooterLink::where('position', 1)->get());
+        Cache::put('secondColumnLinks', FooterLink::where('position', 2)->get());
+        Cache::put('thirdColumnLinks', FooterLink::where('position', 3)->get());
+
+
+
+
         return redirect()->route('admin.footer.link.index')->with('swal-success', ' لینک با موفقیت حذف شد');
     }
 }

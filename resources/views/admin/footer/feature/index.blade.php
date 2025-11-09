@@ -51,7 +51,7 @@
                                     <td>{{ $feature->url ? $feature->url : '-' }}</td>
                                     <td>
                                         <img src="{{ asset($feature->image) }}"
-                                            alt="" width="50" height="50">
+                                            alt="" width="30" height="30">
                                     </td>
 
 
@@ -62,7 +62,7 @@
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                                    class="fa fa-trash-alt"></i></button>
                                         </form>
                                     </td>
                                 </tr>

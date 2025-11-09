@@ -67,7 +67,7 @@
                 </section>
             </section>
 
-            <section class="sidebar-group-link">
+            {{-- <section class="sidebar-group-link">
                 <section class="sidebar-dropdown-toggle">
                     <i class="fas fa-tags icon"></i>
                     <span>تخفیف ها</span>
@@ -78,7 +78,7 @@
                     <a href="{{ route('admin.market.discount.commonDiscount') }}">تخفیف عمومی</a>
                     <a href="{{ route('admin.market.discount.amazingSale') }}">فروش شگفت انگیز</a>
                 </section>
-            </section>
+            </section> --}}
 
             <a href="{{ route('admin.market.delivery.index') }}" class="sidebar-link">
                 <i class="fas fa-truck"></i>

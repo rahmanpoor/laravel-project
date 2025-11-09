@@ -44,7 +44,7 @@
                                 <th>وضعیت پرداخت</th>
                                 <th>مبلغ پرداختی</th>
                                 <th>کد تراکنش</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>

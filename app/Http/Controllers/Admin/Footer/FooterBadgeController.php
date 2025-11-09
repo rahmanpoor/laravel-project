@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Footer\FooterBadge;
 use App\Models\Footer\FooterSocial;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Admin\Footer\FooterBadgeRequest;
 
 class FooterBadgeController extends Controller
@@ -44,7 +45,13 @@ class FooterBadgeController extends Controller
 
         $inputs = $request->all();
 
-        $badge = FooterBadge::create($inputs);
+
+
+        // ذخیره
+        FooterBadge::create( $inputs);
+
+        // بروز کردن کش
+        Cache::put('footerBadges', FooterBadge::all());
 
         return redirect()->route('admin.footer.badge.index')->with('swal-success', ' نماد با موفقیت ایجاد شد');
     }
@@ -92,6 +99,11 @@ class FooterBadgeController extends Controller
     public function destroy(FooterBadge $footer)
     {
         $result = $footer->delete();
+
+              // بروز کردن کش
+        Cache::put('footerBadges', FooterBadge::all());
+
+
         return redirect()->route('admin.footer.badge.index')->with('swal-success', ' نماد با موفقیت حذف شد');
 
     }

@@ -48,7 +48,9 @@ class FooterSocialController extends Controller
 
         $social = FooterSocial::create($inputs);
 
-        Cache::forget('footerSocials'); // کش مربوطه پاک بشه
+        // بروز کردن کش
+        Cache::put('footerSocials', FooterSocial::all());
+
 
         return redirect()->route('admin.footer.social.index')->with('swal-success', ' شبکه اجتماعی با موفقیت ایجاد شد');
     }
@@ -96,7 +98,11 @@ class FooterSocialController extends Controller
     public function destroy(FooterSocial $footer)
     {
         $result = $footer->delete();
-        Cache::forget('footerSocials'); // کش مربوطه پاک بشه
+
+        // بروز کردن کش
+        Cache::put('footerSocials', FooterSocial::all());
+
+
         return redirect()->route('admin.footer.social.index')->with('swal-success', ' شبکه اجتماعی با موفقیت حذف شد');
     }
 }

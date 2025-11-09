@@ -39,29 +39,28 @@
                                 <th>عنوان</th>
                                 <th>آدرس</th>
                                 <th>موقعیت</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @foreach ($links as $key => $link)
                                 <tr>
-                                    <th>{{ $key += 1 }}</th>
+                                    <th>{{ $links->firstItem() + $key }}</th>
                                     <td>{{ $link->title }}</td>
                                     <td>{{ $link->url ? $link->url : '-' }}</td>
                                     <td>
-                                       {{ $positions[$link->position] }}
+                                        {{ $positions[$link->position] }}
                                     </td>
 
 
                                     <td class="width-16-rem text-left">
-                                        <form class="d-inline"
-                                            action="{{ route('admin.footer.link.destroy', $link->id) }}"
+                                        <form class="d-inline" action="{{ route('admin.footer.link.destroy', $link->id) }}"
                                             method="post">
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                                    class="fa fa-trash-alt"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -71,14 +70,19 @@
                         </tbody>
                     </table>
                 </section>
+                <section class="col-12">
+                    <section class="d-flex justify-content-center">
+                        <nav>
+                            {{ $links->links('pagination::bootstrap-4') }}
+                        </nav>
+                    </section>
+                </section>
+
 
             </section>
         </section>
     </section>
 @endsection
 @section('script')
-
-
-@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
-
+    @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete']);
 @endsection

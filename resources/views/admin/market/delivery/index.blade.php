@@ -42,19 +42,19 @@
                                 <th>هزینه ارسال</th>
                                 <th>زمان ارسال</th>
                                 <th>وضعیت</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                                <th class="max-width-16-rem text-left"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @foreach ($delivery_methods as $delivery_method)
-                                
-                           
+
+
 
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $delivery_method->name }}</td>
-                                <td>{{ $delivery_method->amount }} تومان</td>
+                                <td>{{ priceFormat($delivery_method->amount) }} تومان</td>
                                 <td>{{ $delivery_method->delivery_time . ' - ' .  $delivery_method->delivery_time_unit }}</td>
                                 <td>
                                     <label class="apple-switch">
@@ -66,14 +66,14 @@
                                     </label>
                                 </td>
                                 <td class="width-16-rem text-left">
-                                    <a href="{{ route('admin.market.delivery.edit', $delivery_method->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                    <a href="{{ route('admin.market.delivery.edit', $delivery_method->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                     <form class="d-inline"
                                             action="{{ route('admin.market.delivery.destroy', $delivery_method->id) }}"
                                             method="post">
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                                    class="fa fa-trash-alt"></i></button>
                                         </form>
                                 </td>
                             </tr>
