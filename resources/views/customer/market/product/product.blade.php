@@ -232,7 +232,7 @@
                                             @endauth
                                             {{-- favorite end --}}
 
-                                             {{-- compare start --}}
+                                            {{-- compare start --}}
                                             {{-- @guest
                                                 <section class="product-add-to-compare position-relative" style="top: 0">
                                                     <button type="button" class="btn btn-light btn-sm text-decoration-none"
@@ -244,9 +244,9 @@
                                                 </section>
                                             @endguest
                                             @auth
-                                                @if ($product->compares->contains(function($compare, $key) {
-                                                    return $compare->id === auth()->user()->compare->id;
-                                                }))
+                                                @if ($product->compares->contains(function ($compare, $key) {
+        return $compare->id === auth()->user()->compare->id;
+    }))
                                                     <section class="product-add-to-compare position-relative" style="top: 0"">
                                                         <button type="button" class="btn btn-light btn-sm text-decoration-none"
                                                             data-url="{{ route('customer.market.add-to-compare', $product) }}"
@@ -371,70 +371,77 @@
                         <section class="lazyload-wrapper">
                             <section class="lazyload light-owl-nav owl-carousel owl-theme">
                                 @foreach ($relatedProducts as $key => $relatedProduct)
-                                    <section class="item">
-                                        <section class="lazyload-item-wrapper">
-                                            <section class="product">
-                                                <section class="product-add-to-cart"><a href="#"
-                                                        data-bs-toggle="tooltip" data-bs-placement="left"
-                                                        title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
-                                                </section>
-                                                @guest
-                                                    <section class="product-add-to-favorite">
-                                                        <button class="btn btn-light btn-sm text-decoration-none"
-                                                            data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                    <form id="add_to_cart"
+                                        action="{{ route('customer.sales-process.add-to-cart', $relatedProduct) }}"
+                                        method="POST" class="product-info">
+                                        @csrf
+                                        <input type="hidden"  id="number" name="number" value="1">
+                                        <section class="item">
+                                            <section class="lazyload-item-wrapper">
+                                                <section class="product">
+                                                    <section class="product-add-to-cart"><a href="javascript:void(0);"
+                                                            onclick="this.closest('form').submit();"
                                                             data-bs-toggle="tooltip" data-bs-placement="left"
-                                                            title="اضافه از علاقه مندی">
-                                                            <i class="fa fa-heart"></i>
-                                                        </button>
+                                                            title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a>
                                                     </section>
-                                                @endguest
-                                                @auth
-                                                    @if ($relatedProduct->user->contains(auth()->user()->id))
+                                                    @guest
                                                         <section class="product-add-to-favorite">
                                                             <button class="btn btn-light btn-sm text-decoration-none"
                                                                 data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
                                                                 data-bs-toggle="tooltip" data-bs-placement="left"
-                                                                title="حذف از علاقه مندی">
-                                                                <i class="fa fa-heart text-danger"></i>
-                                                            </button>
-                                                        </section>
-                                                    @else
-                                                        <section class="product-add-to-favorite">
-                                                            <button class="btn btn-light btn-sm text-decoration-none"
-                                                                data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
-                                                                data-bs-toggle="tooltip" data-bs-placement="left"
-                                                                title="اضافه به علاقه مندی">
+                                                                title="اضافه از علاقه مندی">
                                                                 <i class="fa fa-heart"></i>
                                                             </button>
                                                         </section>
-                                                    @endif
-                                                @endauth
-                                                <a class="product-link" href="#">
-                                                    <section class="product-image">
-                                                        <img class=""
-                                                            src="{{ asset($relatedProduct->image['indexArray']['medium']) }}"
-                                                            alt="{{ asset($relatedProduct->image['indexArray']['medium']) . '-' . ($key + 1) }}">
-                                                    </section>
-                                                    <section class="product-name">
-                                                        <h3>{{ $relatedProduct->name }}</h3>
-                                                    </section>
-                                                    <section class="product-price-wrapper">
-                                                        <section class="product-price">
-                                                            {{ priceFormat($relatedProduct->price) }} تومان</section>
-                                                    </section>
-                                                    <section class="product-colors">
-
-                                                        @foreach ($relatedProduct->colors()->get() as $color)
-                                                            <section class="product-colors-item"
-                                                                style="background-color: {{ $color->color }};">
+                                                    @endguest
+                                                    @auth
+                                                        @if ($relatedProduct->user->contains(auth()->user()->id))
+                                                            <section class="product-add-to-favorite">
+                                                                <button class="btn btn-light btn-sm text-decoration-none"
+                                                                    data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                    title="حذف از علاقه مندی">
+                                                                    <i class="fa fa-heart text-danger"></i>
+                                                                </button>
                                                             </section>
-                                                        @endforeach
+                                                        @else
+                                                            <section class="product-add-to-favorite">
+                                                                <button class="btn btn-light btn-sm text-decoration-none"
+                                                                    data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                                    title="اضافه به علاقه مندی">
+                                                                    <i class="fa fa-heart"></i>
+                                                                </button>
+                                                            </section>
+                                                        @endif
+                                                    @endauth
+                                                    <a class="product-link" href="#">
+                                                        <section class="product-image">
+                                                            <img class=""
+                                                                src="{{ asset($relatedProduct->image['indexArray']['medium']) }}"
+                                                                alt="{{ asset($relatedProduct->image['indexArray']['medium']) . '-' . ($key + 1) }}">
+                                                        </section>
+                                                        <section class="product-name">
+                                                            <h3>{{ $relatedProduct->name }}</h3>
+                                                        </section>
+                                                        <section class="product-price-wrapper">
+                                                            <section class="product-price">
+                                                                {{ priceFormat($relatedProduct->price) }} تومان</section>
+                                                        </section>
+                                                        <section class="product-colors">
 
-                                                    </section>
-                                                </a>
+                                                            @foreach ($relatedProduct->colors()->get() as $color)
+                                                                <section class="product-colors-item"
+                                                                    style="background-color: {{ $color->color }};">
+                                                                </section>
+                                                            @endforeach
+
+                                                        </section>
+                                                    </a>
+                                                </section>
                                             </section>
                                         </section>
-                                    </section>
+                                    </form>
                                 @endforeach
                             </section>
                         </section>
@@ -506,7 +513,8 @@
                                     @foreach ($product->values()->get() as $value)
                                         <tr>
                                             <td>{{ $value->attribute->name ?? '-' }}</td>
-                                            <td>{{ json_decode($value->value)->value ?? '-' }} {{ $value->attribute->unit ?? '-' }}</td>
+                                            <td>{{ json_decode($value->value)->value ?? '-' }}
+                                                {{ $value->attribute->unit ?? '-' }}</td>
                                         </tr>
                                     @endforeach
 
@@ -826,7 +834,7 @@
             })
         })
     </script>
-{{--
+    {{--
      <script>
         $('.product-add-to-compare button').click(function() {
             var url = $(this).attr('data-url');

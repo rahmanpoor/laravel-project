@@ -52,6 +52,11 @@ class CartController extends Controller
             'number' => 'numeric|min:1|max: 5',
         ]);
 
+
+        if ($request->number > $product->marketable_number) {
+            return back()->with('swal-error', 'تعداد درخواستی بیشتر از موجودی است');
+        }
+
         $color = $request->input('color');
         $guarantee = $request->input('guarantee');
         $userId = auth()->id();
@@ -71,6 +76,7 @@ class CartController extends Controller
             }
             return back()->with('alert-section-info', 'این محصول قبلا به سبد خرید اضافه شده است');
         }
+
 
         $cartItem->number = $request->number;
         $cartItem->save();

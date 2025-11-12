@@ -16,6 +16,7 @@ class ProductController extends Controller
     public function product(Product $product)
     {
 
+
         $cartItem = null;
         if (Auth::check()) {
             $cartItem = CartItem::where('product_id', $product->id)->where('user_id', Auth::user()->id)->first();
@@ -25,6 +26,23 @@ class ProductController extends Controller
         $relatedProducts = Product::with('category')->whereHas('category', function ($query) use ($product) {
             $query->where('id', $product->category->id);
         })->get()->except($product->id);
+
+        // افزایش بازدید هر بار که صفحه محصول باز می‌شود
+        $productKey = 'product_' . $product->id . '_viewed';
+        $lastViewedAtKey = 'viewed_at_' . $product->id;
+
+        $lastViewedAt = session($lastViewedAtKey);
+
+        // اگر محصول قبلاً دیده نشده یا بیش از ۳۰ دقیقه از آخرین بازدید گذشته
+        if (!$lastViewedAt || now()->diffInMinutes($lastViewedAt) > 30) {
+            $product->increment('view');
+
+            // ذخیره اینکه دیده شده و زمان آخرین بازدید
+            session()->put($productKey, true);
+            session()->put($lastViewedAtKey, now());
+        }
+
+
         return view('customer.market.product.product', compact('product', 'relatedProducts', 'cartItem'));
     }
 
@@ -60,11 +78,11 @@ class ProductController extends Controller
         }
     }
 
-      public function addToCompare(Product $product)
+    public function addToCompare(Product $product)
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if($user->compare->count() > 0){
+            if ($user->compare->count() > 0) {
                 $userCompareList = $user->compare;
             } else {
                 $userCompareList = Compare::create(['user_id' => $user->id]);

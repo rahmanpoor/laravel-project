@@ -73,16 +73,16 @@
                                         </label>
                                     </td>
                                     <td class="width-22-rem text-left">
-                                        <a class="btn btn-warning btn-sm" href="{{ route('admin.user.customer.upgrade-to-admin', $user->id) }}"><i class="fa fa-user-shield"></i> ارتقا به مدیر</a>
+                                        <a class="btn btn-warning btn-sm" href="{{ route('admin.user.customer.upgrade-to-admin', $user->id) }}"><i class="fa fa-user-shield"></i></a>
                                         <a href="{{ route('admin.user.customer.edit', $user->id) }}"
-                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                         </button>
                                         <form class="d-inline"
                                             action="{{ route('admin.user.customer.destroy', $user->id) }}" method="post">
                                             @csrf
                                             {{ method_field('delete') }}
                                             <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                                    class="fa fa-trash-alt"></i></button>
                                         </form>
                                     </td>
                                 </tr>

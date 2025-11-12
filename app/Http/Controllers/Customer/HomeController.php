@@ -43,7 +43,7 @@ class HomeController extends Controller
 
         // در حالت واقعی بهتره فیلدهای مرتب‌سازی مشخص باشن (مثلاً views یا discount)
         $mostVisitedProducts = Product::with(['user', 'colors'])
-            ->latest()
+            ->orderByDesc('view')
             ->take(10)
             ->get();
 

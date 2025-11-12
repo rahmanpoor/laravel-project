@@ -118,8 +118,10 @@
                                                   $cartItem->cartItemProductDiscount() * $cartItem->number;
                                           @endphp
 
+
                                           <section
                                               class="header-cart-dropdown-body-item d-flex justify-content-start align-items-center">
+
                                               <img class="flex-shrink-1"
                                                   src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
                                                   alt="{{ asset($cartItem->product->image['indexArray']['medium']) . '-' . ($key + 1) }}">

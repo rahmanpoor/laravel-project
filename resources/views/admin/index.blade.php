@@ -33,7 +33,7 @@
                     <section class="card-body">
                         <section class="d-flex justify-content-between">
                             <section class="info-box-body">
-                                <h5>11</h5>
+                                <h5>{{ $users->count() }}</h5>
                                 <p> تعداد کل کاربران</p>
                             </section>
                             <section class="info-box-icon">
@@ -42,7 +42,7 @@
                         </section>
                     </section>
                     <section class="card-footer info-box-footer">
-                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : 21:42 بعد از ظهر
+                        <i class="fas fa-clock mx-2"></i> به روز رسانی شده در : {{ jalaliDate(optional($users->sortByDesc('updated_at')->first())->updated_at)}}
                     </section>
                 </section>
             </a>
