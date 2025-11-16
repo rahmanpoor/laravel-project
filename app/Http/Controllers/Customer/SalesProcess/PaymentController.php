@@ -338,6 +338,12 @@ class PaymentController extends Controller
 
                 if (isset($result['data']['code']) && $result['data']['code'] == 100) {
 
+                    foreach ($order->orderItems as $orderItem) {
+                        $product = $orderItem->singleProduct;
+                        $product->marketable_number-= $orderItem->number;
+                        $product->save();
+                    }
+
                     $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
 
                     // پاک کردن سبد خرید بعد از موفقیت پرداخت

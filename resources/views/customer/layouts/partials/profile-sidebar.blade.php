@@ -5,7 +5,7 @@
                         <!-- start sidebar nav-->
                         <section class="sidebar-nav">
                             <section class="sidebar-nav-item">
-                                <span class="sidebar-nav-item-title"><a class="p-3" href="{{ route('customer.profile.orders') }}">سفارش های
+                                <span class="sidebar-nav-item-title"><a class="p-3" href="{{ route('customer.profile.orders', 'type=1') }}">سفارش های
                                         من</a></span>
                             </section>
                             <section class="sidebar-nav-item">

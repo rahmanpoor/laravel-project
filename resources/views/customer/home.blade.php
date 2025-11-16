@@ -252,8 +252,8 @@
                                                     </section>
                                                     <section class="product-price-wrapper">
                                                         <section class="product-discount">
-                                                            <span class="product-old-price">6,895,000 </span>
-                                                            <span class="product-discount-amount">10%</span>
+                                                            {{-- <span class="product-old-price">6,895,000 </span>
+                                                            <span class="product-discount-amount">10%</span> --}}
                                                         </section>
                                                         <section class="product-price">
                                                             {{ priceFormat($offerProduct->price) }} تومان</section>
