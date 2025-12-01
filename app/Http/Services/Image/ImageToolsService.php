@@ -115,7 +115,7 @@ class ImageToolsService
     protected function checkdirectory($imageDirectory)
     {
         if (!file_exists($imageDirectory)) {
-            mkdir($imageDirectory, 666, true);
+            mkdir($imageDirectory, 775, true);
         }
     }
 
