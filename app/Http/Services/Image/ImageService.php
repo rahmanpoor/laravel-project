@@ -19,9 +19,8 @@ class ImageService extends ImageToolsService
         //save image
         $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
         $imageObject = $manager->read($image->getRealPath());
-        dd(public_path());
-        $savePath = public_path($this->getImageAddress());
-        dd($savePath);
+        $savePath = str_replace('/home/saeidmar/laravel/public_html', '/home/saeidmar/public_html', public_path($this->getImageAddress()));
+
         $result = $imageObject->save($savePath, quality: 90, format: $this->getImageFormat());
         return $result ? $this->getImageAddress() : false;
     }

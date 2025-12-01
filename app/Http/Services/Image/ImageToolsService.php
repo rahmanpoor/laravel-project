@@ -27,15 +27,12 @@ class ImageToolsService
     public function getExclusiveDirectory()
     {
 
-
-
         return $this->exclusiveDirectory;
     }
 
 
     public function setExclusiveDirectory($exclusiveDirectory)
     {
-
         $this->exclusiveDirectory = trim($exclusiveDirectory, '/\\');
     }
 
@@ -44,7 +41,6 @@ class ImageToolsService
 
     public function getImageDirectory()
     {
-
 
         return $this->imageDirectory;
     }
@@ -58,7 +54,6 @@ class ImageToolsService
 
     public function getImageName()
     {
-
         return $this->imageName;
     }
 
@@ -104,6 +99,7 @@ class ImageToolsService
 
     public function getFinalImageName()
     {
+
         return $this->finalImageName;
     }
 
@@ -119,7 +115,7 @@ class ImageToolsService
     protected function checkdirectory($imageDirectory)
     {
         if (!file_exists($imageDirectory)) {
-            mkdir($imageDirectory, 775, true);
+            mkdir($imageDirectory, 755, true);
         }
     }
 
