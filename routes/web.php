@@ -397,9 +397,6 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->
             Route::get('/set/{admin}', [TicketAdminController::class, 'set'])->name('admin.ticket.admin.set');
         });
 
-
-
-
         //main
         Route::get('/', [TicketController::class, 'index'])->name('admin.ticket.index');
         Route::get('/new-tickets', [TicketController::class, 'newTickets'])->name('admin.ticket.newTickets');
