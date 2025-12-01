@@ -19,6 +19,7 @@ class ImageService extends ImageToolsService
         //save image
         $manager = new ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
         $imageObject = $manager->read($image->getRealPath());
+        dd(public_path());
         $savePath = public_path($this->getImageAddress());
         dd($savePath);
         $result = $imageObject->save($savePath, quality: 90, format: $this->getImageFormat());
