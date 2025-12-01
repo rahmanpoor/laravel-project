@@ -176,7 +176,7 @@
                                                   class="sublist-item-sublist-wrapper d-flex justify-content-around align-items-center">
                                                   <section class="sublist-column col">
                                                       @foreach ($menu->children as $children)
-                                                          <a href="#"
+                                                          <a href="{{ route('customer.products', ['category' => $children->id]) }}"
                                                               class="sub-sub-category">{{ $children->name }}</a>
                                                       @endforeach
                                                   </section>
