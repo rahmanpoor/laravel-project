@@ -71,14 +71,14 @@
                                         <section class="item">
                                             <section class="lazyload-item-wrapper">
                                                 <section class="product">
-                                                    <section class="product-add-to-cart"> <a href="javascript:void(0);"
+                                                    {{-- <section class="product-add-to-cart"> <a href="javascript:void(0);"
                                                             onclick="this.closest('form').submit();"
                                                             data-bs-toggle="tooltip" data-bs-placement="left"
                                                             title="افزودن به سبد خرید">
                                                             <i class="fa fa-cart-plus"></i>
-                                                    </section>
+                                                    </section> --}}
 
-                                                    @guest
+                                                    {{-- @guest
                                                         <section class="product-add-to-favorite">
                                                             <button class="btn btn-light btn-sm text-decoration-none"
                                                                 data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}"
@@ -108,7 +108,7 @@
                                                                 </button>
                                                             </section>
                                                         @endif
-                                                    @endauth
+                                                    @endauth --}}
                                                     <a class="product-link"
                                                         href="{{ route('customer.market.product', $mostVisitedProduct) }}">
                                                         <section class="product-image">
