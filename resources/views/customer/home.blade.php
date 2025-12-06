@@ -125,9 +125,15 @@
                                                                 {{-- <span class="product-old-price">6,895,000 </span>
                                                             <span class="product-discount-amount">10%</span> --}}
                                                             </section>
+                                                            @if($mostVisitedProduct->marketable_number > 0)
                                                             <section class="product-price">
                                                                 {{ priceFormat($mostVisitedProduct->price) }} تومان
                                                             </section>
+                                                            @else
+                                                            <section class="product-price">
+                                                               <span class="text-danger">ناموجود</span>
+                                                            </section>
+                                                            @endif
                                                         </section>
                                                         <section class="product-colors">
                                                             @foreach ($mostVisitedProduct->colors as $color)

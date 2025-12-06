@@ -296,6 +296,7 @@
 
                         <section class="col-md-3">
                             <section class="content-wrapper bg-white p-3 rounded-2 cart-total-price">
+                                @if($product->marketable_number > 0)
                                 <section class="d-flex justify-content-between align-items-center">
                                     <p class="text-muted">قیمت کالا</p>
                                     <p class="text-muted"><span id="product_price"
@@ -325,6 +326,11 @@
                                     <p class="fw-bolder"><span id="final_price"></span><span class="small"> تومان</span>
                                     </p>
                                 </section>
+                                @else
+                                   <section class="d-flex justify-content-between align-items-center">
+                                    <p class="text-muted">این کالا فعلا موجود نیست</p>
+                                </section>
+                                @endif
                                 @if ($product->marketable_number > 0)
                                     <section class="">
                                         <button id="next-level" class="btn btn-danger d-block w-100"
